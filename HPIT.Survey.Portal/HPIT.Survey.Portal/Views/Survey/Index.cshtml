@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- 内容头部 /-->
+<!-- 正文区域 -->
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="#">用户管理</a></li>
+                <li class="active">用户列表</li>
+            </ol>
+        </div>
+        <div class="box-body">
+            <div class="pull-left">
+                <div class="form-group form-inline">
+                    <div class="btn-group">
+                        <a href="AddUser.aspx" class="btn btn-default" target="_self">添加用户</a><br />
+                    </div>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <div class="has-feedback">
+                    <ul>
+                        <li><label>账号：</label><input type="text" id="TextBox_Account" class="form-control input-sm searchInput" /></li>
+                        <li><label>出生日期：</label><input type="text" id="TextBox_CreateTime" class="form-control input-sm searchInput" />  <asp:TextBox ID="TextBox_CreateTime" CssClass="form-control input-sm searchInput" runat="server"></asp:TextBox></li>
+                        <li>
+                            <label>角色类型：</label> <select id="DropDownList_Roles" class="form-control input-sm searchInput">
+                                <option value="-1">请选择</option>
+                            </select>
+                        </li>
+                        <li><input type="button" value="查询" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation" style="float:right">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</section>
+<div class="modal fade" id="editModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">车辆编辑</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped" style="width:570px">
+                    <tr>
+                        <td>车辆编号</td>
+                        <td><input class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>购买日期</td>
+                        <td><input class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>车辆类型</td>
+                        <td>
+                            <select class="form-control selectpicker">
+                                <option>公司车辆</option>
+                                <option>合同车辆</option>
+                                <option>私人车辆</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>车辆长度</td>
+                        <td><input class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>吨位</td>
+                        <td><input class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>车队名称</td>
+                        <td><input class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>加入时间</td>
+                        <td><input class="form-control datetime"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @*<script src="~/js/step/bwizard.min.js"></script>*@
+    <script src="~/js/step/bwizard.js" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        window.onload = function () {
+            //alert("页面加载中。。。");
+        };
+        $(document).ready(function () {
+            alert("页面加载中。。。");
+        })
+    </script>
+}

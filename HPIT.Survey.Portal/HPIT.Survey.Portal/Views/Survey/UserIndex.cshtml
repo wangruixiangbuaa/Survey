@@ -1,0 +1,332 @@
+﻿
+@{
+    ViewBag.Title = "厚溥就业调查问卷";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link href="~/css/bwizard.min.css" rel="stylesheet" />*@
+<link href="~/css/bwizard.css" rel="stylesheet" />
+@section styles{
+    <style>
+        #loading {
+            display: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            background: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2000;
+        }
+    </style>
+}
+<div class="container" style="background: #78dccafa;">
+    <h2>厚溥就业学生信息调查</h2>
+    <div id="loading">
+        <img src="~/img/loadingimg/loading4.gif" style="margin-left: 40%; margin-top: 100px; width: 350px; height: 350px;" />
+    </div>
+    <div id="wizard" style="display:none;">
+        <ol>
+            <li>学生基本信息</li>
+            <li>填写企业信息</li>
+            <li>填写就业信息</li>
+            <li>填写项目信息</li>
+            <li>公司岗位信息</li>
+            <li>公司招聘岗位</li>
+        </ol>
+
+        <div id="div_basic">
+            <script id="basic" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">年份</label><span class="col-md-8"><input type="text" name="Year" value="${Form.Year}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">方向</label><span class="col-md-8"><input type="text" name="Direction" value="${Form.Direction}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">批次</label><span class="col-md-8"><input type="text" name="Batch" value="${Form.Batch}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">项目部</label><span class="col-md-8"><input type="text" name="ProjectName" value="${Form.ProjectName}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">姓名</label><span class="col-md-8"><input type="text" name="StuName" value="${Form.StuName}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">手机号</label><span class="col-md-8"><input type="text" name="Phone" value="${Form.Phone}" class="form-control "></span>
+                    </div>
+                </div>
+            </script>
+        </div>
+        <div id="div_enterprise">
+            <script id="enterprise" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <div class="col-md-5 form-group"> 
+                        <label class="control-label col-md-3">城市</label><span class="col-md-8"><input type="text" name="Company.City" value="${Form.Company.City}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">企业名</label><span class="col-md-8"><input type="text" name="Company.CompanyName" value="${Form.Company.CompanyName}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">企业编号</label><span class="col-md-8"><input type="text" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">所属行业</label><span class="col-md-8"><input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 form-group">
+                        <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" value="${Form.Company.CompanyDesc}" cols="250" rows="5"></textarea></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text"  name="Company.DepartName" value="${Form.Company.DepartName}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="Company.DepartName" class="form-control "></span>
+                    </div>
+                </div>
+            </script>
+        </div>
+        <div id="div_salary">
+            <script id="salary" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">试用期薪资</label><span class="col-md-8"><input type="text" name="WagesOfPeriod" value="${Form.WagesOfPeriod}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">转正薪资</label><span class="col-md-8"><input type="text" name="WagesOfFull" value="${Form.WagesOfFull}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">现在薪资</label><span class="col-md-8"><input type="text" name="WagesOfReal" value="${Form.WagesOfReal}" class="form-control "></span>
+                    </div>
+                </div>
+            </script>
+        </div>
+        <div id="div_project">
+            <script id="project" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>项目名称</th>
+                            <th>项目类型</th>
+                            <th>项目描述</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+                        </tr>
+                        {{each  Form.Project}}
+                        <tr>
+                            <td>${ProjectName}</td>
+                            <td>${ProjectType}</td>
+                            <td>${ProjectDesc}</td>
+                            <td>${BeginTime}</td>
+                            <td>${EndTime}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">项目名称</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">项目类型</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 form-group">
+                        <label class="control-label col-md-3" style=" width: 12%;">项目介绍</label>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" cols="250" rows="5"></textarea></span>
+                    </div>
+                </div>
+            </script>
+        </div>
+        <div id="div_position">
+            <script id="position" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>岗位名称</th>
+                            <th>方向</th>
+                            <th>工作年限</th>
+                            <th>岗位描述</th>
+                        </tr>
+                        {{each  Form.Position}}
+                        <tr>
+                            <td>${PositionName}</td>
+                            <td>${PositionType}</td>
+                            <td>${PositionDesc}</td>
+                            <td>${PositionDesc}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">方向</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">工作年限</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 form-group">
+                        <label class="control-label col-md-3" style=" width: 12%;">岗位描述</label>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" cols="250" rows="5"></textarea></span>
+                    </div>
+                </div>
+            </script>
+        </div>
+        <div id="div_job">
+            <script id="job" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>岗位名称</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+                        </tr>
+                        {{each  Form.ActiveJobs}}
+                        <tr>
+                            <td>${JobName}</td>
+                            <td>${StartTime}</td>
+                            <td>${EndTime}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8 "><input type="text" class="form-control datetime"></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                </div>
+                <input type="button" id="save" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="提交" />
+            </script>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @*<script src="~/js/step/bwizard.min.js"></script>*@
+    <script src="~/js/tmpl/jquery.tmpl.js"></script>
+    <script src="~/js/tmpl/jquery.tmplPlus.js"></script>
+    <script src="~/js/step/bwizard.js" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        window.onload = function () {
+            //alert("页面加载中。。。");
+        };
+        var _ = {
+            form: {},
+            options: {
+                "url": "/Survey/StartNewSurvey",
+                "data": {"id":11},
+                "type": "get",
+                "datatype":"json"
+            },
+            render: function (survey)
+            {
+                $("#basic").tmpl(survey).appendTo('#div_basic');
+                $("#enterprise").tmpl(survey).appendTo('#div_enterprise');
+                $("#salary").tmpl(survey).appendTo('#div_salary');
+                $("#project").tmpl(survey).appendTo('#div_project');
+                $("#position").tmpl(survey).appendTo('#div_position');
+                $("#job").tmpl(survey).appendTo('#div_job');
+                $("#wizard").bwizard().show();    
+            },
+            getQueryString: function (name) {
+                var reg = new RegExp('(?:(?:&|\\?)' + name + '=([^&]*))|(?:/' + name + '/([^/]*))', 'i');
+                var r = window.location.href.match(reg);
+                if (r != null)
+                    return decodeURI(r[1] || r[2]);
+                return null;
+            },
+            ajaxData: function (options,callback) {
+                $.ajax({
+                    url: options.url,
+                    data: options.data,
+                    type: options.type,
+                    dataType: options.dataType,
+                    beforeSend: function () {
+                        $("#loading").show();
+                    },
+                    success: function (survey) {
+                        callback(survey);
+                    },
+                    complete: function () {
+                        $("#loading").hide();
+                        $('.datetime').datepicker({
+                            autoclose: true,
+                            format: 'yyyy-dd-mm'
+                        });
+                    }
+                })
+            }
+        };
+        $(document).ready(function () {
+            var id = _.getQueryString("id");
+            if (id != null && id != '') {
+                _.options.url = "/Survey/GetSurveyByID";
+                _.options.data = { "id": id };
+            }
+            _.ajaxData(_.options, function (result) {
+                _.render(result);
+                _.form = result.Form;
+            })
+
+            $("#wizard").on("change", "input", function () {
+                console.log($(this).val() + "--");
+                var name = $(this).attr("name");
+                if (name.split('.').length == 1) {
+                    _.form[name] = $(this).val();
+                } else {
+                    var ss = name.split('.');
+                    _.form[ss[0]][ss[1]] = $(this).val();
+                }
+            })
+
+            $("#div_job").on("click", "#save", function () {
+                //$.each(_.form, function (key, val) {
+                //    //text = text + "Key:" + i + ", Value:" + val;
+                    
+                //});  
+                _.options.url = "/Survey/Save";
+                _.options.data = _.form;
+                _.ajaxData(_.options, function (result) {
+                    alert("成功!");
+                });
+            })
+        })
+    </script>
+}
