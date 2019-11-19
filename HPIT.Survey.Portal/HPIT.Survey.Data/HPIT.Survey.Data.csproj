@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapter\CommonDal.cs" />
     <Compile Include="Adapter\SurveyDal.cs" />
     <Compile Include="Entitys\ActiveJobs.cs" />
     <Compile Include="Entitys\Company.cs" />

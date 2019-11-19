@@ -41,6 +41,7 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
+        [HttpPost]
         public DeluxeJsonResult Save(SurveyModel model)
         {
             var result = SurveyDal.Instance.Create(model);

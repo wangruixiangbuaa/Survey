@@ -28,6 +28,12 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? PositionID { get; set; }
 
+
+        public int? Count { get; set; }
+
+
+        public decimal? AvageMoney { get; set; }
+
         //public virtual SurveyModel SurveyModel { get; set; }
     }
 }

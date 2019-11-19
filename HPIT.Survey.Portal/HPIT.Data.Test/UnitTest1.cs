@@ -91,5 +91,26 @@ namespace HPIT.Data.Test
             var rsult = SurveyDal.Instance.QueryByID(11);
             string result = JsonConvert.SerializeObject(rsult);
         }
+
+        [TestMethod]
+        public void TestMethodUpdate()
+        {
+            SurveyDal dal = new SurveyDal();
+            var rsult = dal.QueryByID(11);
+            rsult.Form.CorworkPhone = "17700923232";
+            rsult.Form.Direction = "大数据";
+            rsult.Form.ProjectName = "修改";
+            dal.context.Project.RemoveRange(rsult.Form.Project);
+            dal.context.SaveChanges();
+            List<Project> newProject = new List<Project>();
+            foreach (var item in rsult.Form.Project)
+            {
+                newProject.Add(item);
+            }
+            newProject.Add(new Project() {  ProjectName = "update", BeginTime = DateTime.Now,EndTime=DateTime.Now, ProjectType = "ee",SurveyID = rsult.Form.SurveyID});
+            rsult.Form.Project = newProject;
+            int tt = dal.Update(rsult.Form);
+            string result = JsonConvert.SerializeObject(rsult);
+        }
     }
 }

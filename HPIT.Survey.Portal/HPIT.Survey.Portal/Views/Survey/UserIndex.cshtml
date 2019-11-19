@@ -40,15 +40,7 @@
             <script id="basic" type="text/x-jquery-tmpl">
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">年份</label><span class="col-md-8"><input type="text" name="Year" value="${Form.Year}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">方向</label><span class="col-md-8"><input type="text" name="Direction" value="${Form.Direction}" class="form-control "></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">批次</label><span class="col-md-8"><input type="text" name="Batch" value="${Form.Batch}" class="form-control "></span>
+                        <label class="control-label col-md-3">姓名</label><span class="col-md-8"><input type="text" name="StuName" value="${Form.StuName}" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">项目部</label><span class="col-md-8"><input type="text" name="ProjectName" value="${Form.ProjectName}" class="form-control "></span>
@@ -56,19 +48,66 @@
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">姓名</label><span class="col-md-8"><input type="text" name="StuName" value="${Form.StuName}" class="form-control "></span>
+                        <label class="control-label col-md-3">年份</label><span class="col-md-8">
+                            <select name="Year" class="form-control input-md">
+                                {{each ExtraDatas.Years}}
+                                {{if Form.Year == Value}}
+                                <option selected="selected" value="${Value}">${Text}</option>
+                                {{else}}
+                                <option value="${Value}">${Text}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                            @*<input type="text" name="Year" value="${Form.Year}" class="form-control ">*@
+                        </span>
                     </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">方向</label><span class="col-md-8">
+                            <select name="Direction" class="form-control input-md">
+                                {{each ExtraDatas.Directions}}
+                                {{if Form.Direction == Value}}
+                                <option selected="selected" value="${Value}">${Text}</option>
+                                {{else}}
+                                <option value="${Value}">${Text}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                            @*<input type="text" name="Direction" value="${Form.Direction}" class="form-control ">*@
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">学校</label><span class="col-md-8"><input type="text" name="School" value="${Form.School}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">批次</label><span class="col-md-8"><input type="text" name="Batch" value="${Form.Batch}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">手机号</label><span class="col-md-8"><input type="text" name="Phone" value="${Form.Phone}" class="form-control "></span>
                     </div>
+
                 </div>
             </script>
         </div>
         <div id="div_enterprise">
             <script id="enterprise" type="text/x-jquery-tmpl">
                 <div class="row">
-                    <div class="col-md-5 form-group"> 
-                        <label class="control-label col-md-3">城市</label><span class="col-md-8"><input type="text" name="Company.City" value="${Form.Company.City}" class="form-control "></span>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">城市</label><span class="col-md-8">
+                            <select name="Company.City" class="form-control input-md">
+                                {{each ExtraDatas.Citys}}
+                                {{if Form.Company.City == Value}}
+                                <option selected="selected" value="${Value}">${Text}</option>
+                                {{else}}
+                                <option value="${Value}">${Text}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                            @*<input type="text" name="Company.City" value="${Form.Company.City}" class="form-control ">*@
+                        </span>
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">企业名</label><span class="col-md-8"><input type="text" name="Company.CompanyName" value="${Form.Company.CompanyName}" class="form-control "></span>
@@ -85,15 +124,15 @@
                 <div class="row">
                     <div class="col-md-10 form-group">
                         <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
-                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" value="${Form.Company.CompanyDesc}" cols="250" rows="5"></textarea></span>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc"  cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text"  name="Company.DepartName" value="${Form.Company.DepartName}" class="form-control "></span>
+                        <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text" name="Form.DepartName" value="${Form.DepartName}" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="Company.DepartName" class="form-control "></span>
+                        <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="Form.PositionName" value="${Form.PositionName}" class="form-control "></span>
                     </div>
                 </div>
             </script>
@@ -123,42 +162,51 @@
                             <th>项目名称</th>
                             <th>项目类型</th>
                             <th>项目描述</th>
-                            <th>开始时间</th>
-                            <th>结束时间</th>
+                            @*<th>开始时间</th>
+                    <th>结束时间</th>*@
                         </tr>
                         {{each  Form.Project}}
                         <tr>
                             <td>${ProjectName}</td>
                             <td>${ProjectType}</td>
                             <td>${ProjectDesc}</td>
-                            <td>${BeginTime}</td>
-                            <td>${EndTime}</td>
+                            @*<td>${BeginTime}</td>
+                    <td>${EndTime}</td>*@
                         </tr>
                         {{/each}}
                     </table>
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">项目名称</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="control-label col-md-3">项目名称</label><span class="col-md-8">
+                        <input type="text" id="projectName" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">项目类型</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="col-md-3 control-label">项目类型</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select id="projectType" class="form-control input-md">
+                                {{each ExtraDatas.ProjectTypes}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
                     </div>
                 </div>
-                <div class="row">
+                @*<div class="row" style="display:none">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
                     </div>
-                </div>
+                </div>*@
                 <div class="row">
                     <div class="col-md-10 form-group">
                         <label class="control-label col-md-3" style=" width: 12%;">项目介绍</label>
-                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" cols="250" rows="5"></textarea></span>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" cols="250" id="projectdesc" rows="5"></textarea></span>
                     </div>
                 </div>
+                <input type="button" id="addProject" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
         </div>
         <div id="div_position">
@@ -183,23 +231,45 @@
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
+                        <input type="text" id="positionName" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">方向</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="col-md-3 control-label">方向</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select id="positionDirection" class="form-control input-md">
+                                {{each ExtraDatas.Directions}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">工作年限</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="control-label col-md-3">工作年限</label><span class="col-md-8">
+                        <input type="text" id="positionYears" class="form-control ">
+                        </span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">来源</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select id="positionSource" class="form-control input-md">
+                                {{each ExtraDatas.Source}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-10 form-group">
                         <label class="control-label col-md-3" style=" width: 12%;">岗位描述</label>
-                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" cols="250" rows="5"></textarea></span>
+                        <span class="col-md-8 " style="width:83%;">
+                        <textarea class="form-control" id="positionDesc" cols="250" rows="5"></textarea></span>
                     </div>
                 </div>
+                <input type="button" id="addPosition" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
         </div>
         <div id="div_job">
@@ -222,7 +292,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
+                        <input type="text" id="jobName" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">招聘人数</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select class="form-control input-md">
+                                {{each ExtraDatas.Count}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
                     </div>
                 </div>
                 <div class="row">
@@ -233,7 +314,13 @@
                         <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
                     </div>
                 </div>
-                <input type="button" id="save" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="提交" />
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">平均薪资</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                    </div>
+                    <input type="button" id="addjob" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
+                </div>
+                <input type="button" id="save" class="btn btn-primary" style="width: 100px;margin-left: 40%;" value="提交就业信息调查" />
             </script>
         </div>
     </div>
@@ -243,90 +330,7 @@
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script src="~/js/tmpl/jquery.tmplPlus.js"></script>
     <script src="~/js/step/bwizard.js" charset="utf-8"></script>
-    <script type="text/javascript" charset="utf-8">
-        window.onload = function () {
-            //alert("页面加载中。。。");
-        };
-        var _ = {
-            form: {},
-            options: {
-                "url": "/Survey/StartNewSurvey",
-                "data": {"id":11},
-                "type": "get",
-                "datatype":"json"
-            },
-            render: function (survey)
-            {
-                $("#basic").tmpl(survey).appendTo('#div_basic');
-                $("#enterprise").tmpl(survey).appendTo('#div_enterprise');
-                $("#salary").tmpl(survey).appendTo('#div_salary');
-                $("#project").tmpl(survey).appendTo('#div_project');
-                $("#position").tmpl(survey).appendTo('#div_position');
-                $("#job").tmpl(survey).appendTo('#div_job');
-                $("#wizard").bwizard().show();    
-            },
-            getQueryString: function (name) {
-                var reg = new RegExp('(?:(?:&|\\?)' + name + '=([^&]*))|(?:/' + name + '/([^/]*))', 'i');
-                var r = window.location.href.match(reg);
-                if (r != null)
-                    return decodeURI(r[1] || r[2]);
-                return null;
-            },
-            ajaxData: function (options,callback) {
-                $.ajax({
-                    url: options.url,
-                    data: options.data,
-                    type: options.type,
-                    dataType: options.dataType,
-                    beforeSend: function () {
-                        $("#loading").show();
-                    },
-                    success: function (survey) {
-                        callback(survey);
-                    },
-                    complete: function () {
-                        $("#loading").hide();
-                        $('.datetime').datepicker({
-                            autoclose: true,
-                            format: 'yyyy-dd-mm'
-                        });
-                    }
-                })
-            }
-        };
-        $(document).ready(function () {
-            var id = _.getQueryString("id");
-            if (id != null && id != '') {
-                _.options.url = "/Survey/GetSurveyByID";
-                _.options.data = { "id": id };
-            }
-            _.ajaxData(_.options, function (result) {
-                _.render(result);
-                _.form = result.Form;
-            })
-
-            $("#wizard").on("change", "input", function () {
-                console.log($(this).val() + "--");
-                var name = $(this).attr("name");
-                if (name.split('.').length == 1) {
-                    _.form[name] = $(this).val();
-                } else {
-                    var ss = name.split('.');
-                    _.form[ss[0]][ss[1]] = $(this).val();
-                }
-            })
-
-            $("#div_job").on("click", "#save", function () {
-                //$.each(_.form, function (key, val) {
-                //    //text = text + "Key:" + i + ", Value:" + val;
-                    
-                //});  
-                _.options.url = "/Survey/Save";
-                _.options.data = _.form;
-                _.ajaxData(_.options, function (result) {
-                    alert("成功!");
-                });
-            })
-        })
-    </script>
+    <script src="~/js/app.survey/survey.js"></script>
+    @*<script type="text/javascript" charset="utf-8">
+        </script>*@
 }

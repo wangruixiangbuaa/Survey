@@ -53,6 +53,17 @@ namespace HPIT.Survey.Data.Entitys
 
         public string Phone { get; set; }
 
+
+        public string AuditName { get; set; }
+
+        public int? AuditStatus { get; set; }
+
+        public string School { get; set; }
+
+        public string DepartName { get; set; }
+
+        public string PositionName { get; set; }
+
         public string CorworkPhone { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -63,8 +74,14 @@ namespace HPIT.Survey.Data.Entitys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Position> Position { get; set; }
 
+        [NotMapped]
+        public Position CurrentPosition { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Project { get; set; }
+
+        [NotMapped]
+        public Project CurrentProject { get; set; }
 
         public virtual Student Student { get; set; } = new Student();
     }

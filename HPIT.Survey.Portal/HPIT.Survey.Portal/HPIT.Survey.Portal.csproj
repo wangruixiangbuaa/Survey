@@ -144,6 +144,7 @@
     <Content Include="img\user7-128x128.jpg" />
     <Content Include="img\user8-128x128.jpg" />
     <Content Include="img\visa.png" />
+    <Content Include="js\app.survey\survey.js" />
     <Content Include="js\aurora.js" />
     <Content Include="js\coalesce.js" />
     <Content Include="js\demo.js" />

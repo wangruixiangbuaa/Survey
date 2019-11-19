@@ -32,6 +32,9 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? CompanyID { get; set; }
 
+
+        public string Source { get; set; }
+
         //public virtual SurveyModel SurveyModel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
