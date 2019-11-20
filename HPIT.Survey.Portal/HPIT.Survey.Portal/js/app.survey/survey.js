@@ -16,6 +16,10 @@ var _ = {
         $("#projectC").tmpl(survey).appendTo('#div_project');
         $("#positionC").tmpl(survey).appendTo('#div_position');
         $("#jobC").tmpl(survey).appendTo('#div_job');
+
+        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
+        $("#position").tmpl(_.MasterData).appendTo('#positionTb');
+        $("#job").tmpl(_.MasterData).appendTo('#jobTb');
         //绘制各个步骤
         $("#wizard").bwizard().show();
     },
@@ -42,7 +46,7 @@ var _ = {
                 $("#loading").hide();
                 $('.datetime').datepicker({
                     autoclose: true,
-                    format: 'yyyy-dd-mm'
+                    format: 'yyyy-mm-dd'
                 });
             }
         })
@@ -91,7 +95,7 @@ $(document).ready(function () {
     $("#div_job").on("click", "#save", function () {
         _.options.url = "/Survey/Save";
         _.options.type = 'post';
-        _.options.data = _.form;
+        _.options.data = _.MasterData.Form;
         _.ajaxData(_.options, function (result) {
             alert("成功!");
         });
@@ -125,7 +129,7 @@ $(document).ready(function () {
     })
 
     $("#wizard").on("click", "#addjob", function () {
-        var name = $("#jobName").val();
+        var name = $("#positionList").val();
         var count = $("#jobCount").val();
         var begin = $("#jobBeginTime").val();
         var end = $("#jobEndTime").val();
