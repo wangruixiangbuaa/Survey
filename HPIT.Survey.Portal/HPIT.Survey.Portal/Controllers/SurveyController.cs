@@ -2,6 +2,7 @@
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
 using HPIT.Survey.Portal.Filters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,7 @@ namespace HPIT.Survey.Portal.Controllers
         [HttpPost]
         public DeluxeJsonResult Save(SurveyModel model)
         {
+            string json = JsonConvert.SerializeObject(model);
             var result = SurveyDal.Instance.Create(model);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }

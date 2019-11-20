@@ -35,6 +35,8 @@ namespace HPIT.Survey.Data.Entitys
 
         public string Source { get; set; }
 
+        public string Years { get; set; }
+
         //public virtual SurveyModel SurveyModel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

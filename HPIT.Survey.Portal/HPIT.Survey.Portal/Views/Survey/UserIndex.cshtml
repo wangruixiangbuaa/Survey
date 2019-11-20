@@ -32,8 +32,8 @@
             <li>填写企业信息</li>
             <li>填写就业信息</li>
             <li>填写项目信息</li>
-            <li>公司岗位信息</li>
-            <li>公司招聘岗位</li>
+            <li>公司岗位招聘信息</li>
+            <li>公司在招聘岗位</li>
         </ol>
 
         <div id="div_basic">
@@ -124,7 +124,7 @@
                 <div class="row">
                     <div class="col-md-10 form-group">
                         <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
-                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc"  cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
                     </div>
                 </div>
                 <div class="row">
@@ -155,31 +155,23 @@
             </script>
         </div>
         <div id="div_project">
-            <script id="project" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>项目名称</th>
-                            <th>项目类型</th>
-                            <th>项目描述</th>
-                            @*<th>开始时间</th>
-                    <th>结束时间</th>*@
-                        </tr>
-                        {{each  Form.Project}}
-                        <tr>
-                            <td>${ProjectName}</td>
-                            <td>${ProjectType}</td>
-                            <td>${ProjectDesc}</td>
-                            @*<td>${BeginTime}</td>
-                    <td>${EndTime}</td>*@
-                        </tr>
-                        {{/each}}
-                    </table>
-                </div>
+            <div class="row">
+                <table id="projectTb" class="table table-bordered">
+                    <tr>
+                        <th>项目名称</th>
+                        <th>项目类型</th>
+                        <th>项目描述</th>
+                        @*<th>开始时间</th>
+                            <th>结束时间</th>*@
+                    </tr>
+                </table>
+            </div>
+            <script id="projectC" type="text/x-jquery-tmpl">
                 <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">项目名称</label><span class="col-md-8">
-                        <input type="text" id="projectName" class="form-control "></span>
+                            <input type="text" id="projectName" class="form-control ">
+                        </span>
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">项目类型</label><span class="col-md-8">
@@ -192,14 +184,6 @@
                         </span>
                     </div>
                 </div>
-                @*<div class="row" style="display:none">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                    </div>
-                </div>*@
                 <div class="row">
                     <div class="col-md-10 form-group">
                         <label class="control-label col-md-3" style=" width: 12%;">项目介绍</label>
@@ -208,31 +192,31 @@
                 </div>
                 <input type="button" id="addProject" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
+            @*<div class="row" style="display:none">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                </div>*@
         </div>
         <div id="div_position">
-            <script id="position" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>岗位名称</th>
-                            <th>方向</th>
-                            <th>工作年限</th>
-                            <th>岗位描述</th>
-                        </tr>
-                        {{each  Form.Position}}
-                        <tr>
-                            <td>${PositionName}</td>
-                            <td>${PositionType}</td>
-                            <td>${PositionDesc}</td>
-                            <td>${PositionDesc}</td>
-                        </tr>
-                        {{/each}}
-                    </table>
-                </div>
+            <div class="row">
+                <table id="positionTb" class="table table-bordered">
+                    <tr>
+                        <th>岗位名称</th>
+                        <th>方向</th>
+                        <th>工作年限</th>
+                        <th>岗位描述</th>
+                    </tr>
+                </table>
+            </div>
+            <script id="positionC" type="text/x-jquery-tmpl">
                 <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
-                        <input type="text" id="positionName" class="form-control "></span>
+                        <input type="text" id="positionName" class="form-control ">
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">方向</label><span class="col-md-8">
@@ -248,7 +232,7 @@
                 <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">工作年限</label><span class="col-md-8">
-                        <input type="text" id="positionYears" class="form-control ">
+                            <input type="text" id="positionYears" class="form-control ">
                         </span>
                     </div>
                     <div class="col-md-5 form-group">
@@ -266,41 +250,38 @@
                     <div class="col-md-10 form-group">
                         <label class="control-label col-md-3" style=" width: 12%;">岗位描述</label>
                         <span class="col-md-8 " style="width:83%;">
-                        <textarea class="form-control" id="positionDesc" cols="250" rows="5"></textarea></span>
+                            <textarea class="form-control" id="positionDesc" cols="250" rows="5"></textarea>
+                        </span>
                     </div>
                 </div>
                 <input type="button" id="addPosition" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
         </div>
         <div id="div_job">
-            <script id="job" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>岗位名称</th>
-                            <th>开始时间</th>
-                            <th>结束时间</th>
-                        </tr>
-                        {{each  Form.ActiveJobs}}
-                        <tr>
-                            <td>${JobName}</td>
-                            <td>${StartTime}</td>
-                            <td>${EndTime}</td>
-                        </tr>
-                        {{/each}}
-                    </table>
-                </div>
+
+            <div class="row">
+                <table id="jobTb" class="table table-bordered">
+                    <tr>
+                        <th>岗位名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                    </tr>
+                </table>
+            </div>
+            <script id="jobC" type="text/x-jquery-tmpl">
                 <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
-                        <input type="text" id="jobName" class="form-control "></span>
+    @*<input type="text" id="jobName" class="form-control ">*@
+                        <select id="positionList" class="form-control input-md"></select>
+                        </span>
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">招聘人数</label><span class="col-md-8">
                             @*<input type="text" class="form-control ">*@
-                            <select class="form-control input-md">
+                            <select id="jobCount" class="form-control input-md">
                                 {{each ExtraDatas.Count}}
-                                <option value="${Value}">${Text}</option>
+                                  <option value="${Value}">${Text}</option>
                                 {{/each}}
                             </select>
                         </span>
@@ -308,23 +289,53 @@
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8 "><input type="text" class="form-control datetime"></span>
+                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8 "><input type="text" id="jobBeginTime" class="form-control datetime"></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" id="jobEndTime" class="form-control datetime"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">平均薪资</label><span class="col-md-8"><input type="text" class="form-control "></span>
+                        <label class="control-label col-md-3">平均薪资</label><span class="col-md-8"><input type="text" id="avgMoney" class="form-control "></span>
                     </div>
-                    <input type="button" id="addjob" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
+                    <input type="button" id="addjob" class="btn btn-default" style="width: 100px;" value="添加" />
                 </div>
-                <input type="button" id="save" class="btn btn-primary" style="width: 100px;margin-left: 40%;" value="提交就业信息调查" />
+                <input type="button" id="save" class="btn btn-primary" style="width: 200px;margin-left: 40%;" value="提交就业信息调查" />
             </script>
         </div>
     </div>
 </div>
+<script id="project" type="text/x-jquery-tmpl">
+    {{each  Form.Project}}
+    <tr>
+        <td>${ProjectName}</td>
+        <td>${ProjectType}</td>
+        <td>${ProjectDesc}</td>
+        @*<td>${BeginTime}</td>
+            <td>${EndTime}</td>*@
+    </tr>
+    {{/each}}
+</script>
+<script id="job" type="text/x-jquery-tmpl">
+    {{each  Form.ActiveJobs}}
+    <tr>
+        <td>${JobName}</td>
+        <td>${StartTime}</td>
+        <td>${EndTime}</td>
+    </tr>
+    {{/each}}
+</script>
+<script id="position" type="text/x-jquery-tmpl">
+    {{each  Form.Position}}
+    <tr>
+        <td>${PositionName}</td>
+        <td>${PositionType}</td>
+        <td>${PositionDesc}</td>
+        <td>${PositionDesc}</td>
+    </tr>
+    {{/each}}
+</script>
 @section scripts{
     @*<script src="~/js/step/bwizard.min.js"></script>*@
     <script src="~/js/tmpl/jquery.tmpl.js"></script>

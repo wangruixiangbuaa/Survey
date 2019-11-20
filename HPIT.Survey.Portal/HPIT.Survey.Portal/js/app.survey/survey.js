@@ -2,7 +2,7 @@
 //    //alert("页面加载中。。。");
 //};
 var _ = {
-    form: {},
+    MasterData: {},
     options: {
         "url": "/Survey/StartNewSurvey",
         "data": { "id": 11 },
@@ -13,9 +13,9 @@ var _ = {
         $("#basic").tmpl(survey).appendTo('#div_basic');
         $("#enterprise").tmpl(survey).appendTo('#div_enterprise');
         $("#salary").tmpl(survey).appendTo('#div_salary');
-        $("#project").tmpl(survey).appendTo('#div_project');
-        $("#position").tmpl(survey).appendTo('#div_position');
-        $("#job").tmpl(survey).appendTo('#div_job');
+        $("#projectC").tmpl(survey).appendTo('#div_project');
+        $("#positionC").tmpl(survey).appendTo('#div_position');
+        $("#jobC").tmpl(survey).appendTo('#div_job');
         //绘制各个步骤
         $("#wizard").bwizard().show();
     },
@@ -55,30 +55,37 @@ $(document).ready(function () {
         _.options.data = { "id": id };
     }
     _.ajaxData(_.options, function (result) {
-        _.render(result);
-        _.form = result.Form;
+       
+        _.MasterData = result;
+        _.render(_.MasterData);
     })
 
     //检测界面上input标签的变化，如果有变化 则更改其中的值
     $("#wizard").on("change", "input", function () {
         var name = $(this).attr("name");
+        if (name == null || name == undefined) {
+            return false;
+        }
         if (name.split('.').length == 1) {
-            _.form[name] = $(this).val();
+            _.MasterData.Form[name] = $(this).val();
         } else {
             var ss = name.split('.');
-            _.form[ss[0]][ss[1]] = $(this).val();
+            _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
         }
     })
 
     $("#wizard").on("change", "select", function () {
         var name = $(this).attr("name");
+        if (name == null || name == undefined) {
+            return false;
+        }
         if (name.split('.').length == 1) {
-            _.form[name] = $(this).val();
+            _.MasterData.Form[name] = $(this).val();
         } else {
             var ss = name.split('.');
-            _.form[ss[0]][ss[1]] = $(this).val();
+            _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
         }
-    
+
     })
 
     $("#div_job").on("click", "#save", function () {
@@ -94,16 +101,47 @@ $(document).ready(function () {
         var name = $("#projectName").val();
         var type = $("#projectType").val();
         var desc = $("#projectdesc").val();
-        alert("添加项目" + name + type + desc);
-        _.form.Project.push({ "ProjectName": name, "ProjectType": type, "ProjectDesc": desc });
+        //alert("添加项目" + name + type + desc);
+        _.MasterData.Form.Project.push({ "ProjectName": name, "ProjectType": type, "ProjectDesc": desc });
+        $("#projectTb tr:gt(0)").remove();
+        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
     })
 
     $("#wizard").on("click", "#addPosition", function () {
-        alert("添加岗位");
+        var name = $("#positionName").val();
+        var type = $("#positionDirection").val();
+        var source = $("#positionSource").val();
+        var desc = $("#positionDesc").val();
+        var years = $("#positionYears").val();
+        _.MasterData.Form.Position.push({ "PositionName": name, "PositionType": type, "Source": source, "PositionDesc": desc, "Years": years });
+        $("#positionTb tr:gt(0)").remove();
+        var select = $("#positionList");
+        $("#positionList option").remove();
+        for (var i = 0; i < _.MasterData.Form.Position.length; i++) {
+            var text = _.MasterData.Form.Position[i].PositionName;
+            $("#positionList").append("<option value='" + text +"'>" + text + "</option>");
+        }
+        $("#position").tmpl(_.MasterData).appendTo('#positionTb');
     })
 
     $("#wizard").on("click", "#addjob", function () {
-        alert("添加职位");
+        var name = $("#jobName").val();
+        var count = $("#jobCount").val();
+        var begin = $("#jobBeginTime").val();
+        var end = $("#jobEndTime").val();
+        var avgMoney = $("#avgMoney").val();
+        var desc = "";
+        var type = "";
+        var match = {};
+        for (var i = 0; i < _.MasterData.Form.Position.length; i++) {
+            if (_.MasterData.Form.Position[i].PositionName == name) {
+                desc = _.MasterData.Form.Position[i].PositionDesc;
+                type = _.MasterData.Form.Position[i].PositionType;
+            }
+        }
+        _.MasterData.Form.ActiveJobs.push({ "JobName": name, "JobType": type, "JobDesc": desc, "StartTime": begin, "EndTime": end, "Count": count, "AvageMoney": avgMoney });
+        $("#jobTb tr:gt(0)").remove();
+        $("#job").tmpl(_.MasterData).appendTo('#jobTb');
     })
 
 })
