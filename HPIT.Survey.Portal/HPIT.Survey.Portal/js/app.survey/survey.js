@@ -57,9 +57,15 @@ $(document).ready(function () {
     if (id != null && id != '') {
         _.options.url = "/Survey/GetSurveyByID";
         _.options.data = { "id": id };
+    } else {
+        var type = $("#main_div").attr("stype");
+        if (type == 0) {
+            _.options.url = "/Survey/StartUserNewSurvey";
+        } else {
+            _.options.url = "/Survey/StartStudentNewSurvey";
+        }
     }
     _.ajaxData(_.options, function (result) {
-       
         _.MasterData = result;
         _.render(_.MasterData);
     })
@@ -78,6 +84,20 @@ $(document).ready(function () {
         }
     })
 
+    $("#wizard").on("change", "textarea", function () {
+        var name = $(this).attr("name");
+        if (name == null || name == undefined) {
+            return false;
+        }
+        if (name.split('.').length == 1) {
+            _.MasterData.Form[name] = $(this).val();
+        } else {
+            var ss = name.split('.');
+            _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
+        }
+
+    })
+
     $("#wizard").on("change", "select", function () {
         var name = $(this).attr("name");
         if (name == null || name == undefined) {
@@ -93,7 +113,13 @@ $(document).ready(function () {
     })
 
     $("#div_job").on("click", "#save", function () {
-        _.options.url = "/Survey/Save";
+        if (_.MasterData.Form.SurveyID == 0)
+        {
+            _.options.url = "/Survey/Save";
+        } else
+        {
+            _.options.url = "/Survey/Update";
+        }
         _.options.type = 'post';
         _.options.data = _.MasterData.Form;
         _.ajaxData(_.options, function (result) {
@@ -107,6 +133,19 @@ $(document).ready(function () {
         var desc = $("#projectdesc").val();
         //alert("添加项目" + name + type + desc);
         _.MasterData.Form.Project.push({ "ProjectName": name, "ProjectType": type, "ProjectDesc": desc });
+        $("#projectTb tr:gt(0)").remove();
+        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
+    })
+
+    $("#projectTb").on("click", "a", function () {
+        var name = $(this).attr("pname");
+        var newPro = [];
+        for (var i = 0; i < _.MasterData.Form.Project.length; i++) {
+            if (_.MasterData.Form.Project[i].ProjectName != name) {
+                newPro.push(_.MasterData.Form.Project[i]);
+            }
+        }
+        _.MasterData.Form.Project = newPro; 
         $("#projectTb tr:gt(0)").remove();
         $("#project").tmpl(_.MasterData).appendTo('#projectTb');
     })
@@ -128,6 +167,20 @@ $(document).ready(function () {
         $("#position").tmpl(_.MasterData).appendTo('#positionTb');
     })
 
+
+    $("#positionTb").on("click", "a", function () {
+        var name = $(this).attr("pname");
+        var newPro = [];
+        for (var i = 0; i < _.MasterData.Form.Position.length; i++) {
+            if (_.MasterData.Form.Position[i].PositionName != name) {
+                newPro.push(_.MasterData.Form.Position[i]);
+            }
+        }
+        _.MasterData.Form.Position = newPro;
+        $("#projectTb tr:gt(0)").remove();
+        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
+    })
+
     $("#wizard").on("click", "#addjob", function () {
         var name = $("#positionList").val();
         var count = $("#jobCount").val();
@@ -146,6 +199,19 @@ $(document).ready(function () {
         _.MasterData.Form.ActiveJobs.push({ "JobName": name, "JobType": type, "JobDesc": desc, "StartTime": begin, "EndTime": end, "Count": count, "AvageMoney": avgMoney });
         $("#jobTb tr:gt(0)").remove();
         $("#job").tmpl(_.MasterData).appendTo('#jobTb');
+    })
+
+    $("#jobTb").on("click", "a", function () {
+        var name = $(this).attr("pname");
+        var newPro = [];
+        for (var i = 0; i < _.MasterData.Form.ActiveJobs.length; i++) {
+            if (_.MasterData.Form.Position[i].JobName != name) {
+                newPro.push(_.MasterData.Form.ActiveJobs[i]);
+            }
+        }
+        _.MasterData.Form.ActiveJobs = newPro;
+        $("#projectTb tr:gt(0)").remove();
+        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
     })
 
 })

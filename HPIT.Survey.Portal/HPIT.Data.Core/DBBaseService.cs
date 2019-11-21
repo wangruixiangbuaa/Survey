@@ -57,7 +57,7 @@ namespace HPIT.Data.Core
                 parameter.pageIndex = count;
             }
             parameter.pageIndex = parameter.pageIndex == 0 ? 1 : parameter.pageIndex;
-            return list.Skip((parameter.pageIndex - 1) * parameter.pageSize).Take(parameter.pageSize).ToList() ;
+            return list.Skip((parameter.pageIndex - 1) * parameter.pageSize).Take(parameter.pageSize).ToList();
         }
 
         /// <summary>

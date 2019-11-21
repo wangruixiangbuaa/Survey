@@ -27,14 +27,164 @@
     </div>
     <div id="wizard" style="display:none;">
         <ol>
-            <li>学生基本信息</li>
+            @*<li>学生基本信息</li>*@
             <li>填写企业信息</li>
-            <li>填写就业信息</li>
-            <li>填写项目信息</li>
+            @*<li>填写就业信息</li>*@
+            @*<li>填写项目信息</li>*@
             <li>公司岗位招聘信息</li>
             <li>公司正在招聘岗位</li>
         </ol>
 
+
+        <div id="div_enterprise">
+            <script id="enterprise" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">城市</label><span class="col-md-8">
+                            <select name="Company.City" class="form-control input-md">
+                                {{each ExtraDatas.Citys}}
+                                {{if Form.Company.City == Value}}
+                                <option selected="selected" value="${Value}">${Text}</option>
+                                {{else}}
+                                <option value="${Value}">${Text}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                            @*<input type="text" name="Company.City" value="${Form.Company.City}" class="form-control ">*@
+                        </span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">企业名</label><span class="col-md-8"><input type="text" name="Company.CompanyName" value="${Form.Company.CompanyName}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">企业编号</label><span class="col-md-8"><input type="text" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">所属行业</label><span class="col-md-8"><input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control "></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 form-group">
+                        <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
+                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text" name="DepartName" value="${Form.DepartName}" class="form-control "></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="PositionName" value="${Form.PositionName}" class="form-control "></span>
+                    </div>
+                </div>
+            </script>
+        </div>
+        <div id="div_position">
+            <div class="row">
+                <table id="positionTb" class="table table-bordered">
+                    <tr>
+                        <th>岗位名称</th>
+                        <th>方向</th>
+                        <th>工作年限</th>
+                        <th>岗位描述</th>
+                        <th>操作</th>
+                    </tr>
+                </table>
+            </div>
+            <script id="positionC" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
+                            <input type="text" id="positionName" class="form-control ">
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-md-3 control-label">方向</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select id="positionDirection" class="form-control input-md">
+                                {{each ExtraDatas.Directions}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">工作年限</label><span class="col-md-8">
+                            <input type="text" id="positionYears" class="form-control ">
+                        </span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">来源</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select id="positionSource" class="form-control input-md">
+                                {{each ExtraDatas.Source}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 form-group">
+                        <label class="control-label col-md-3" style=" width: 12%;">岗位描述</label>
+                        <span class="col-md-8 " style="width:83%;">
+                            <textarea class="form-control" id="positionDesc" cols="250" rows="5"></textarea>
+                        </span>
+                    </div>
+                </div>
+                <input type="button" id="addPosition" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
+            </script>
+        </div>
+        <div id="div_job">
+            <div class="row">
+                <table id="jobTb" class="table table-bordered">
+                    <tr>
+                        <th>岗位名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>操作</th>
+                    </tr>
+                </table>
+            </div>
+            <script id="jobC" type="text/x-jquery-tmpl">
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
+                            @*<input type="text" id="jobName" class="form-control ">*@
+                            <select id="positionList" class="form-control input-md"></select>
+                        </span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">招聘人数</label><span class="col-md-8">
+                            @*<input type="text" class="form-control ">*@
+                            <select id="jobCount" class="form-control input-md">
+                                {{each ExtraDatas.Count}}
+                                <option value="${Value}">${Text}</option>
+                                {{/each}}
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8 "><input type="text" id="jobBeginTime" class="form-control datetime"></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" id="jobEndTime" class="form-control datetime"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">平均薪资</label><span class="col-md-8"><input type="text" id="avgMoney" class="form-control "></span>
+                    </div>
+                    <input type="button" id="addjob" class="btn btn-default" style="width: 100px;" value="添加" />
+                </div>
+                <input type="button" id="save" class="btn btn-primary" style="width: 200px;margin-left: 40%;" value="提交就业信息调查" />
+            </script>
+        </div>
         <div id="div_basic">
             <script id="basic" type="text/x-jquery-tmpl">
                 <div class="row">
@@ -88,51 +238,6 @@
                         <label class="col-md-3 control-label">手机号</label><span class="col-md-8"><input type="text" name="Phone" value="${Form.Phone}" class="form-control "></span>
                     </div>
 
-                </div>
-            </script>
-        </div>
-        <div id="div_enterprise">
-            <script id="enterprise" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">城市</label><span class="col-md-8">
-                            <select name="Company.City" class="form-control input-md">
-                                {{each ExtraDatas.Citys}}
-                                {{if Form.Company.City == Value}}
-                                <option selected="selected" value="${Value}">${Text}</option>
-                                {{else}}
-                                <option value="${Value}">${Text}</option>
-                                {{/if}}
-                                {{/each}}
-                            </select>
-                            @*<input type="text" name="Company.City" value="${Form.Company.City}" class="form-control ">*@
-                        </span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">企业名</label><span class="col-md-8"><input type="text" name="Company.CompanyName" value="${Form.Company.CompanyName}" class="form-control "></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">企业编号</label><span class="col-md-8"><input type="text" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">所属行业</label><span class="col-md-8"><input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control "></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 form-group">
-                        <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
-                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text" name="DepartName" value="${Form.DepartName}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="PositionName" value="${Form.PositionName}" class="form-control "></span>
-                    </div>
                 </div>
             </script>
         </div>
@@ -193,117 +298,13 @@
                 <input type="button" id="addProject" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
             @*<div class="row" style="display:none">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                    </div>
-                </div>*@
-        </div>
-        <div id="div_position">
-            <div class="row">
-                <table id="positionTb" class="table table-bordered">
-                    <tr>
-                        <th>岗位名称</th>
-                        <th>方向</th>
-                        <th>工作年限</th>
-                        <th>岗位描述</th>
-                        <th>操作</th>
-                    </tr>
-                </table>
-            </div>
-            <script id="positionC" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
-                        <input type="text" id="positionName" class="form-control ">
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">方向</label><span class="col-md-8">
-                            @*<input type="text" class="form-control ">*@
-                            <select id="positionDirection" class="form-control input-md">
-                                {{each ExtraDatas.Directions}}
-                                <option value="${Value}">${Text}</option>
-                                {{/each}}
-                            </select>
-                        </span>
-                    </div>
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">工作年限</label><span class="col-md-8">
-                            <input type="text" id="positionYears" class="form-control ">
-                        </span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">来源</label><span class="col-md-8">
-                            @*<input type="text" class="form-control ">*@
-                            <select id="positionSource" class="form-control input-md">
-                                {{each ExtraDatas.Source}}
-                                <option value="${Value}">${Text}</option>
-                                {{/each}}
-                            </select>
-                        </span>
-                    </div>
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-10 form-group">
-                        <label class="control-label col-md-3" style=" width: 12%;">岗位描述</label>
-                        <span class="col-md-8 " style="width:83%;">
-                            <textarea class="form-control" id="positionDesc" cols="250" rows="5"></textarea>
-                        </span>
-                    </div>
-                </div>
-                <input type="button" id="addPosition" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
-            </script>
-        </div>
-        <div id="div_job">
-            <div class="row">
-                <table id="jobTb" class="table table-bordered">
-                    <tr>
-                        <th>岗位名称</th>
-                        <th>开始时间</th>
-                        <th>结束时间</th>
-                        <th>操作</th>
-                    </tr>
-                </table>
-            </div>
-            <script id="jobC" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
-                         @*<input type="text" id="jobName" class="form-control ">*@
-                        <select id="positionList" class="form-control input-md"></select>
-                        </span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">招聘人数</label><span class="col-md-8">
-                            @*<input type="text" class="form-control ">*@
-                            <select id="jobCount" class="form-control input-md">
-                                {{each ExtraDatas.Count}}
-                                  <option value="${Value}">${Text}</option>
-                                {{/each}}
-                            </select>
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8 "><input type="text" id="jobBeginTime" class="form-control datetime"></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" id="jobEndTime" class="form-control datetime"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">平均薪资</label><span class="col-md-8"><input type="text" id="avgMoney" class="form-control "></span>
-                    </div>
-                    <input type="button" id="addjob" class="btn btn-default" style="width: 100px;" value="添加" />
-                </div>
-                <input type="button" id="save" class="btn btn-primary" style="width: 200px;margin-left: 40%;" value="提交就业信息调查" />
-            </script>
+            </div>*@
         </div>
     </div>
 </div>
@@ -315,7 +316,7 @@
         <td>${ProjectDesc}</td>
         <td><a href="#" class="proDelete" pname="${ProjectName}">删除</a></td>
         @*<td>${BeginTime}</td>
-        <td>${EndTime}</td>*@
+            <td>${EndTime}</td>*@
     </tr>
     {{/each}}
 </script>

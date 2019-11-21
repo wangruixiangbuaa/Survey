@@ -153,6 +153,8 @@
     <Content Include="js\noise.min.js" />
     <Content Include="js\nth.tabs.js" />
     <Content Include="js\nth.tabs.min.js" />
+    <Content Include="js\page\paging.css" />
+    <Content Include="js\page\paging.js" />
     <Content Include="js\pipeline.js" />
     <Content Include="js\shift.js" />
     <Content Include="js\step\bwizard.js" />
@@ -1325,6 +1327,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Survey\Index.cshtml" />
     <Content Include="Views\Survey\UserIndex.cshtml" />
+    <Content Include="Views\Survey\StudentIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

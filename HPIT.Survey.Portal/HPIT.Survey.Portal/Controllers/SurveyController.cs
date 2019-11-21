@@ -1,4 +1,5 @@
-﻿using HPIT.Survey.Data.Adapter;
+﻿using HPIT.Data.Core;
+using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
 using HPIT.Survey.Portal.Filters;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static HPIT.Survey.Data.Entitys.Enumerations;
 
 namespace HPIT.Survey.Portal.Controllers
 {
@@ -21,24 +23,34 @@ namespace HPIT.Survey.Portal.Controllers
 
         public ActionResult UserIndex()
         {
+            ViewBag.Type = (int)SurveyType.User;
+            return View();
+        }
+
+        public ActionResult StudentIndex()
+        {
+            ViewBag.Type = (int)SurveyType.Student;
             return View();
         }
 
 
         public DeluxeJsonResult GetSurveyByID(int id)
         {
-            //JsonResult result = new JsonResult();
-            //result.Data =  
-            //result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            //var timeConverter = new IsoDateTimeConverter { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" };
-            //return Content(JsonConvert.SerializeObject(Date, Formatting.Indented, timeConverter));
             var result = SurveyDal.Instance.QueryByID(id);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
-        public DeluxeJsonResult StartNewSurvey()
+        public DeluxeJsonResult StartUserNewSurvey()
         {
-            var result = SurveyDal.Instance.StartNewSurvey();
+            AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
+            result.Form.Type = (int)SurveyType.User;
+            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+        }
+
+        public DeluxeJsonResult StartStudentNewSurvey()
+        {
+            AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
+            result.Form.Type = (int)SurveyType.Student;
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
@@ -52,8 +64,16 @@ namespace HPIT.Survey.Portal.Controllers
 
         public DeluxeJsonResult Update(SurveyModel model)
         {
-            var result = SurveyDal.Instance.Create(model);
+            var result = SurveyDal.Instance.Update(model);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+        }
+
+        public DeluxeJsonResult QueryPageData(SearchModel<SurveyModel> search)
+        {
+            int total = 0;
+            var result = SurveyDal.Instance.GetPageData(search,out total);
+            var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
+            return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages}, "yyyy-MM-dd HH:mm");
         }
     }
 }

@@ -12,8 +12,11 @@ namespace HPIT.Survey.Data.Entitys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SurveyModel()
         {
+            //现在招聘的岗位
             ActiveJobs = new HashSet<ActiveJobs>();
+            //公司存在的岗位信息
             Position = new HashSet<Position>();
+            //项目信息
             Project = new HashSet<Project>();
         }
 
@@ -40,6 +43,8 @@ namespace HPIT.Survey.Data.Entitys
         public decimal? WagesOfReal { get; set; }
 
         public int? Status { get; set; }
+
+        public int? Type { get; set; }
 
         public DateTime? CreateTime { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HPIT.Data.Core;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
@@ -89,6 +90,17 @@ namespace HPIT.Data.Test
         public void TestMethod3()
         {
             var rsult = SurveyDal.Instance.QueryByID(11);
+            string result = JsonConvert.SerializeObject(rsult);
+        }
+
+        [TestMethod]
+        public void TestMethodPage()
+        {
+            SearchModel<SurveyModel> search = new SearchModel<SurveyModel>();
+            search.PageIndex = 0;
+            search.PageSize = 10;
+            int total = 0;
+            var rsult = SurveyDal.Instance.GetPageData(search,out total);
             string result = JsonConvert.SerializeObject(rsult);
         }
 

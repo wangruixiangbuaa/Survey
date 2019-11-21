@@ -48,5 +48,13 @@ namespace HPIT.Survey.Data.Entitys
             [Display(Name = "删除")]
             delete
         }
+
+        public enum SurveyType
+        {
+            [Display(Name = "已就业学生")]
+            User,
+            [Display(Name = "未就业学生")]
+            Student
+        }
     }
 }
