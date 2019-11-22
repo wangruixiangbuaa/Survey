@@ -1222,6 +1222,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\SkillTagController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1328,6 +1330,8 @@
     <Content Include="Views\Survey\Index.cshtml" />
     <Content Include="Views\Survey\UserIndex.cshtml" />
     <Content Include="Views\Survey\StudentIndex.cshtml" />
+    <Content Include="Views\SkillTag\Index.cshtml" />
+    <Content Include="Views\Position\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
