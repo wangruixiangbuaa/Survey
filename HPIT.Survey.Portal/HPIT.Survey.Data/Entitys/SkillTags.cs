@@ -8,14 +8,15 @@ namespace HPIT.Survey.Data.Entitys
 
     public partial class SkillTags
     {
-        public int ID { get; set; }
+        [Key]
+        public string ID { get; set; }
 
-        public int? TagID { get; set; }
+        public string TagID { get; set; }
 
-        public int? PositionID { get; set; }
+        public string PositionID { get; set; }
 
-        public virtual Position Position { get; set; }
+        //public virtual Position Position { get; set; }
 
-        public virtual SkillTag SkillTag { get; set; }
+        //public virtual SkillTag SkillTag { get; set; }
     }
 }

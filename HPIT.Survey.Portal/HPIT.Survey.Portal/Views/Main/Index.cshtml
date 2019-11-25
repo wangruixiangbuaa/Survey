@@ -207,17 +207,32 @@
                         </a>
                         <ul class="treeview-menu">
                             <li id="admin-login">
+                                <a href="#" class="menu" aurl="../Survey/UserIndex" atitle="调查管理" aid="userSurvery">
+                                    <i class="fa fa-circle-o"></i> 就业学生信息调查
+                                </a>
+                            </li>
+                            <li id="admin-login">
+                                <a href="#" class="menu" aurl="../Survey/StudentIndex" atitle="调查管理" aid="studentSurvey">
+                                    <i class="fa fa-circle-o"></i> 未就业学生信息调查
+                                </a>
+                            </li>
+                            <li id="admin-login">
                                 <a href="#" class="menu" aurl="../Survey/Index" atitle="调查管理" aid="surveylist">
                                     <i class="fa fa-circle-o"></i> 调查管理
                                 </a>
                             </li>
                             <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="公司管理" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 公司管理
+                                <a href="#" class="menu" aurl="../SkillTag/Index" atitle="技术点管理" aid="skilltaglist">
+                                    <i class="fa fa-circle-o"></i> 技术点管理
                                 </a>
                             </li>
+                            @*<li id="admin-register">
+            <a href="#" class="menu" aurl="../Jobs/Index" atitle="公司管理" aid="jobslist">
+                <i class="fa fa-circle-o"></i> 公司管理
+            </a>
+        </li>*@
                             <li id="admin-404">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="岗位管理" aid="jobslist">
+                                <a href="#" class="menu" aurl="../Position/Index" atitle="岗位管理" aid="positionlist">
                                     <i class="fa fa-circle-o"></i> 岗位管理
                                 </a>
                             </li>
@@ -266,16 +281,11 @@
                                     <i class="fa fa-circle-o"></i> 词典管理
                                 </a>
                             </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="技术点管理" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 技术点管理
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-folder"></i> <span>统计分析</span>
+                            <i class="fa fa-folder"></i> <span>数据分析</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>

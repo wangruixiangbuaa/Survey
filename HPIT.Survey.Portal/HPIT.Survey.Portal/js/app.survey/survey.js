@@ -9,6 +9,19 @@ var _ = {
         "type": "get",
         "datatype": "json"
     },
+    uuid: function() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+
+        var uuid = s.join("");
+        return uuid;
+    },
     render: function (survey) {
         $("#basic").tmpl(survey).appendTo('#div_basic');
         $("#enterprise").tmpl(survey).appendTo('#div_enterprise');
@@ -113,11 +126,9 @@ $(document).ready(function () {
     })
 
     $("#div_job").on("click", "#save", function () {
-        if (_.MasterData.Form.SurveyID == 0)
-        {
+        if (_.MasterData.Form.SurveyID == 0) {
             _.options.url = "/Survey/Save";
-        } else
-        {
+        } else {
             _.options.url = "/Survey/Update";
         }
         _.options.type = 'post';
@@ -145,7 +156,7 @@ $(document).ready(function () {
                 newPro.push(_.MasterData.Form.Project[i]);
             }
         }
-        _.MasterData.Form.Project = newPro; 
+        _.MasterData.Form.Project = newPro;
         $("#projectTb tr:gt(0)").remove();
         $("#project").tmpl(_.MasterData).appendTo('#projectTb');
     })
@@ -156,13 +167,15 @@ $(document).ready(function () {
         var source = $("#positionSource").val();
         var desc = $("#positionDesc").val();
         var years = $("#positionYears").val();
-        _.MasterData.Form.Position.push({ "PositionName": name, "PositionType": type, "Source": source, "PositionDesc": desc, "Years": years });
+        var uuid = _.uuid();
+        _.MasterData.Form.Position.push({ "PositionID": uuid, "PositionName": name, "PositionType": type, "Source": source, "PositionDesc": desc, "Years": years });
         $("#positionTb tr:gt(0)").remove();
         var select = $("#positionList");
         $("#positionList option").remove();
         for (var i = 0; i < _.MasterData.Form.Position.length; i++) {
             var text = _.MasterData.Form.Position[i].PositionName;
-            $("#positionList").append("<option value='" + text +"'>" + text + "</option>");
+            var value = _.MasterData.Form.Position[i].PositionID
+            $("#positionList").append("<option value='" + value + "'>" + text + "</option>");
         }
         $("#position").tmpl(_.MasterData).appendTo('#positionTb');
     })
@@ -182,7 +195,8 @@ $(document).ready(function () {
     })
 
     $("#wizard").on("click", "#addjob", function () {
-        var name = $("#positionList").val();
+        var pid = $("#positionList").val();
+        var text = $("#positionList").find("option:selected").text();
         var count = $("#jobCount").val();
         var begin = $("#jobBeginTime").val();
         var end = $("#jobEndTime").val();
@@ -196,7 +210,7 @@ $(document).ready(function () {
                 type = _.MasterData.Form.Position[i].PositionType;
             }
         }
-        _.MasterData.Form.ActiveJobs.push({ "JobName": name, "JobType": type, "JobDesc": desc, "StartTime": begin, "EndTime": end, "Count": count, "AvageMoney": avgMoney });
+        _.MasterData.Form.ActiveJobs.push({ "PositionID": pid, "JobName": text, "JobType": type, "JobDesc": desc, "StartTime": begin, "EndTime": end, "Count": count, "AvageMoney": avgMoney });
         $("#jobTb tr:gt(0)").remove();
         $("#job").tmpl(_.MasterData).appendTo('#jobTb');
     })

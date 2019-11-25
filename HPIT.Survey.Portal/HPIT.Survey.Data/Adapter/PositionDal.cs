@@ -1,5 +1,6 @@
 ﻿using HPIT.Data.Core;
 using HPIT.Survey.Data.Entitys;
+using HPIT.Survey.Data.ExtEntitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +19,20 @@ namespace HPIT.Survey.Data.Adapter
             this.context = new SurveyContext();
         }
 
-        public object GetPageData(SearchModel<Position> search, out int count)
+        public object GetPageData(SearchModel<PositionExt> search, out int count)
         {
-            GetPageListParameter<Position, int> parameter = new GetPageListParameter<Position, int>();
+            GetPageListParameter<PositionExt, int> parameter = new GetPageListParameter<PositionExt, int>();
             parameter.isAsc = true;
-            parameter.orderByLambda = t => t.PositionID;
+            //parameter.orderByLambda = t => t.PositionID;
             parameter.pageIndex = search.PageIndex;
             parameter.pageSize = search.PageSize;
-            parameter.whereLambda = t => t.PositionID > 0;
+            //parameter.whereLambda = t => t.PositionID > 0;
             DBBaseService baseService = new DBBaseService(SurveyContext.Instance);
-            List<Position> list = baseService.GetSimplePagedData<Position, int>(parameter, out count);
+            string sql = @"SELECT p.*,c.CompanyName ,c.CompanyType 
+                         FROM dbo.[Position] p 
+                         left join dbo.[SurveyModel] s on p.SurveyID = s.SurveyID 
+                         left join dbo.[Company] c on c.CompanyID = s.CompanyID";
+            List<PositionExt> list = baseService.GetSqlPagedData<PositionExt, int>(sql,parameter, out count);
             return list;
         }
     }

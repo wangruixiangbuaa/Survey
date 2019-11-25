@@ -20,6 +20,7 @@
         }
     </style>
     <link href="~/js/page/paging.css" rel="stylesheet" />
+    <link href="~/js/tags/tag.css" rel="stylesheet" />
 }
 <section class="content">
     <div id="loading">
@@ -57,7 +58,9 @@
             <div class="row">
                 <table id="ListTb" class="table table-bordered">
                     <tr>
-                        <th>编号</th>
+                        @*<th>编号</th>*@
+                        <th>公司名</th>
+                        <th>公司类型</th>
                         <th>岗位名称</th>
                         <th>岗位类型</th>
                         <th>来源</th>
@@ -69,12 +72,14 @@
                 <script id="dataList" type="text/x-jquery-tmpl">
                     {{each  Data}}
                     <tr>
-                        <td>${PositionID}</td>
+                        @*<td>${PositionID}</td>*@
+                        <td>${CompanyName}</td>
+                        <td>${CompanyType}</td>
                         <td>${PositionName}</td>
                         <td>${PositionType}</td>
                         <td>${Source}</td>
-                        <th>${Years}</th>
-                        <td><a href="#" class="posiDelete" pname="${TagID}">编辑</a></td>
+                        <th>${Years}年</th>
+                        <td><a href="#" type="posiEdit" pdesc="${PositionDesc}" pid="${PositionID}">编辑</a></td>
                     </tr>
                     {{/each}}
                 </script>
@@ -87,48 +92,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">车辆编辑</h3>
+                <h3 id="myModalLabel">岗位标签编辑</h3>
             </div>
             <div class="modal-body">
+                <input type="text" id="positionID" style="display:none;"/>
                 <table class="table table-bordered table-striped" style="width:570px">
                     <tr>
-                        <td>车辆编号</td>
-                        <td><input class="form-control"></td>
+                        <td>岗位描述</td>
+                        <td><textarea class="form-control" rows="10" id="desc"></textarea></td>
                     </tr>
                     <tr>
-                        <td>购买日期</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>车辆类型</td>
-                        <td>
-                            <select class="form-control selectpicker">
-                                <option>公司车辆</option>
-                                <option>合同车辆</option>
-                                <option>私人车辆</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>车辆长度</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>吨位</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>车队名称</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>加入时间</td>
-                        <td><input class="form-control datetime"></td>
+                        <td>标签</td>
+                        <td><input type="text" id="tagValue"></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-success" data-dismiss="modal" id="save" aria-hidden="true">保存</button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
@@ -138,6 +118,7 @@
     @*<script src="~/js/step/bwizard.min.js"></script>*@
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script src="~/js/page/paging.js"></script>
+    <script src="~/js/tags/tag.js"></script>
     <script type="text/javascript" charset="utf-8">
         window.onload = function () {
             //alert("页面加载中。。。");
@@ -183,7 +164,35 @@
                 })
             }
         };
+        var tag = new Tag("tagValue");
         $(document).ready(function () {
+            $("#save").click(function () {
+                var tags =  $(".tagItem span");
+                var tagObjs = [];
+                var pid = $("#positionID").val();
+                for (var i = 0; i < tags.length; i++) {
+                    var tagName = tags[i].innerText;
+                    tagObjs.push({ "PositionID": pid, "TagID": "", "TagName": tagName });
+                }
+                _.options.data = { "tags": tagObjs };
+                _.options.url = "/SkillTag/AddTags";
+                _.ajaxData(_.options, function (result) {
+                    alert(result);
+                })
+
+            })
+            tag.initView();
+            $("#ListTb").on("click", "a", function () {
+                var type = $(this).attr("type");
+                var desc = $(this).attr("pdesc");
+                var id = $(this).attr("pid");
+                $("#positionID").val(id);
+                if (type == "posiEdit") {
+                    $("#desc").val(desc);
+                    //tag.tagValue = "浙江,绍兴,上海,山东,北京,四川";
+                    $("#editModal").modal("show");
+                }
+            })
             _.ajaxData(_.options, function (result) {
                 _.render(result);
                 var setTotalCount = result.Total;

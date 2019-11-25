@@ -2,6 +2,8 @@
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Portal.Filters;
+using HPIT.Survey.Portal.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,8 @@ namespace HPIT.Survey.Portal.Controllers
 {
     public class SkillTagController : Controller
     {
+
+
         // GET: SkillTag
         public ActionResult Index()
         {
@@ -24,6 +28,21 @@ namespace HPIT.Survey.Portal.Controllers
             var result = SkillTagDal.Instance.GetPageData(search, out total);
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages }, "yyyy-MM-dd HH:mm");
+        }
+
+        [HttpPost]
+        public DeluxeJsonResult AddTags(TagsModel model)
+        {
+            string json = JsonConvert.SerializeObject(model);
+            var result = SkillTagDal.Instance.AddTags(model.tags);
+            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+        }
+
+        [HttpPost]
+        public DeluxeJsonResult UpdateTag(SkillTag tag)
+        {
+            var result = SkillTagDal.Instance.UpdateTag(tag);
+            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
     }
 }

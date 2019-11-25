@@ -17,7 +17,7 @@ namespace HPIT.Survey.Data.Entitys
         }
 
         [Key]
-        public int TagID { get; set; }
+        public string TagID { get; set; }
 
         [StringLength(20)]
         public string TagName { get; set; }
@@ -42,5 +42,8 @@ namespace HPIT.Survey.Data.Entitys
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentTags> StudentTags { get; set; }
+
+        [NotMapped]
+        public string PositionID { get; set; }
     }
 }

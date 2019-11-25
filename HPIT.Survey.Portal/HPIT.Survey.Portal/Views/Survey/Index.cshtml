@@ -83,7 +83,11 @@
                             <td>${PositionName}</td>
                             <td>${CompanyNo}</td>
                             <td>${CreateTime}</td>
-                            <td><a href="#" class="posiDelete" pname="${SurveyID}">编辑</a></td>
+                            {{if Type==0}}
+                            <td><a href="/Survey/UserIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">编辑</a></td>
+                            {{else}}
+                            <td><a href="/Survey/StudentIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">编辑</a></td>
+                            {{/if}}
                         </tr>
                         {{/each}}
                     </script>

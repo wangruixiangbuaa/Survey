@@ -15,7 +15,7 @@ namespace HPIT.Survey.Data.Entitys
             SkillTags = new HashSet<SkillTags>();
         }
 
-        public int PositionID { get; set; }
+        public string PositionID { get; set; }
 
         public int? SurveyID { get; set; }
 

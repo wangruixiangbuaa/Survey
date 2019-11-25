@@ -23,19 +23,19 @@ namespace HPIT.Data.Test
             survey.WagesOfReal = 333;
             survey.SurveyTickNumber = "123456";
             List<Position> posts = new List<Position>();
-            posts.Add(new Position() {  PositionType = "NET"  , PositionDesc = ".NET工程师" ,  PositionName = "NET工程师"});
-            posts.Add(new Position() { PositionType = "NET2", PositionDesc = ".NET工程师2", PositionName = "NET工程师2" });
+            posts.Add(new Position() { PositionID=Guid.NewGuid().ToString(),  PositionType = "NET初级工程师"  , PositionDesc = ".NET工程师" ,  PositionName = "NET工程师"});
+            posts.Add(new Position() { PositionID=Guid.NewGuid().ToString(), PositionType = "NET高级工程师", PositionDesc = ".NET工程师2", PositionName = "NET工程师2" });
             survey.Position = posts;
             List<ActiveJobs> activeJobs = new List<ActiveJobs>();
-            activeJobs.Add(new ActiveJobs() { EndTime = DateTime.Now, StartTime = DateTime.Now, JobDesc = "2net 工程师", JobName = "2工程师", JobType = "2NET" });
-            activeJobs.Add(new ActiveJobs() {  EndTime = DateTime.Now, StartTime= DateTime.Now, JobDesc = "net 工程师" , JobName="工程师", JobType="NET"});
+            activeJobs.Add(new ActiveJobs() { PositionID=posts[0].PositionID, EndTime = DateTime.Now, StartTime = DateTime.Now, JobDesc = "NET初级工程师", JobName = "2工程师", JobType = "2NET" });
+            activeJobs.Add(new ActiveJobs() { PositionID = posts[1].PositionID, EndTime = DateTime.Now, StartTime= DateTime.Now, JobDesc = "NET高级工程师", JobName="工程师", JobType="NET"});
             survey.ActiveJobs = activeJobs;
             List<Project> projects = new List<Project>();
             projects.Add(new Project() { BeginTime = DateTime.Now, EndTime = DateTime.Now, ProjectDesc ="第一个项目", ProjectName ="物流管理系统" , ProjectType ="物流", ProjectTypeID = 1 });
             projects.Add(new Project() { BeginTime = DateTime.Now, EndTime = DateTime.Now, ProjectDesc = "2第一个项目", ProjectName = "物流管理系统2", ProjectType = "物流2", ProjectTypeID = 1 });
             survey.Project = projects;
             survey.StuNo = 1;
-            survey.CompanyID = 1;
+            //survey.CompanyID = 1;
             survey.Year = 2019;
             survey.CreateTime = DateTime.Now;
             survey.Direction = "Net";
@@ -57,7 +57,6 @@ namespace HPIT.Data.Test
         [TestMethod]
         public void TestMethod2()
         {
-
             Student stu = new Student();
             stu.Year = 2019;
             stu.StuName = "王瑞祥";
@@ -102,6 +101,31 @@ namespace HPIT.Data.Test
             int total = 0;
             var rsult = SurveyDal.Instance.GetPageData(search,out total);
             string result = JsonConvert.SerializeObject(rsult);
+        }
+
+        [TestMethod]
+        public void TestMethodPositionPage()
+        {
+            SearchModel<PositionExt> search = new SearchModel<PositionExt>();
+            search.PageIndex = 0;
+            search.PageSize = 10;
+            int total = 0;
+            var rsult = PositionDal.Instance.GetPageData(search, out total);
+            string result = JsonConvert.SerializeObject(rsult);
+        }
+
+
+        [TestMethod]
+        public void TestMethodPositionAdd()
+        {
+
+            Position stu = new Position();
+            stu.PositionName = "测试工程师";
+            stu.PositionType = "测试";
+            SurveyContext context = new SurveyContext();
+            var result = context.Position.Add(stu);
+            context.SaveChanges();
+            string json = JsonConvert.SerializeObject(result);
         }
 
         [TestMethod]

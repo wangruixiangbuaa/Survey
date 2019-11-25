@@ -12,7 +12,7 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? StuNo { get; set; }
 
-        public int? TagID { get; set; }
+        public string TagID { get; set; }
 
         public int? SelfPoint { get; set; }
 

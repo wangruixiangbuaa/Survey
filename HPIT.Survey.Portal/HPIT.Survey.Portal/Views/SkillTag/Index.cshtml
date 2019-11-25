@@ -57,7 +57,7 @@
             <div class="row">
                 <table id="ListTb" class="table table-bordered">
                     <tr>
-                        <th>标签编号</th>
+                        @*<th>标签编号</th>*@
                         <th>标签名</th>
                         <th>标签类型</th>
                         <th>课程名称</th>
@@ -70,13 +70,13 @@
                 <script id="dataList" type="text/x-jquery-tmpl">
                     {{each  Data}}
                     <tr>
-                        <td>${TagID}</td>
+                        @*<td>${TagID}</td>*@
                         <td>${TagName}</td>
                         <td>${TagType}</td>
                         <td>${CourseName}</td>
                         <th>${Direction}</th>
                         <td>${Creatime}</td>
-                        <td><a href="#" class="posiDelete" pname="${TagID}">编辑</a></td>
+                        <td><a href="#" class="tagDelete" tid="${TagID}" tname="${TagName}" ttype="${TagType}" tcourseName="${CourseName}" tdirction="${Direction}">编辑</a></td>
                     </tr>
                     {{/each}}
                 </script>
@@ -89,55 +89,44 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">车辆编辑</h3>
+                <h3 id="myModalLabel">标签编辑</h3>
             </div>
             <div class="modal-body">
+                <input class="form-control" name="tagid" id="tagid" style="display:none;">
                 <table class="table table-bordered table-striped" style="width:570px">
                     <tr>
-                        <td>车辆编号</td>
-                        <td><input class="form-control"></td>
+                        <td>标签名</td>
+                        <td><input class="form-control" name="tagName" id="tagName"></td>
                     </tr>
                     <tr>
-                        <td>购买日期</td>
-                        <td><input class="form-control"></td>
+                        <td>标签类型</td>
+                        <td><input class="form-control" name="tagType" id="tagType"></td>
                     </tr>
                     <tr>
-                        <td>车辆类型</td>
+                        <td>课程名称</td>
                         <td>
-                            <select class="form-control selectpicker">
-                                <option>公司车辆</option>
-                                <option>合同车辆</option>
-                                <option>私人车辆</option>
-                            </select>
+                            <input class="form-control" name="CourseName" id="CourseName">
+                            @*<select class="form-control selectpicker">
+                        <option>NET</option>
+                        <option>JAVA</option>
+                        <option>HTML</option>
+                    </select>*@
                         </td>
                     </tr>
                     <tr>
-                        <td>车辆长度</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>吨位</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>车队名称</td>
-                        <td><input class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>加入时间</td>
-                        <td><input class="form-control datetime"></td>
+                        <td>方向</td>
+                        <td><input class="form-control" name="direction" id="direction"></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-success" id="save" data-dismiss="modal" aria-hidden="true">保存</button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
     </div>
 </div>
 @section scripts{
-    @*<script src="~/js/step/bwizard.min.js"></script>*@
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script src="~/js/page/paging.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -186,6 +175,35 @@
             }
         };
         $(document).ready(function () {
+            $("#ListTb").on("click", "a", function () {
+                var tid = $(this).attr("tid");
+                var tname = $(this).attr("tname");
+                var ttype = $(this).attr("ttype");
+                var tcourseName = $(this).attr("tcourseName");
+                var tdirection = $(this).attr("tdirction");
+
+                $("#tagid").val(tid);
+                $("#tagName").val(tname);
+                $("#tagType").val(ttype);
+                $("#CourseName").val(tcourseName);
+                $("#direction").val(tdirection);
+                $("#editModal").modal("show");
+            })
+
+            $("#save").click(function () {
+                var tagObj = {
+                    "TagID": $("#tagid").val(),
+                    "TagName": $("#tagName").val(),
+                    "TagType": $("#tagType").val(),
+                    "CourseName": $("#CourseName").val(),
+                    "Direction": $("#direction").val()
+                };
+                _.options.data = tagObj;
+                _.options.url = "/SkillTag/UpdateTag";
+                _.ajaxData(_.options, function (result) {
+                    window.location.reload();
+                })
+            })
             _.ajaxData(_.options, function (result) {
                 _.render(result);
                 var setTotalCount = result.Total;

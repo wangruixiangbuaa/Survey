@@ -74,6 +74,7 @@
     <Compile Include="Entitys\UserRoles.cs" />
     <Compile Include="Entitys\Users.cs" />
     <Compile Include="ExtEntitys\AbstractFormModel.cs" />
+    <Compile Include="ExtEntitys\PositionExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

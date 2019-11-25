@@ -12,6 +12,7 @@ namespace HPIT.Survey.Data.Entitys
         public SurveyContext()
             : base("name=SurveyContext")
         {
+            
         }
 
         public virtual DbSet<ActiveJobs> ActiveJobs { get; set; }

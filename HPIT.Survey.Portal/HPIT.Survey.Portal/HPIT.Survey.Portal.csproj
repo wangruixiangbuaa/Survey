@@ -149,6 +149,7 @@
     <Content Include="js\coalesce.js" />
     <Content Include="js\demo.js" />
     <Content Include="js\echarts\main.min.js" />
+    <Content Include="js\img\x.png" />
     <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\noise.min.js" />
     <Content Include="js\nth.tabs.js" />
@@ -160,6 +161,8 @@
     <Content Include="js\step\bwizard.js" />
     <Content Include="js\step\bwizard.min.js" />
     <Content Include="js\swirl.js" />
+    <Content Include="js\tags\tag.css" />
+    <Content Include="js\tags\tag.js" />
     <Content Include="js\tmpl\jquery.tmpl.js" />
     <Content Include="js\tmpl\jquery.tmpl.min.js" />
     <Content Include="js\tmpl\jquery.tmplPlus.js" />
@@ -1228,6 +1231,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TagsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1342,7 +1346,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HPIT.Data.Core\HPIT.Data.Core.csproj">

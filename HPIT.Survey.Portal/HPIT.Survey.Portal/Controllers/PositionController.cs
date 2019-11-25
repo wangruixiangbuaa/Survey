@@ -1,6 +1,7 @@
 ﻿using HPIT.Data.Core;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
+using HPIT.Survey.Data.ExtEntitys;
 using HPIT.Survey.Portal.Filters;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace HPIT.Survey.Portal.Controllers
             return View();
         }
 
-        public DeluxeJsonResult QueryPageData(SearchModel<Position> search)
+        public DeluxeJsonResult QueryPageData(SearchModel<PositionExt> search)
         {
             int total = 0;
             var result = PositionDal.Instance.GetPageData(search, out total);

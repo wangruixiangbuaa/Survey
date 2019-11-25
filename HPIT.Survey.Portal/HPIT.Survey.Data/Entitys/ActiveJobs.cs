@@ -26,7 +26,7 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? SurveyID { get; set; }
 
-        public int? PositionID { get; set; }
+        public string PositionID { get; set; }
 
 
         public int? Count { get; set; }

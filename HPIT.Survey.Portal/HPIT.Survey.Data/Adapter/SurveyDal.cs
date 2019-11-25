@@ -22,6 +22,7 @@ namespace HPIT.Survey.Data.Adapter
         public int Create(SurveyModel survey)
         {
             SurveyContext context = new SurveyContext();
+            //survey.CreateTime = DateTime.Now;
             context.SurveyModel.Add(survey);
             return context.SaveChanges();
         }
