@@ -74,6 +74,7 @@ namespace HPIT.Data.Core
         {
             count = db.Database.SqlQuery<T>(sql).Count();
             DbRawSqlQuery<T> list = db.Database.SqlQuery<T>(sql);
+            
             if (parameter.pageIndex <= 0)
             {
                 parameter.pageIndex = 1;

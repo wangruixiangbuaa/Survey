@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -69,13 +72,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HPIT.Data.Core\HPIT.Data.Core.csproj">
       <Project>{317ce2ff-4a10-43b8-bc0f-6861c20d6cfa}</Project>
       <Name>HPIT.Data.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HPIT.Evalute.Data\HPIT.Evalute.Data.csproj">
+      <Project>{cb3b9317-61d2-48d6-a338-eefa84b55bad}</Project>
+      <Name>HPIT.Evalute.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\HPIT.Survey.Data\HPIT.Survey.Data.csproj">
       <Project>{683b8bd8-c65f-4bf9-a284-9de6a6bdfb80}</Project>

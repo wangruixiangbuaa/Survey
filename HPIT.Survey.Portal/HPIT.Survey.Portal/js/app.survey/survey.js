@@ -72,10 +72,11 @@ $(document).ready(function () {
         _.options.data = { "id": id };
     } else {
         var type = $("#main_div").attr("stype");
+        var stuNo = _.getQueryString("stuNo");
         if (type == 0) {
             _.options.url = "/Survey/StartUserNewSurvey";
         } else {
-            _.options.url = "/Survey/StartStudentNewSurvey";
+            _.options.url = "/Survey/StartStudentNewSurvey?stuNo=" + stuNo;
         }
     }
     _.ajaxData(_.options, function (result) {
@@ -88,6 +89,26 @@ $(document).ready(function () {
         var name = $(this).attr("name");
         if (name == null || name == undefined) {
             return false;
+        }
+        //学生姓名发生变化的时候
+        if (name == "StuName") {
+            var nvalue = $(this).val();
+            _.options.url = "/Survey/QueryStudentInfo?name=" + nvalue +"&className="+'';
+            _.options.data = {};
+            _.ajaxData(_.options, function (result) {
+                //console.log(result);
+                if (result.State == 'OK') {
+                    _.MasterData.Form.ProjectName = result.Data.pName;
+                    _.MasterData.Form.School = result.Data.GraduateSchool;
+                    _.MasterData.Form.Batch = result.Data.bName;
+                    _.MasterData.Form.Phone = result.Data.Mobile;
+                    _.MasterData.Form.Year = result.Data.bYear;
+                    _.MasterData.Form.Direction = result.Data.mName;
+                    $('#step1').html('');
+                    $("#basic").tmpl(_.MasterData).appendTo('#step1');
+                };
+                
+            })
         }
         if (name.split('.').length == 1) {
             _.MasterData.Form[name] = $(this).val();

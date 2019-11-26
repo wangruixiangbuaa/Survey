@@ -36,61 +36,62 @@
         </ol>
 
         <div id="div_basic">
-            <script id="basic" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">姓名</label><span class="col-md-8"><input type="text" name="StuName" value="${Form.StuName}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">项目部</label><span class="col-md-8"><input type="text" name="ProjectName" value="${Form.ProjectName}" class="form-control "></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">年份</label><span class="col-md-8">
-                            <select name="Year" class="form-control input-md">
-                                {{each ExtraDatas.Years}}
-                                {{if Form.Year == Value}}
-                                <option selected="selected" value="${Value}">${Text}</option>
-                                {{else}}
-                                <option value="${Value}">${Text}</option>
-                                {{/if}}
-                                {{/each}}
-                            </select>
-                            @*<input type="text" name="Year" value="${Form.Year}" class="form-control ">*@
-                        </span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">方向</label><span class="col-md-8">
-                            <select name="Direction" class="form-control input-md">
-                                {{each ExtraDatas.Directions}}
-                                {{if Form.Direction == Value}}
-                                <option selected="selected" value="${Value}">${Text}</option>
-                                {{else}}
-                                <option value="${Value}">${Text}</option>
-                                {{/if}}
-                                {{/each}}
-                            </select>
-                            @*<input type="text" name="Direction" value="${Form.Direction}" class="form-control ">*@
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">学校</label><span class="col-md-8"><input type="text" name="School" value="${Form.School}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">批次</label><span class="col-md-8"><input type="text" name="Batch" value="${Form.Batch}" class="form-control "></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">手机号</label><span class="col-md-8"><input type="text" name="Phone" value="${Form.Phone}" class="form-control "></span>
-                    </div>
 
-                </div>
-            </script>
         </div>
+        <script id="basic" type="text/x-jquery-tmpl">
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">姓名</label><span class="col-md-8"><input type="text" name="StuName" value="${Form.StuName}" class="form-control "></span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">项目部</label><span class="col-md-8"><input type="text" name="ProjectName" value="${Form.ProjectName}" class="form-control "></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">年份</label><span class="col-md-8">
+                        <select name="Year" class="form-control input-md">
+                            {{each ExtraDatas.Years}}
+                            {{if Form.Year == Value}}
+                            <option selected="selected" value="${Value}">${Text}</option>
+                            {{else}}
+                            <option value="${Value}">${Text}</option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                        @*<input type="text" name="Year" value="${Form.Year}" class="form-control ">*@
+                    </span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">方向</label><span class="col-md-8">
+                        <select name="Direction" class="form-control input-md">
+                            {{each ExtraDatas.Directions}}
+                            {{if Form.Direction == Value}}
+                            <option selected="selected" value="${Value}">${Text}</option>
+                            {{else}}
+                            <option value="${Value}">${Text}</option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                        @*<input type="text" name="Direction" value="${Form.Direction}" class="form-control ">*@
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">学校</label><span class="col-md-8"><input type="text" name="School" value="${Form.School}" class="form-control "></span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">批次</label><span class="col-md-8"><input type="text" name="Batch" value="${Form.Batch}" class="form-control "></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">手机号</label><span class="col-md-8"><input type="text" name="Phone" value="${Form.Phone}" class="form-control "></span>
+                </div>
+
+            </div>
+        </script>
         <div id="div_enterprise">
             <script id="enterprise" type="text/x-jquery-tmpl">
                 <div class="row">
@@ -193,13 +194,13 @@
                 <input type="button" id="addProject" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
             @*<div class="row" style="display:none">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                    </div>
-                </div>*@
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                </div>
+            </div>*@
         </div>
         <div id="div_position">
             <div class="row">
@@ -217,7 +218,7 @@
                 <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
-                        <input type="text" id="positionName" class="form-control ">
+                            <input type="text" id="positionName" class="form-control ">
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">方向</label><span class="col-md-8">
@@ -273,8 +274,8 @@
                 <div class="row">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">岗位名称</label><span class="col-md-8">
-                         @*<input type="text" id="jobName" class="form-control ">*@
-                        <select id="positionList" class="form-control input-md"></select>
+                            @*<input type="text" id="jobName" class="form-control ">*@
+                            <select id="positionList" class="form-control input-md"></select>
                         </span>
                     </div>
                     <div class="col-md-5 form-group">
@@ -282,7 +283,7 @@
                             @*<input type="text" class="form-control ">*@
                             <select id="jobCount" class="form-control input-md">
                                 {{each ExtraDatas.Count}}
-                                  <option value="${Value}">${Text}</option>
+                                <option value="${Value}">${Text}</option>
                                 {{/each}}
                             </select>
                         </span>

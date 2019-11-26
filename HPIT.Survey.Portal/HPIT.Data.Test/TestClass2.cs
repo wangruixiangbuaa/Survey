@@ -1,4 +1,5 @@
-﻿using HPIT.Survey.Data.Adapter;
+﻿using HPIT.Evalute.Data;
+using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -38,6 +39,28 @@ namespace HPIT.Data.Test
             //context.SkillTags.Add(new SkillTags() { ID = Guid.NewGuid(), TagID = 1, PositionID = 29 });
             context.SaveChanges();
             string json = JsonConvert.SerializeObject(1);
+        }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+
+            //context.SkillTags.Add(new SkillTags() { ID = Guid.NewGuid(), TagID = 2, PositionID = 29 });
+            //context.SkillTags.Add(new SkillTags() { ID = Guid.NewGuid(), TagID = 1, PositionID = 29 });
+            EvaluteDal dal = new EvaluteDal();
+            var result = dal.GetMatchStudent("谢吉龙", "");
+            string json = JsonConvert.SerializeObject(result);
+        }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+
+            //context.SkillTags.Add(new SkillTags() { ID = Guid.NewGuid(), TagID = 2, PositionID = 29 });
+            //context.SkillTags.Add(new SkillTags() { ID = Guid.NewGuid(), TagID = 1, PositionID = 29 });
+            EvaluteDal dal = new EvaluteDal();
+            var result = dal.GetMatchStudentByNo("02020160267");
+            string json = JsonConvert.SerializeObject(result);
         }
 
 

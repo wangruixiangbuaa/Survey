@@ -1,4 +1,6 @@
 ﻿using HPIT.Data.Core;
+using HPIT.Evalute.Data;
+using HPIT.Evalute.Data.Model;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
@@ -47,10 +49,22 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
-        public DeluxeJsonResult StartStudentNewSurvey()
+        public DeluxeJsonResult StartStudentNewSurvey(string stuNo)
         {
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
             result.Form.Type = (int)SurveyType.Student;
+            //根据学生编号创建新的
+            List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudentByNo(stuNo);
+            if (matchList.Count == 1)
+            {
+                EvalStudent match = matchList.FirstOrDefault();
+                result.Form.ProjectName = match.pName;
+                result.Form.Phone = match.Mobile;
+                result.Form.Direction = match.mName;
+                result.Form.Year = match.bYear;
+                result.Form.School = match.GraduateSchool;
+                result.Form.Batch = match.bName;
+            }
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
@@ -75,5 +89,20 @@ namespace HPIT.Survey.Portal.Controllers
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages}, "yyyy-MM-dd HH:mm");
         }
+
+        public DeluxeJsonResult QueryStudentInfo(string name,string className)
+        {
+            List<EvalStudent> result = EvaluteDal.Instance.GetMatchStudent(name,className);
+            if (result.FirstOrDefault() == null)
+            {
+                return new DeluxeJsonResult(new { Data = result, State = "Fail" }, "yyyy-MM-dd HH:mm");
+            }
+            else
+            {
+                return new DeluxeJsonResult(new { Data = result.FirstOrDefault(), State = "OK" }, "yyyy-MM-dd HH:mm");
+            }
+            
+        }
+
     }
 }
