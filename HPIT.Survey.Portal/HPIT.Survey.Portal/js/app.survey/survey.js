@@ -155,7 +155,20 @@ $(document).ready(function () {
         _.options.type = 'post';
         _.options.data = _.MasterData.Form;
         _.ajaxData(_.options, function (result) {
-            alert("成功!");
+            //alert("反馈成功!");
+            //swal("", "欢迎您的反馈！", "success");
+            swal({
+                title: "欢迎您的反馈！",
+                showConfirmButton: false,
+                type:"success",
+                showCancelButton: false,
+                timer: 2000
+            })
+            setTimeout(function () {
+                window.close();
+                //5秒后实现的方法写在这个方法里面
+
+            }, 2 * 1000)
         });
     })
 

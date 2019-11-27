@@ -30,5 +30,11 @@ namespace HPIT.Survey.Data.ExtEntitys
         public string CompanyName { get; set; }
 
         public string CompanyType { get; set; }
+
+        [NotMapped]
+        public List<SkillTag> Tags { get; set; }
+
+        [NotMapped]
+        public string TagsJsonStr { get; set; }
     }
 }

@@ -35,5 +35,9 @@ namespace HPIT.Evalute.Data.Model
         public int bYear { get; set; }
 
         public string mName { get; set; }
+
+        public string PRM { get; set; }
+
+        public string PEM { get; set; }
     }
 }

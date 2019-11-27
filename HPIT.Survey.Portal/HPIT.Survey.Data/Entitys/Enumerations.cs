@@ -38,7 +38,9 @@ namespace HPIT.Survey.Data.Entitys
             [Display(Name = "未通过")]
             fail,
             [Display(Name = "作废")]
-            cancel
+            cancel,
+            [Display(Name = "完成")]
+            complete
         }
 
         public enum DataStatus

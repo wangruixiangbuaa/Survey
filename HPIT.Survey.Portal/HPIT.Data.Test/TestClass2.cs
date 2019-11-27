@@ -1,4 +1,5 @@
 ﻿using HPIT.Evalute.Data;
+using HPIT.StudentEvaluate.Core;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -41,6 +42,14 @@ namespace HPIT.Data.Test
             string json = JsonConvert.SerializeObject(1);
         }
 
+
+        [TestMethod]
+        public void TestMethodPTags()
+        {
+            var result = PositionDal.Instance.GetTagsByPositionID("e8337a42-0d06-4fee-8332-ab227caee5fc");
+            string json = JsonConvert.SerializeObject(result);
+        }
+
         [TestMethod]
         public void TestMethod4()
         {
@@ -61,6 +70,43 @@ namespace HPIT.Data.Test
             EvaluteDal dal = new EvaluteDal();
             var result = dal.GetMatchStudentByNo("02020160267");
             string json = JsonConvert.SerializeObject(result);
+        }
+
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            var json = SurveyDal.Instance.Delete(1058);
+        }
+
+        [TestMethod]
+        public void TestMethodLogin()
+        {
+            EvaluteDal dal = new EvaluteDal();
+            string encry = Md5Encrypt.Md5("123456");
+            var json = dal.LoginMember("诸葛亮", encry);
+        }
+
+
+        [TestMethod]
+        public void TestMethod7()
+        {
+            AuditLog log = new AuditLog();
+            log.AuditName = "王瑞祥";
+            log.AuditTime = DateTime.Now;
+            log.RoleName = "项目经理";
+            log.SurveyID = 55;
+            log.AuditState = 1;
+            SurveyContext context = new SurveyContext();
+            context.AuditLog.Add(log);
+            var result = context.SaveChanges();
+        }
+
+        [TestMethod]
+        public void TestMethod8()
+        {
+            SurveyContext context = new SurveyContext();
+            var result = context.AuditLog.Where(r => r.ID == 1).FirstOrDefault();
         }
 
 

@@ -45,7 +45,7 @@ namespace HPIT.Survey.Data.Adapter
             var result = 0;
             foreach (var tag in tags)
             {
-                var match = this.context.SkillTag.Where(r => r.TagName == tag.TagName).FirstOrDefault();
+                SkillTag match = this.context.SkillTag.Where(r => r.TagName == tag.TagName).FirstOrDefault();
                 if (match == null)
                 {
                     tag.TagID = Guid.NewGuid().ToString();
@@ -54,10 +54,14 @@ namespace HPIT.Survey.Data.Adapter
                 }
                 else
                 {
-                    this.context.SkillTags.Add(new SkillTags() { PositionID = tag.PositionID, TagID = match.TagID.ToString(), ID = Guid.NewGuid().ToString() });
+                    SkillTags tagMatch = this.context.SkillTags.Where(r => r.TagID == match.TagID && r.PositionID ==tag.PositionID).FirstOrDefault();
+                    if (tagMatch == null)
+                    {
+                        this.context.SkillTags.Add(new SkillTags() { PositionID = tag.PositionID, TagID = match.TagID, ID = Guid.NewGuid().ToString() });
+                    }
                 }
-                result = this.context.SaveChanges();
             }
+            result = this.context.SaveChanges();
             return result;
         }
     }

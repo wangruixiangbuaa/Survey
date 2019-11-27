@@ -69,6 +69,10 @@ namespace HPIT.Survey.Data.Entitys
 
         public string PositionName { get; set; }
 
+        public string PEM { get; set; }
+
+        public string PRM { get; set; }
+
         public string CorworkPhone { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

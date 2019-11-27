@@ -32,6 +32,9 @@ namespace HPIT.Survey.Data.Entitys
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Department> Department { get; set; }
 
+
+        public virtual DbSet<AuditLog> AuditLog { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>()

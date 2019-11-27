@@ -79,7 +79,7 @@
                         <td>${PositionType}</td>
                         <td>${Source}</td>
                         <th>${Years}年</th>
-                        <td><a href="#" type="posiEdit" pdesc="${PositionDesc}" pid="${PositionID}">编辑</a></td>
+                        <td><a href="#" type="posiEdit" tags="${TagsJsonStr}"  pdesc="${PositionDesc}" pid="${PositionID}">编辑</a></td>
                     </tr>
                     {{/each}}
                 </script>
@@ -100,6 +100,10 @@
                     <tr>
                         <td>岗位描述</td>
                         <td><textarea class="form-control" rows="10" id="desc"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>已存在的标签</td>
+                        <td><input type="text" id="existtagValue"></td>
                     </tr>
                     <tr>
                         <td>标签</td>
@@ -165,6 +169,7 @@
             }
         };
         var tag = new Tag("tagValue");
+        var tag2 = new Tag("existtagValue");
         $(document).ready(function () {
             $("#save").click(function () {
                 var tags =  $(".tagItem span");
@@ -181,10 +186,20 @@
                 })
 
             })
-            tag.initView();
+            
             $("#ListTb").on("click", "a", function () {
                 var type = $(this).attr("type");
                 var desc = $(this).attr("pdesc");
+                var existTags = $(this).attr("tags");
+                var existObj = [];
+                if (existTags != null && existTags != '') {
+                    existObj = JSON.parse(existTags);
+                }
+                $(".tagsContaine").remove();
+                tag2.tagValue = existObj.join(',');
+                tag2.isDisable = true;
+                tag2.initView();
+                tag.initView();
                 var id = $(this).attr("pid");
                 $("#positionID").val(id);
                 if (type == "posiEdit") {

@@ -19,18 +19,87 @@ namespace HPIT.Survey.Data.Adapter
             this.context = new SurveyContext();
         }
 
+        /// <summary>
+        /// 创建调查问卷
+        /// </summary>
+        /// <param name="survey"></param>
+        /// <returns></returns>
         public int Create(SurveyModel survey)
         {
             SurveyContext context = new SurveyContext();
-            //survey.CreateTime = DateTime.Now;
+            survey.CreateTime = DateTime.Now;
             context.SurveyModel.Add(survey);
+            //遍历所有的职位，生成标签
+            List<SkillTag> allTags = context.SkillTag.ToList();
+            List<SkillTags> matchTags = new List<SkillTags>();
+            try
+            {
+                foreach (Position position in survey.Position)
+                {
+                    foreach (SkillTag tag in allTags)
+                    {
+                        if (!string.IsNullOrEmpty(position.PositionDesc))
+                        {
+                            string desc = position.PositionDesc.ToLower().Trim();
+                            string tagLower = tag.TagName.ToLower();
+                            if (desc.Contains(tagLower))
+                            {
+                                SkillTags matchTag = new SkillTags();
+                                matchTag.ID = Guid.NewGuid().ToString();
+                                matchTag.PositionID = position.PositionID;
+                                matchTag.TagID = tag.TagID;
+                                matchTags.Add(matchTag);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            //保存的时候进行验证
+            context.Configuration.ValidateOnSaveEnabled = false;
+            //自动添加匹配的职位标签
+            context.SkillTags.AddRange(matchTags);
             return context.SaveChanges();
         }
 
+        /// <summary>
+        /// 更新调查问卷
+        /// </summary>
+        /// <param name="survey"></param>
+        /// <returns></returns>
         public int Update(SurveyModel survey)
         {
+            survey.CreateTime = DateTime.Now;
             context.Entry(survey).State = EntityState.Modified;
             return context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// 根据id删除调查问卷 软删除
+        /// </summary>
+        /// <param name="surveyID"></param>
+        /// <returns></returns>
+        public int Delete(int surveyID)
+        {
+            int result = 0;
+            using (var context = new SurveyContext())
+            {
+               result = context.Database.ExecuteSqlCommand(
+                  "UPDATE dbo.SurveyModel SET Status = 1 where SurveyID=" + surveyID);
+            }
+            return result;
+        }
+
+        public void GetList()
+        {
+            //using (var context = new MyDBContext())
+            //{
+            //    var postTitles = context.Database.SqlQuery<string>("SELECT Title FROM dbo.Posts").ToList();
+            //}
         }
 
         public AbstractFormModel<SurveyModel> StartNewSurvey()
@@ -71,7 +140,7 @@ namespace HPIT.Survey.Data.Adapter
             parameter.orderByLambda = t => t.SurveyID;
             parameter.pageIndex = search.PageIndex;
             parameter.pageSize = search.PageSize;
-            parameter.whereLambda = t => t.SurveyID > 0;
+            parameter.whereLambda = t => t.Status != 1;
             DBBaseService baseService = new DBBaseService(SurveyContext.Instance);
             List<SurveyModel> list = baseService.GetSimplePagedData<SurveyModel, int>(parameter, out count);
             return list;
