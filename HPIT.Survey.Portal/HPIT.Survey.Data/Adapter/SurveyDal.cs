@@ -110,14 +110,32 @@ namespace HPIT.Survey.Data.Adapter
             model.Form = new SurveyModel();
             model.Form.Company = new Company();
             model.Form.Student = new Student();
-            model.ExtraDatas["Directions"] = context.Dictionary.Where(r => r.Type == "方向").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Citys"] = context.Dictionary.Where(r => r.Type == "城市").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["ProjectTypes"] = context.Dictionary.Where(r => r.Type == "项目类型").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Source"] = context.Dictionary.Where(r => r.Type == "来源").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Industrys"] = context.Dictionary.Where(r => r.Type == "行业").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Count"] = CommonDal.Instance.GetCount();
-            model.ExtraDatas["Years"] = CommonDal.Instance.GetYears();
+            model.ExtraDatas = GetExtraDatas();
             return model;
+        }
+
+        public Dictionary<string, object> GetExtraDatas()
+        {
+
+            Dictionary<string, object> ExtraDatas = new Dictionary<string, object>();
+            List<GeneralSelectItem> directions = context.Dictionary.Where(r => r.Type == "方向").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            directions.Insert(0,new GeneralSelectItem() { Text="请选择",Value=""});
+            ExtraDatas["Directions"] = directions;
+            List<GeneralSelectItem> citys = context.Dictionary.Where(r => r.Type == "城市").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            citys.Insert(0,new GeneralSelectItem() { Text = "请选择", Value="" });
+            ExtraDatas["Citys"] = citys;
+            List<GeneralSelectItem> projectTypes = context.Dictionary.Where(r => r.Type == "项目类型").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            projectTypes.Insert(0,new GeneralSelectItem() { Text="请选择" ,Value=""});
+            ExtraDatas["ProjectTypes"] = projectTypes;
+            List<GeneralSelectItem> sources = context.Dictionary.Where(r => r.Type == "来源").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            sources.Insert(0,new GeneralSelectItem() { Text = "请选择" , Value=""});
+            ExtraDatas["Source"] = sources;
+            List<GeneralSelectItem> industrys = context.Dictionary.Where(r => r.Type == "行业").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            industrys.Insert(0,new GeneralSelectItem() { Text="请选择",Value=""});
+            ExtraDatas["Industrys"] = industrys;
+            ExtraDatas["Count"] = CommonDal.Instance.GetCount();
+            ExtraDatas["Years"] = CommonDal.Instance.GetYears();
+            return ExtraDatas;
         }
 
         public AbstractFormModel<SurveyModel> QueryByID(int id)
@@ -125,13 +143,7 @@ namespace HPIT.Survey.Data.Adapter
             var survey = context.SurveyModel.Where(r => r.SurveyID == id).FirstOrDefault();
             AbstractFormModel<SurveyModel> model = new AbstractFormModel<SurveyModel>();
             model.Form = survey;
-            model.ExtraDatas["Directions"] = context.Dictionary.Where(r => r.Type == "方向").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Citys"] = context.Dictionary.Where(r=>r.Type=="城市").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["ProjectTypes"] = context.Dictionary.Where(r => r.Type == "项目类型").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Count"] = CommonDal.Instance.GetCount();
-            model.ExtraDatas["Source"] = context.Dictionary.Where(r => r.Type == "来源").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Industrys"] = context.Dictionary.Where(r => r.Type == "行业").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
-            model.ExtraDatas["Years"] = CommonDal.Instance.GetYears();
+            model.ExtraDatas = GetExtraDatas();
             return model;
         }
 

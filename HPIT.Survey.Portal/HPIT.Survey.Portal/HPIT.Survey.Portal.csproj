@@ -152,6 +152,9 @@
     <Content Include="js\coalesce.js" />
     <Content Include="js\demo.js" />
     <Content Include="js\echarts\main.min.js" />
+    <Content Include="js\editselect\arrow-down.gif" />
+    <Content Include="js\editselect\jquery.editable-select.css" />
+    <Content Include="js\editselect\jquery.editable-select.js" />
     <Content Include="js\img\x.png" />
     <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\noise.min.js" />

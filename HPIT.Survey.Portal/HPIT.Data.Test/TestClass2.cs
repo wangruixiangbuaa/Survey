@@ -115,8 +115,8 @@ namespace HPIT.Data.Test
         {
             SkillTagDal dal = new SkillTagDal();
             SkillTag tag = new SkillTag();
-            tag.TagID = "1380bc2a-621d-48da-a531-0b8a9af49b7f";
-            tag.TagName = "WebForm2";
+            tag.TagID = "2c9a86d9-23a0-4bb0-9859-360613fe0b89";
+            tag.TagName = "Egret";
             tag.TagType = "技术";
             tag.CourseName = "C#";
             tag.Direction = "NET";

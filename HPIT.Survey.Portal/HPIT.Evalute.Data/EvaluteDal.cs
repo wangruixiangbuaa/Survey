@@ -12,7 +12,7 @@ namespace HPIT.Evalute.Data
         {
             string sql = @"select * from (
                            select s.StudentNo,m.Name as mName,year(b.CheckInTime) as bYear,
-                           s.Name,s.Mobile,s.[Address],s.GraduateSchool,p.Name as pName,
+                           s.Name,s.Mobile,s.[Address],s.EducationBackground as GraduateSchool ,p.Name as pName,
                            (select RealName from Member me where me.Id = p.PeopleManagerId) as PEM,
                            (select RealName from Member me where me.Id = p.ProjectManagerId) as PRM,
                            p.Classroom,b.Name as bName from Student s 
