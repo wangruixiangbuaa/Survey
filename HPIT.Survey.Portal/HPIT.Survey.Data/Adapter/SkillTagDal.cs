@@ -40,6 +40,11 @@ namespace HPIT.Survey.Data.Adapter
             return context.SaveChanges();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
         public int AddTags(List<SkillTag> tags)
         {
             var result = 0;

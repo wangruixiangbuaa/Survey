@@ -71,7 +71,7 @@
                         <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="display:none;">
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text" name="DepartName" value="${Form.DepartName}" class="form-control "></span>
                     </div>
@@ -245,15 +245,15 @@
             <script id="salary" type="text/x-jquery-tmpl">
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">试用期薪资</label><span class="col-md-8"><input type="text" name="WagesOfPeriod" value="${Form.WagesOfPeriod}" class="form-control "></span>
+                        <label class="control-label col-md-3">试用期薪资</label><span class="col-md-8"><input type="number" name="WagesOfPeriod" value="${Form.WagesOfPeriod}" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">转正薪资</label><span class="col-md-8"><input type="text" name="WagesOfFull" value="${Form.WagesOfFull}" class="form-control "></span>
+                        <label class="col-md-3 control-label">转正薪资</label><span class="col-md-8"><input type="number" name="WagesOfFull" value="${Form.WagesOfFull}" class="form-control "></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">现在薪资</label><span class="col-md-8"><input type="text" name="WagesOfReal" value="${Form.WagesOfReal}" class="form-control "></span>
+                        <label class="control-label col-md-3">现在薪资</label><span class="col-md-8"><input type="number" name="WagesOfReal" value="${Form.WagesOfReal}" class="form-control "></span>
                     </div>
                 </div>
             </script>

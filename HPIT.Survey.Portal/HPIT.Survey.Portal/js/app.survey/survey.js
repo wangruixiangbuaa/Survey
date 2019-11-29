@@ -112,7 +112,8 @@ $(document).ready(function () {
         }
         if (name.split('.').length == 1) {
             _.MasterData.Form[name] = $(this).val();
-        } else {
+        }
+        else {
             var ss = name.split('.');
             _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
         }

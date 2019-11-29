@@ -118,7 +118,19 @@
                         <label class="control-label col-md-3">企业编号</label><span class="col-md-8"><input type="text" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">所属行业</label><span class="col-md-8"><input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control "></span>
+                        <label class="col-md-3 control-label">所属行业</label>
+                        <span class="col-md-8">
+                            @*<input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control ">*@
+                            <select name="Company.CompanyType" class="form-control input-md">
+                                {{each ExtraDatas.Industrys}}
+                                {{if Form.Company.CompanyType == Value}}
+                                <option selected="selected" value="${Value}">${Text}</option>
+                                {{else}}
+                                <option value="${Value}">${Text}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                        </span>
                     </div>
                 </div>
                 <div class="row">
@@ -141,15 +153,15 @@
             <script id="salary" type="text/x-jquery-tmpl">
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">试用期薪资</label><span class="col-md-8"><input type="text" name="WagesOfPeriod" value="${Form.WagesOfPeriod}" class="form-control "></span>
+                        <label class="control-label col-md-3">试用期薪资</label><span class="col-md-8"><input type="number" min="2000" name="WagesOfPeriod" value="${Form.WagesOfPeriod}" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">转正薪资</label><span class="col-md-8"><input type="text" name="WagesOfFull" value="${Form.WagesOfFull}" class="form-control "></span>
+                        <label class="col-md-3 control-label">转正薪资</label><span class="col-md-8"><input type="number" min="2000" name="WagesOfFull" value="${Form.WagesOfFull}" class="form-control "></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">现在薪资</label><span class="col-md-8"><input type="text" name="WagesOfReal" value="${Form.WagesOfReal}" class="form-control "></span>
+                        <label class="control-label col-md-3">现在薪资</label><span class="col-md-8"><input type="number" min="2000" name="WagesOfReal" value="${Form.WagesOfReal}" class="form-control "></span>
                     </div>
                 </div>
             </script>

@@ -52,13 +52,6 @@ namespace HPIT.Survey.Portal.Controllers
         {
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
             result.Form.Type = (int)SurveyType.User;
-            List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(result.Form.StuName,"");
-            if (matchList.Count == 1)
-            {
-                EvalStudent match = matchList.FirstOrDefault();
-                result.Form.PRM = match.PRM;
-                result.Form.PEM = match.PEM;
-            }
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
@@ -86,6 +79,13 @@ namespace HPIT.Survey.Portal.Controllers
         [HttpPost]
         public DeluxeJsonResult Save(SurveyModel model)
         {
+            List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(model.StuName, "");
+            if (matchList.Count == 1)
+            {
+                EvalStudent match = matchList.FirstOrDefault();
+                model.PRM = !string.IsNullOrEmpty(model.PRM) ? model.PRM: match.PRM;
+                model.PEM = !string.IsNullOrEmpty(model.PEM) ? model.PEM : match.PEM;
+            }
             var result = SurveyDal.Instance.Create(model);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }

@@ -15,7 +15,8 @@ namespace HPIT.Survey.Data.Adapter
         public static SurveyDal Instance = new SurveyDal();
 
         public SurveyContext context { get; set; }
-        public SurveyDal() {
+        public SurveyDal()
+        {
             this.context = new SurveyContext();
         }
 
@@ -113,6 +114,7 @@ namespace HPIT.Survey.Data.Adapter
             model.ExtraDatas["Citys"] = context.Dictionary.Where(r => r.Type == "城市").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
             model.ExtraDatas["ProjectTypes"] = context.Dictionary.Where(r => r.Type == "项目类型").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
             model.ExtraDatas["Source"] = context.Dictionary.Where(r => r.Type == "来源").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            model.ExtraDatas["Industrys"] = context.Dictionary.Where(r => r.Type == "行业").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
             model.ExtraDatas["Count"] = CommonDal.Instance.GetCount();
             model.ExtraDatas["Years"] = CommonDal.Instance.GetYears();
             return model;
@@ -128,11 +130,17 @@ namespace HPIT.Survey.Data.Adapter
             model.ExtraDatas["ProjectTypes"] = context.Dictionary.Where(r => r.Type == "项目类型").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
             model.ExtraDatas["Count"] = CommonDal.Instance.GetCount();
             model.ExtraDatas["Source"] = context.Dictionary.Where(r => r.Type == "来源").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            model.ExtraDatas["Industrys"] = context.Dictionary.Where(r => r.Type == "行业").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
             model.ExtraDatas["Years"] = CommonDal.Instance.GetYears();
             return model;
         }
 
-
+        /// <summary>
+        /// 分页查询，代码
+        /// </summary>
+        /// <param name="search"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public object GetPageData(SearchModel<SurveyModel> search,out int count)
         {
             GetPageListParameter<SurveyModel, int> parameter = new GetPageListParameter<SurveyModel, int>();
