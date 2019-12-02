@@ -532,8 +532,8 @@
       var width = this.select.width() + 2 + 20;
       this.select.hide();
       var padding_right = parseInt(this.text.css('padding-right').replace(/px/, ''), 10);
-      this.text.width(width - padding_right + 18);
-      this.wrapper.width(width + 2 + 20);
+      //this.text.width(width - padding_right + 18);
+      //this.select[0].css("width","300px");
       if(this.bg_iframe) {
         this.bg_iframe.width(width + 4 + 20);
       };

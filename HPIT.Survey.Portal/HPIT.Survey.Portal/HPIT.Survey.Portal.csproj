@@ -157,6 +157,10 @@
     <Content Include="js\editselect\jquery.editable-select.js" />
     <Content Include="js\img\x.png" />
     <Content Include="js\jquery-1.11.3.min.js" />
+    <Content Include="js\login\canva_moving_effect.js" />
+    <Content Include="js\login\fontawesome-all.css" />
+    <Content Include="js\login\jquery-3.3.1.min.js" />
+    <Content Include="js\login\style.css" />
     <Content Include="js\noise.min.js" />
     <Content Include="js\nth.tabs.js" />
     <Content Include="js\nth.tabs.min.js" />
@@ -1229,11 +1233,14 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Common\DeluxeUser.cs" />
     <Compile Include="Controllers\JobsController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SkillTagController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
+    <Compile Include="Filters\CustomAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1342,6 +1349,7 @@
     <Content Include="Views\Survey\StudentIndex.cshtml" />
     <Content Include="Views\SkillTag\Index.cshtml" />
     <Content Include="Views\Position\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1351,7 +1359,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HPIT.Data.Core\HPIT.Data.Core.csproj">

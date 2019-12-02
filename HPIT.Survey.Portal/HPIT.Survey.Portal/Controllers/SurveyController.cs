@@ -4,15 +4,16 @@ using HPIT.Evalute.Data.Model;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
+using HPIT.Survey.Portal.Common;
 using HPIT.Survey.Portal.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using static HPIT.Survey.Data.Entitys.Enumerations;
-
 namespace HPIT.Survey.Portal.Controllers
 {
     public class SurveyController : Controller
@@ -38,7 +39,7 @@ namespace HPIT.Survey.Portal.Controllers
 
         public DeluxeJsonResult GetSurveyByID(int id)
         {
-            var result = SurveyDal.Instance.QueryByID(id);
+            var result = SurveyDal.Instance.QuerySingleByID(id);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
@@ -90,12 +91,55 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
+
+        [HttpPost]
         public DeluxeJsonResult Update(SurveyModel model)
         {
-            var result = SurveyDal.Instance.Update(model);
+            SurveyDal dal = new SurveyDal();
+            SurveyModel match = dal.QueryByID(model.SurveyID).Form;
+            List<Project> newProject = new List<Project>();
+            foreach (var item in model.Project)
+            {
+                item.SurveyID = model.SurveyID;
+                newProject.Add(item);
+            }
+            List<Position> newPositions = new List<Position>();
+            foreach (var item in model.Position)
+            {
+                item.SurveyID = model.SurveyID;
+                newPositions.Add(item);
+            }
+            List<ActiveJobs> newJobs = new List<ActiveJobs>();
+            foreach (var item in model.ActiveJobs)
+            {
+                item.SurveyID = model.SurveyID;
+                newJobs.Add(item);
+            }
+            dal.context.Position.RemoveRange(match.Position);
+            dal.context.Project.RemoveRange(match.Project);
+            dal.context.ActiveJobs.RemoveRange(match.ActiveJobs);
+            dal.context.SaveChanges();
+            match.Project = newProject;
+            match.Position = newPositions;
+            match.ActiveJobs = newJobs;
+            string json = JsonConvert.SerializeObject(match);
+            int result = dal.Update(match);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
+
+        public DeluxeJsonResult Audit(int surveyID,int type)
+        {
+            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            AuditLog log = new AuditLog();
+            log.AuditName = currentUser.RealName;
+            log.AuditState = type;
+            log.SurveyID = surveyID;
+            log.RoleName = currentUser.FullName;
+            SurveyDal dal = new SurveyDal();
+            var result = dal.Audit(log);
+            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+        }
         public DeluxeJsonResult QueryPageData(SearchModel<SurveyModel> search)
         {
             int total = 0;

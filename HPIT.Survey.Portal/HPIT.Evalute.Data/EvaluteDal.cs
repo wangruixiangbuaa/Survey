@@ -1,5 +1,6 @@
 ﻿using HPIT.Data.Core;
 using HPIT.Evalute.Data.Model;
+using HPIT.StudentEvaluate.Core;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,7 +46,7 @@ namespace HPIT.Evalute.Data
         }
 
 
-        public List<MemberInfo> LoginMember(string loginName, string passWord)
+        public List<HPITMemberInfo> LoginMember(string loginName, string passWord)
         {
             string sql = @"select * from(  select m.RealName,m.Mobile,m.Email,r.Category,r.FullName,r.Description,r.OrganizeId 
                           ,o.FullName as oFullName,o.Address,o.Manager,o.Mobile as oMobile,ma.Password
@@ -53,10 +54,10 @@ namespace HPIT.Evalute.Data
                           left join RoleInfo r on m.RoleId = r.Id
                           left join Organize o on m.OrganizeId = o.Id
                           left join MemberAccount ma on ma.Id = m.MemberAccountId) t where t.RealName = @RealName and t.Password = @Password";
-            MemberInfo stu = new MemberInfo();
+            HPITMemberInfo stu = new HPITMemberInfo();
             stu.RealName = loginName;
-            stu.Password = passWord;
-            List<MemberInfo> result = DapperDBHelper.Instance.ExcuteQuery<MemberInfo>(sql, stu).ToList();
+            stu.Password =Md5Encrypt.Md5(passWord);
+            List<HPITMemberInfo> result = DapperDBHelper.Instance.ExcuteQuery<HPITMemberInfo>(sql, stu).ToList();
             return result;
         }
     }

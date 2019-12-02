@@ -1,9 +1,10 @@
 ﻿@{
-    ViewBag.Title = "厚溥就业调查问卷";
+    ViewBag.Title = "就业调查问卷";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/css/bwizard.min.css" rel="stylesheet" />*@
 <link href="~/css/bwizard.css" rel="stylesheet" />
+<link href="~/js/editselect/jquery.editable-select.css" rel="stylesheet" />
 @section styles{
     <style>
         #loading {
@@ -21,7 +22,7 @@
     </style>
 }
 <div class="container" id="main_div" stype="@ViewBag.Type" style="background: #78dccafa;">
-    <h2>厚溥就业学生信息调查</h2>
+    <h2>就业学生信息调查</h2>
     <div id="loading">
         <img src="~/img/loadingimg/loading3.gif" style="margin-left: 40%; margin-top: 100px; width: 350px; height: 350px;" />
     </div>
@@ -62,7 +63,19 @@
                         <label class="control-label col-md-3">企业编号</label><span class="col-md-8"><input type="text" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
                     </div>
                     <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">所属行业</label><span class="col-md-8"><input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control "></span>
+                        <label class="col-md-3 control-label">所属行业</label>
+                        <span class="col-md-8">
+                            @*<input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control ">*@
+                            <select name="Company.CompanyType" id="companyType" class="form-control input-md">
+                                {{each ExtraDatas.Industrys}}
+                                {{if Form.Company.CompanyType == Value}}
+                                <option selected="selected" value="${Value}">${Text}</option>
+                                {{else}}
+                                <option value="${Value}">${Text}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                        </span>
                     </div>
                 </div>
                 <div class="row">
@@ -119,7 +132,7 @@
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">来源</label><span class="col-md-8">
                             @*<input type="text" class="form-control ">*@
-                            <select id="positionSource" class="form-control input-md">
+                            <select id="positionSource"  class="form-control input-md">
                                 {{each ExtraDatas.Source}}
                                 <option value="${Value}">${Text}</option>
                                 {{/each}}
@@ -298,13 +311,13 @@
                 <input type="button" id="addProject" class="btn btn-default" style="width: 100px;margin-left: 40%;" value="添加" />
             </script>
             @*<div class="row" style="display:none">
-                <div class="col-md-5 form-group">
-                    <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                </div>
-                <div class="col-md-5 form-group">
-                    <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
-                </div>
-            </div>*@
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">开始时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="control-label col-md-3">结束时间</label><span class="col-md-8"><input type="text" class="form-control datetime"></span>
+                    </div>
+                </div>*@
         </div>
     </div>
 </div>
@@ -343,10 +356,11 @@
 </script>
 @section scripts{
     @*<script src="~/js/step/bwizard.min.js"></script>*@
+    <script src="~/js/editselect/jquery.editable-select.js"></script>
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script src="~/js/tmpl/jquery.tmplPlus.js"></script>
     <script src="~/js/step/bwizard.js" charset="utf-8"></script>
     <script src="~/js/app.survey/survey.js"></script>
-    @*<script type="text/javascript" charset="utf-8">
-        </script>*@
+    <script type="text/javascript" charset="utf-8">
+    </script>
 }

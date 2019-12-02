@@ -215,12 +215,22 @@
         $(document).ready(function () {
             $("#ListTb").on("click", "a", function ()
             {
+                var id = $(this).attr("pid");
                 var type = $(this).attr("type");
                 if (type == "pass") {
-
+                    var status = type == "pass" ? 1 : 2;
+                    _.options.url = "/Survey/Audit?surveyID=" + id + "&type=" + status;
+                    _.ajaxData(_.options, function (result) {
+                        swal({
+                            title: "审核成功！",
+                            showConfirmButton: false,
+                            type: "success",
+                            showCancelButton: false,
+                            timer: 2000
+                        })
+                    });
                 }
                 if (type == 'delete') {
-                    var id = $(this).attr("pid");
                     _.options.url = "/Survey/DeleteSurveyByID?id=" + id;
                     _.ajaxData(_.options, function (result) {
                         _.options.url = "/Survey/QueryPageData";
@@ -235,7 +245,6 @@
                                 jump: true, //是否支持跳转
                                 callback: function (page) {
                                     //回调函数
-                                    //alert(page);
                                     _.options.data.PageIndex = page;
                                     _.ajaxData(_.options, function (result) {
                                         _.render(result);
@@ -260,7 +269,6 @@
                     jump: true, //是否支持跳转
                     callback: function (page) {
                         //回调函数
-                        //alert(page);
                         _.options.data.PageIndex = page;
                         _.ajaxData(_.options, function (result) {
                             _.render(result);

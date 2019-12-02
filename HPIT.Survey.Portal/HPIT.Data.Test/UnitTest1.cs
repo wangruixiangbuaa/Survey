@@ -132,19 +132,47 @@ namespace HPIT.Data.Test
         public void TestMethodUpdate()
         {
             SurveyDal dal = new SurveyDal();
-            var rsult = dal.QueryByID(11);
+            var rsult = dal.QueryByID(1076);
             rsult.Form.CorworkPhone = "17700923232";
             rsult.Form.Direction = "大数据";
             rsult.Form.ProjectName = "修改";
-            dal.context.Project.RemoveRange(rsult.Form.Project);
-            dal.context.SaveChanges();
             List<Project> newProject = new List<Project>();
             foreach (var item in rsult.Form.Project)
             {
                 newProject.Add(item);
             }
-            newProject.Add(new Project() {  ProjectName = "update", BeginTime = DateTime.Now,EndTime=DateTime.Now, ProjectType = "ee",SurveyID = rsult.Form.SurveyID});
+            List<Position> newPositions = new List<Position>();
+            foreach (var item in rsult.Form.Position)
+            {
+                newPositions.Add(item);
+            }
+            List<ActiveJobs> newJobs = new List<ActiveJobs>();
+            foreach (var item in rsult.Form.ActiveJobs)
+            {
+                newJobs.Add(item);
+            }
+            dal.context.Position.RemoveRange(rsult.Form.Position);
+            dal.context.Project.RemoveRange(rsult.Form.Project);
+            dal.context.ActiveJobs.RemoveRange(rsult.Form.ActiveJobs);
+            dal.context.SaveChanges();
+            newPositions.Add(new Position() { PositionID=Guid.NewGuid().ToString(), PositionName="测试工程师2" });
+            newProject.Add(new Project() {  ProjectName = "update4", BeginTime = DateTime.Now,EndTime=DateTime.Now, ProjectType = "ee",SurveyID = rsult.Form.SurveyID});
             rsult.Form.Project = newProject;
+            rsult.Form.Position = newPositions;
+            rsult.Form.ActiveJobs = newJobs;
+            int tt = dal.Update(rsult.Form);
+            string result = JsonConvert.SerializeObject(rsult.Form);
+        }
+
+        [TestMethod]
+        public void TestSurveyUpdate()
+        {
+            SurveyDal dal = new SurveyDal();
+            var rsult = dal.QueryByID(1076);
+            rsult.Form.CorworkPhone = "17700923232";
+            rsult.Form.Direction = "大数据2";
+            rsult.Form.ProjectName = "修改2";
+            rsult.Form.Project.Add(new Project() { ProjectName="酒店管理系统", ProjectType="酒店管理" });
             int tt = dal.Update(rsult.Form);
             string result = JsonConvert.SerializeObject(rsult);
         }

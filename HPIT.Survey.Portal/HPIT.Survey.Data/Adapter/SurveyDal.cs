@@ -79,6 +79,16 @@ namespace HPIT.Survey.Data.Adapter
         }
 
 
+        public int Audit(AuditLog log)
+        {
+            log.AuditTime = DateTime.Now;
+            SurveyContext context = new SurveyContext();
+            context.AuditLog.Add(log);
+            context.Database.ExecuteSqlCommand(
+                  string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}",log.AuditName,log.AuditState,log.SurveyID));
+            return context.SaveChanges();
+        }
+
         /// <summary>
         /// 根据id删除调查问卷 软删除
         /// </summary>
@@ -141,6 +151,17 @@ namespace HPIT.Survey.Data.Adapter
         public AbstractFormModel<SurveyModel> QueryByID(int id)
         {
             var survey = context.SurveyModel.Where(r => r.SurveyID == id).FirstOrDefault();
+            AbstractFormModel<SurveyModel> model = new AbstractFormModel<SurveyModel>();
+            model.Form = survey;
+            model.ExtraDatas = GetExtraDatas();
+            return model;
+        }
+
+
+        public AbstractFormModel<SurveyModel> QuerySingleByID(int id)
+        {
+            SurveyContext db = new SurveyContext();
+            var survey = db.SurveyModel.Where(r => r.SurveyID == id).FirstOrDefault();
             AbstractFormModel<SurveyModel> model = new AbstractFormModel<SurveyModel>();
             model.Form = survey;
             model.ExtraDatas = GetExtraDatas();

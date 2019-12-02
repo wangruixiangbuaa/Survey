@@ -49,7 +49,7 @@
     <Compile Include="EvaluteDal.cs" />
     <Compile Include="Md5Encrypt.cs" />
     <Compile Include="Model\EvalStudent.cs" />
-    <Compile Include="Model\MemberInfo.cs" />
+    <Compile Include="Model\HPITMemberInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

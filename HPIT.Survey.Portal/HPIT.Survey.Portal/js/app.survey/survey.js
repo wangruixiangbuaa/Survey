@@ -34,6 +34,30 @@ var _ = {
         $("#position").tmpl(_.MasterData).appendTo('#positionTb');
         $("#job").tmpl(_.MasterData).appendTo('#jobTb');
         //绘制各个步骤
+        try {
+            $("#companyType").editableSelect({
+                bg_iframe: true,
+                case_sensitive: false,
+                items_then_scroll: 10,
+                isFilter: false
+            });
+            $("#companyType_sele").val(_.MasterData.Form.Company.CompanyType);
+            $("#positionSource").editableSelect({
+                bg_iframe: true,
+                case_sensitive: false,
+                items_then_scroll: 10,
+                isFilter: false
+            });
+            $("#projectType").editableSelect({
+                bg_iframe: true,
+                case_sensitive: false,
+                items_then_scroll: 10,
+                isFilter: false
+            });
+        } catch (e) {
+            console.log("下拉框,初始化报错了。");
+        }
+
         $("#wizard").bwizard().show();
     },
     getQueryString: function (name) {
@@ -142,12 +166,15 @@ $(document).ready(function () {
             _.MasterData.Form[name] = $(this).val();
         } else {
             var ss = name.split('.');
+            //var nameval = $("input[name=" + name + "']").val();
             _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
         }
 
     })
 
     $("#div_job").on("click", "#save", function () {
+        //获取下拉框选择的公司类型的值。
+        _.MasterData.Form.Company.CompanyType = $("input[name='Company.CompanyType_sele']").val();
         if (_.MasterData.Form.SurveyID == 0) {
             _.options.url = "/Survey/Save";
         } else {
@@ -173,9 +200,10 @@ $(document).ready(function () {
         });
     })
 
+    //添加项目
     $("#wizard").on("click", "#addProject", function () {
         var name = $("#projectName").val();
-        var type = $("#projectType").val();
+        var type = $("#projectType_sele").val(); //$("#projectType").val();
         var desc = $("#projectdesc").val();
         //alert("添加项目" + name + type + desc);
         _.MasterData.Form.Project.push({ "ProjectName": name, "ProjectType": type, "ProjectDesc": desc });
@@ -183,6 +211,7 @@ $(document).ready(function () {
         $("#project").tmpl(_.MasterData).appendTo('#projectTb');
     })
 
+    //加载下拉列表
     $("#projectTb").on("click", "a", function () {
         var name = $(this).attr("pname");
         var newPro = [];
@@ -199,7 +228,7 @@ $(document).ready(function () {
     $("#wizard").on("click", "#addPosition", function () {
         var name = $("#positionName").val();
         var type = $("#positionDirection").val();
-        var source = $("#positionSource").val();
+        var source = $("#positionSource_sele").val(); //$("#positionSource").val();
         var desc = $("#positionDesc").val();
         var years = $("#positionYears").val();
         var uuid = _.uuid();
@@ -215,7 +244,7 @@ $(document).ready(function () {
         $("#position").tmpl(_.MasterData).appendTo('#positionTb');
     })
 
-
+    //删除操作
     $("#positionTb").on("click", "a", function () {
         var name = $(this).attr("pname");
         var newPro = [];
@@ -225,8 +254,8 @@ $(document).ready(function () {
             }
         }
         _.MasterData.Form.Position = newPro;
-        $("#projectTb tr:gt(0)").remove();
-        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
+        $("#positionTb tr:gt(0)").remove();
+        $("#position").tmpl(_.MasterData).appendTo('#projectTb');
     })
 
     $("#wizard").on("click", "#addjob", function () {
