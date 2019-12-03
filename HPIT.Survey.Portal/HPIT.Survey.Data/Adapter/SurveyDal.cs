@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using HPIT.Survey.Data.ExtEntitys;
 using System.Data.Entity;
 using HPIT.Data.Core;
+using System.Linq.Expressions;
+using HPIT.Survey.Data.Tool;
 
 namespace HPIT.Survey.Data.Adapter
 {
@@ -84,8 +86,23 @@ namespace HPIT.Survey.Data.Adapter
             log.AuditTime = DateTime.Now;
             SurveyContext context = new SurveyContext();
             context.AuditLog.Add(log);
+            //通过工作流审批 获取到下一个审批人
+            string nextAuditName = "";
+            SurveyWorkFlow surveyWorkFlow = new SurveyWorkFlow();
+            if (log.AuditState == 1)
+            {
+                nextAuditName = surveyWorkFlow.Pass(log.AuditName, log.RoleName);
+            }
+            else
+            {
+                nextAuditName = surveyWorkFlow.Reject(log.AuditName, log.RoleName);
+            }
+            if (nextAuditName == "已完成")
+            {
+                log.AuditState = 3;
+            }
             context.Database.ExecuteSqlCommand(
-                  string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}",log.AuditName,log.AuditState,log.SurveyID));
+                  string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}", nextAuditName, log.AuditState,log.SurveyID));
             return context.SaveChanges();
         }
 
@@ -174,14 +191,35 @@ namespace HPIT.Survey.Data.Adapter
         /// <param name="search"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public object GetPageData(SearchModel<SurveyModel> search,out int count)
+        public List<SurveyModel> GetPageData(SearchModel<SurveyModel> search,out int count)
         {
             GetPageListParameter<SurveyModel, int> parameter = new GetPageListParameter<SurveyModel, int>();
             parameter.isAsc = true;
             parameter.orderByLambda = t => t.SurveyID;
             parameter.pageIndex = search.PageIndex;
             parameter.pageSize = search.PageSize;
-            parameter.whereLambda = t => t.Status != 1;
+            if (search.RoleName == "学生")
+            {
+                Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;
+                Expression<Func<SurveyModel, bool>> lambda1 = item => item.StuName == search.UserName;
+                //合并表达式
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
+            }
+            else if (search.RoleName == "人事经理")
+            {
+                Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;
+                Expression<Func<SurveyModel, bool>> lambda1 = item => (item.PEM == search.UserName && string.IsNullOrEmpty(item.AuditName)) || item.AuditStatus == 3;
+                //合并表达式
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
+            }
+            else
+            {
+                Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;
+                Expression<Func<SurveyModel, bool>> lambda1 = item => item.AuditName == search.UserName || item.AuditStatus == 3;
+                //合并表达式
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
+            }
+            //查询数据
             DBBaseService baseService = new DBBaseService(SurveyContext.Instance);
             List<SurveyModel> list = baseService.GetSimplePagedData<SurveyModel, int>(parameter, out count);
             return list;

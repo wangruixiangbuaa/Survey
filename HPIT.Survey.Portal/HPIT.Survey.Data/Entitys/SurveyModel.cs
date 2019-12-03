@@ -33,6 +33,8 @@ namespace HPIT.Survey.Data.Entitys
         [StringLength(10)]
         public string StuName { get; set; }
 
+        public string StudentNo { get; set; }
+
         [StringLength(64)]
         public string CompanyNo { get; set; }
 
@@ -93,5 +95,8 @@ namespace HPIT.Survey.Data.Entitys
         public Project CurrentProject { get; set; }
 
         public virtual Student Student { get; set; } = new Student();
+
+        [NotMapped]
+        public string CurrentRoleName { get; set; }
     }
 }

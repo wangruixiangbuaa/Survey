@@ -33,6 +33,10 @@ namespace HPIT.Data.Core
 
         public string TeamName { get; set; }
 
+        public string UserName { get; set; }
+
+        public string RoleName { get; set; }
+
         public List<T> Datas { get; set; }
 
         public T Entity { get; set; }

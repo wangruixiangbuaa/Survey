@@ -43,7 +43,7 @@ namespace HPIT.Survey.Portal.Controllers
             else
             {
                 //RedirectToAction("Index", "Login", false);
-                jsonResult.Data = new { data = "", state = "400" };
+                jsonResult.Data = new { data = "未找到用户!", state = "403" };
                 return jsonResult;
             }
         }

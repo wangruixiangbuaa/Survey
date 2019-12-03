@@ -87,7 +87,7 @@
                             <td>${PositionName}</td>
                             <td>${CompanyNo}</td>
                             <td>${CreateTime}</td>
-                            {{if Type==0}}
+                            {{if Type == 0}}
                             <td>已就业</td>
                             <td>
                                 <a href="/Survey/UserIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">编辑</a>
@@ -100,10 +100,12 @@
                                 <a href="#" type="delete" pid="${SurveyID}">删除</a>
                             </td>
                             {{/if}}
+                            {{if AuditStatus != 3 && CurrentRoleName != '学生'}}
                             <td>
                                 <a href="#" type="pass" pid="${SurveyID}">通过</a>
                                 <a href="#" type="reject" pid="${SurveyID}">驳回</a>
                             </td>
+                            {{/if}}
                         </tr>
                         {{/each}}
                     </script>

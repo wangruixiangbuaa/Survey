@@ -60,12 +60,15 @@ namespace HPIT.Survey.Portal.Controllers
         {
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
             result.Form.Type = (int)SurveyType.Student;
+            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
             //根据学生编号创建新的
-            List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudentByNo(stuNo);
+            List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(currentUser.RealName,"");
             if (matchList.Count == 1)
             {
                 EvalStudent match = matchList.FirstOrDefault();
                 result.Form.ProjectName = match.pName;
+                result.Form.StudentNo = match.StudentNo;
+                result.Form.StuName = match.Name;
                 result.Form.Phone = match.Mobile;
                 result.Form.Direction = match.mName;
                 result.Form.Year = match.bYear;
@@ -143,7 +146,14 @@ namespace HPIT.Survey.Portal.Controllers
         public DeluxeJsonResult QueryPageData(SearchModel<SurveyModel> search)
         {
             int total = 0;
+            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            search.UserName = currentUser.RealName;
+            search.RoleName = currentUser.FullName;
             var result = SurveyDal.Instance.GetPageData(search,out total);
+            foreach (var item in result)
+            {
+                item.CurrentRoleName = currentUser.FullName;
+            }
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages}, "yyyy-MM-dd HH:mm");
         }

@@ -34,6 +34,7 @@ var _ = {
         $("#position").tmpl(_.MasterData).appendTo('#positionTb');
         $("#job").tmpl(_.MasterData).appendTo('#jobTb');
         //绘制各个步骤
+        //处理可以输入的下拉框的控件 处理
         try {
             $("#companyType").editableSelect({
                 bg_iframe: true,
@@ -182,6 +183,36 @@ $(document).ready(function () {
         }
         _.options.type = 'post';
         _.options.data = _.MasterData.Form;
+        var form = _.MasterData.Form;
+        if (form.StuName == '' || form.StuName == null) {
+            swal("", "学生姓名不能为空！", "info");
+            return;
+        }
+        if (form.School == '' || form.School == null) {
+            swal("", "学校不能为空！", "info");
+            return;
+        }
+        if (form.ProjectName == '' || form.ProjectName == null) {
+            swal("", "项目部不能为空！", "info");
+            return;
+        }
+        //未就业学生都需要校验
+        if (form.Company.CompanyName == '' || form.Company.CompanyName == null) {
+            swal("", "公司名不能为空！", "info");
+            return;
+        }
+        if (form.CompanyNo == '' || form.CompanyNo == null) {
+            swal("", "公司工商号不能为空！", "info");
+            return;
+        }
+        if (form.Position.length == 0) {
+            swal("", "至少填写一个岗位招聘信息！", "info");
+            return;
+        }
+        if (form.ActiveJobs.length == 0) {
+            swal("", "至少填写一个公司正在招聘的职位！", "info");
+            return;
+        }
         _.ajaxData(_.options, function (result) {
             //alert("反馈成功!");
             //swal("", "欢迎您的反馈！", "success");
@@ -195,7 +226,6 @@ $(document).ready(function () {
             setTimeout(function () {
                 window.close();
                 //5秒后实现的方法写在这个方法里面
-
             }, 2 * 1000)
         });
     })
