@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <style>
+        #loading {
+            display: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            background: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2000;
+        }
+    </style>
+}
+    <div>
+        <h1 style="text-align:center;">自我技术评估</h1>
+        <div class="row" style="margin-left:0%;">
+            <label class="col-md-1">软件工程师：</label>
+            <select id="dire" class="input-sm col-md-1">
+                <option value="NET">NET工程师</option>
+                <option value="JAVA">JAVA工程师</option>
+                <option value="企信">企信信息化工程师</option>
+                <option value="大数据">大数据工程师</option>
+                <option value="Web前端">Web前端工程师</option>
+                <option value="网销">网络营销工程师</option>
+            </select>
+        </div>
+        <div id="tagList" style="width: 800px;margin-left: 25%;">
+        </div>
+        <script id="dataList" type="text/x-jquery-tmpl">
+            {{each data}}
+            <div class="col-md-3" style="margin-top:10px;">
+                <select class="input-sm" stype="${TagName}" sid="${TagID}">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <label>${TagName}</label>
+            </div>
+            {{/each}}
+            <div class="row">
+                <span style="width:300px;margin-left:35%;display:inline-block;margin-top:20px;">
+                     <input type="button" class="btn-info btn" value="查看分数" id="scanScore" />
+                     <input type="button" class="btn-primary btn" value="提交评估" id="submitScore" />
+                </span>
+            </div>
+        </script>
+    </div>
+@section scripts{
+    <script src="~/js/tmpl/jquery.tmpl.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var _ = {
+            ScoreTotal: 0,
+            TagScoreList:[],
+            MasterData: {},
+            options: {
+                "url": "/Student/GetDirectionSkillTag",
+                "data": {"direction":"NET"},
+                "type": "post",
+                "datatype": "json"
+            },
+            render: function (data) {
+                //$("#ListTb tr:gt(0)").remove();
+                $("#tagList").empty();
+                $("#dataList").tmpl(data).appendTo('#tagList');
+            },
+            getQueryString: function (name) {
+                var reg = new RegExp('(?:(?:&|\\?)' + name + '=([^&]*))|(?:/' + name + '/([^/]*))', 'i');
+                var r = window.location.href.match(reg);
+                if (r != null)
+                    return decodeURI(r[1] || r[2]);
+                return null;
+            },
+            ajaxData: function (options, callback) {
+                $.ajax({
+                    url: options.url,
+                    data: options.data,
+                    type: options.type,
+                    dataType: options.dataType,
+                    beforeSend: function () {
+                        $("#loading").show();
+                    },
+                    success: function (survey) {
+                        callback(survey);
+                    },
+                    complete: function () {
+                        $("#loading").hide();
+                        $('.datetime').datepicker({
+                            autoclose: true,
+                            format: 'yyyy-mm-dd'
+                        });
+                    }
+                })
+            }
+        };
+        $(document).ready(function () {
+            _.ajaxData(_.options, function (result) {
+                _.render(result);
+            });
+            $("#tagList").on("click", "#scanScore", function () {
+                var selectList = $("#tagList").find("select");
+                _.TagScoreList = [];
+                _.ScoreTotal = 0;
+                for (var i = 0; i < selectList.length; i++) {
+                    //alert(selectList[i].attr("stype"));
+                    _.ScoreTotal += selectList[i].selectedIndex;
+                    if (selectList[i].selectedIndex > 0) {
+                        _.TagScoreList.push({ "TagID": selectList[i].attributes["sid"].value, "SelfPoint": selectList[i].selectedIndex });
+                    }
+                }
+                swal(''+_.ScoreTotal,"以上是您的自我评估分数！", "info");
+            })
+            $("#tagList").on("click", "#submitScore", function () {
+                var selectList = $("#tagList").find("select");
+                _.TagScoreList = [];
+                for (var i = 0; i < selectList.length; i++) {
+                    //alert(selectList[i].attr("stype"));
+                    _.ScoreTotal += selectList[i].selectedIndex;
+                    if (selectList[i].selectedIndex > 0) {
+                        _.TagScoreList.push({ "TagID": selectList[i].attributes["sid"].value, "SelfPoint": selectList[i].selectedIndex });
+                    }
+                }
+                _.options.url = "/Student/AddEvalPoint";
+                _.options.data = { "tags": _.TagScoreList };
+                _.ajaxData(_.options, function (result) {
+                    swal('', "提交成功", "success");
+                })
+            })
+            $("#dire").change(function () {
+                var val = $(this).val();
+                _.options.url = "/Student/GetDirectionSkillTag";
+                _.options.data.direction = val;
+                _.ajaxData(_.options, function (result) {
+                    _.render(result);
+                })
+            })
+        })
+    </script>
+}

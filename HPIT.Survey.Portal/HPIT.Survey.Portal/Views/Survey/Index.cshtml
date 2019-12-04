@@ -219,7 +219,7 @@
             {
                 var id = $(this).attr("pid");
                 var type = $(this).attr("type");
-                if (type == "pass") {
+                if (type == "pass" || type == 'reject') {
                     var status = type == "pass" ? 1 : 2;
                     _.options.url = "/Survey/Audit?surveyID=" + id + "&type=" + status;
                     _.ajaxData(_.options, function (result) {
@@ -255,9 +255,6 @@
                             })
                         })
                     })
-                }
-                if (type == 'reject') {
-
                 }
             })
             _.ajaxData(_.options, function (result) {

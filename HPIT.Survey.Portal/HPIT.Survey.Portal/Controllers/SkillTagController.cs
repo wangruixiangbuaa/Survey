@@ -44,5 +44,17 @@ namespace HPIT.Survey.Portal.Controllers
             var result = SkillTagDal.Instance.UpdateTag(tag);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
+
+
+        public ActionResult SkillStatistic()
+        {
+            return View();
+        }
+
+        public DeluxeJsonResult GetDirectionSkillTagStatics(string direction)
+        {
+            var result = SkillTagDal.Instance.TagStatistic(direction);
+            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+        }
     }
 }

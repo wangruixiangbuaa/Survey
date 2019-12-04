@@ -13,7 +13,7 @@ namespace HPIT.Survey.Data.Entitys
         public SkillTag()
         {
             SkillTags = new HashSet<SkillTags>();
-            StudentTags = new HashSet<StudentTags>();
+            //StudentTags = new HashSet<StudentTags>();
         }
 
         [Key]
@@ -40,8 +40,8 @@ namespace HPIT.Survey.Data.Entitys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SkillTags> SkillTags { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StudentTags> StudentTags { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<StudentTags> StudentTags { get; set; }
 
         [NotMapped]
         public string PositionID { get; set; }

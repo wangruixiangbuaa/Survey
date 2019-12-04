@@ -1,5 +1,6 @@
 ﻿using HPIT.Data.Core;
 using HPIT.Survey.Data.Entitys;
+using HPIT.Survey.Data.ExtEntitys;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -40,8 +41,26 @@ namespace HPIT.Survey.Data.Adapter
             return context.SaveChanges();
         }
 
+        public List<SkillTag> DirectionTags(string direction)
+        {
+            return context.SkillTag.Where(r => r.Direction == direction).ToList();
+        }
+
+        public List<SkillTagStatic> TagStatistic(string direction)
+        {
+            List<SkillTagStatic> skillStatistic = new List<SkillTagStatic>();
+            string sql = string.Format(@"select t.TagName as name,count(t.TagName) as value from (
+                                         SELECT ts.*,tg.TagName,tg.Direction,tg.CourseName,tg.TagType
+                                         FROM [SurveyDB].[dbo].[SkillTags] ts 
+                                         left join [SurveyDB].[dbo].[SkillTag] tg on ts.TagID = tg.TagID where tg.Direction='{0}') t group by t.TagName",direction);
+            using (var context = new SurveyContext())
+            {
+                skillStatistic = context.Database.SqlQuery<SkillTagStatic>(sql).ToList();
+            }
+            return skillStatistic;
+        }
         /// <summary>
-        /// 
+        /// 添加标签的方法
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>

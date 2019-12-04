@@ -17,7 +17,9 @@ namespace HPIT.Survey.Data.Entitys
         }
 
         [Key]
-        public int StuNo { get; set; }
+        public int? StuNo { get; set; }
+
+        public string StudentNo { get; set; }
 
         [StringLength(50)]
         public string StuName { get; set; }

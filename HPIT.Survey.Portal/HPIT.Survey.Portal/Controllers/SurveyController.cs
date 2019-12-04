@@ -24,6 +24,7 @@ namespace HPIT.Survey.Portal.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult UserIndex()
         {
             ViewBag.Type = (int)SurveyType.User;
@@ -36,7 +37,7 @@ namespace HPIT.Survey.Portal.Controllers
             return View();
         }
 
-
+        [AllowAnonymous]
         public DeluxeJsonResult GetSurveyByID(int id)
         {
             var result = SurveyDal.Instance.QuerySingleByID(id);
@@ -49,6 +50,7 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
+        [AllowAnonymous]
         public DeluxeJsonResult StartUserNewSurvey()
         {
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
@@ -80,6 +82,7 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public DeluxeJsonResult Save(SurveyModel model)
         {
@@ -93,7 +96,6 @@ namespace HPIT.Survey.Portal.Controllers
             var result = SurveyDal.Instance.Create(model);
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
-
 
         [HttpPost]
         public DeluxeJsonResult Update(SurveyModel model)

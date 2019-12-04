@@ -151,6 +151,7 @@
     <Content Include="js\aurora.js" />
     <Content Include="js\coalesce.js" />
     <Content Include="js\demo.js" />
+    <Content Include="js\Echarts.js" />
     <Content Include="js\echarts\main.min.js" />
     <Content Include="js\editselect\arrow-down.gif" />
     <Content Include="js\editselect\jquery.editable-select.css" />
@@ -1239,11 +1240,13 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\SkillTagController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
     <Compile Include="Filters\CustomAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentTagsModel.cs" />
     <Compile Include="Models\TagsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1350,6 +1353,9 @@
     <Content Include="Views\SkillTag\Index.cshtml" />
     <Content Include="Views\Position\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\SkillTag\SkillStatistic.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

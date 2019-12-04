@@ -56,6 +56,7 @@
     <Compile Include="Adapter\CommonDal.cs" />
     <Compile Include="Adapter\PositionDal.cs" />
     <Compile Include="Adapter\SkillTagDal.cs" />
+    <Compile Include="Adapter\StudentDal.cs" />
     <Compile Include="Adapter\SurveyDal.cs" />
     <Compile Include="Adapter\SurveyWorkFlow.cs" />
     <Compile Include="Entitys\ActiveJobs.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Entitys\WorkFlow\Activity.cs" />
     <Compile Include="ExtEntitys\AbstractFormModel.cs" />
     <Compile Include="ExtEntitys\PositionExt.cs" />
+    <Compile Include="ExtEntitys\SkillTagStatic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool\ExpressionExt.cs" />
     <Compile Include="Tool\ExpressionVistorMy.cs" />
