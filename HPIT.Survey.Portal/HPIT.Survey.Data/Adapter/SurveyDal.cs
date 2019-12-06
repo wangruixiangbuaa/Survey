@@ -80,6 +80,27 @@ namespace HPIT.Survey.Data.Adapter
             return context.SaveChanges();
         }
 
+        public int DeleteSurvery(int surveyID)
+        {
+            //根据id去查询主表的数据
+            SurveyModel match = context.SurveyModel.FirstOrDefault(r => r.SurveyID == surveyID);
+            //找到匹配的数据
+            if (match != null)
+            {
+                //Position 一对多的
+                foreach (var item in match.Position)
+                {
+                    context.SkillTags.RemoveRange(item.SkillTags);
+                }
+                //
+                context.ActiveJobs.RemoveRange(match.ActiveJobs);
+                context.Position.RemoveRange(match.Position);
+                context.Project.RemoveRange(match.Project);
+                context.Entry(match).State = EntityState.Deleted;
+            }
+            return context.SaveChanges();
+        }
+
 
         public int Audit(AuditLog log)
         {

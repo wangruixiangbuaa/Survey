@@ -20,7 +20,7 @@
     </style>
 }
     <div>
-        <h1 style="text-align:center;">自我技术评估</h1>
+        <h2 style="text-align:center;"><b>@ViewBag.StuName</b>学员技术评估</h2>
         <div class="row" style="margin-left:0%;">
             <label class="col-md-1">软件工程师：</label>
             <select id="dire" class="input-sm col-md-1">
@@ -55,8 +55,8 @@
             {{/each}}
             <div class="row">
                 <span style="width:300px;margin-left:35%;display:inline-block;margin-top:20px;">
-                     <input type="button" class="btn-info btn" value="查看分数" id="scanScore" />
-                     <input type="button" class="btn-primary btn" value="提交评估" id="submitScore" />
+                    <input type="button" class="btn-info btn" value="查看分数" id="scanScore" />
+                    <input type="button" class="btn-primary btn" value="提交评估" id="submitScore" />
                 </span>
             </div>
         </script>
@@ -65,6 +65,7 @@
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script type="text/javascript" charset="utf-8">
         var _ = {
+            stuNo:"",
             ScoreTotal: 0,
             TagScoreList:[],
             MasterData: {},
@@ -109,6 +110,7 @@
             }
         };
         $(document).ready(function () {
+            _.stuNo = _.getQueryString("stuNo");
             _.ajaxData(_.options, function (result) {
                 _.render(result);
             });
@@ -129,14 +131,16 @@
                 var selectList = $("#tagList").find("select");
                 _.TagScoreList = [];
                 for (var i = 0; i < selectList.length; i++) {
-                    //alert(selectList[i].attr("stype"));
                     _.ScoreTotal += selectList[i].selectedIndex;
-                    if (selectList[i].selectedIndex > 0) {
-                        _.TagScoreList.push({ "TagID": selectList[i].attributes["sid"].value, "SelfPoint": selectList[i].selectedIndex });
-                    }
+                    _.TagScoreList.push({ "TagID": selectList[i].attributes["sid"].value, "SelfPoint": selectList[i].selectedIndex, "TeacherPoint": selectList[i].selectedIndex });
                 }
-                _.options.url = "/Student/AddEvalPoint";
-                _.options.data = { "tags": _.TagScoreList };
+
+                if (_.stuNo == null || _.stuNo == '' || _.stuNo == undefined) {
+                    _.options.url = "/Student/AddEvalPoint";
+                } else {
+                    _.options.url = "/Student/UpdateEvalPoint";
+                }
+                _.options.data = { "tags": _.TagScoreList, "stuNo": _.stuNo };
                 _.ajaxData(_.options, function (result) {
                     swal('', "提交成功", "success");
                 })

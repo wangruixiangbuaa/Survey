@@ -14,8 +14,8 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? RoleID { get; set; }
 
-        public virtual Menus Menus { get; set; }
+        //public virtual Menus Menus { get; set; }
 
-        public virtual Roles Roles { get; set; }
+        //public virtual Roles Roles { get; set; }
     }
 }

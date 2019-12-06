@@ -27,7 +27,11 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? ParentID { get; set; }
 
-        public int? Order { get; set; }
+        public int? Sort { get; set; }
+
+        public string MenuUrl { get; set; }
+
+        public string MenuCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoleMenus> RoleMenus { get; set; }

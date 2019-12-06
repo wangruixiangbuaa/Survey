@@ -9,5 +9,7 @@ namespace HPIT.Survey.Portal.Models
     public class StudentTagsModel
     {
         public List<StudentTags> tags { get; set; }
+
+        public string stuNo { get; set; }
     }
 }

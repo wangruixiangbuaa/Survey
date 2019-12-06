@@ -35,6 +35,8 @@ namespace HPIT.Survey.Data.Entitys
 
         public virtual DbSet<AuditLog> AuditLog { get; set; }
 
+        public virtual DbSet<StudentEval> StudentEvaluate { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>()

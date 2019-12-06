@@ -195,162 +195,32 @@
                         <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                     </div>
                 </div>
-                <ul class="sidebar-menu">
-                    <li class="header">菜单</li>
-                    <li id="admin-index"><a href="/TruckTeam/Index"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
-                    <!-- 菜单 -->
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-folder"></i> <span>数据管理</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="admin-login">
-                                <a href="#" class="menu" aurl="../Survey/UserIndex" atitle="就业学生调查问卷" aid="userSurvery">
-                                    <i class="fa fa-circle-o"></i> 就业学生信息调查
-                                </a>
-                            </li>
-                            <li id="admin-login">
-                                <a href="#" class="menu" aurl="../Survey/StudentIndex" atitle="学生调查问卷收集" aid="studentSurvey">
-                                    <i class="fa fa-circle-o"></i> 未就业学生信息调查
-                                </a>
-                            </li>
-                            <li id="admin-login">
-                                <a href="#" class="menu" aurl="../Survey/Index" atitle="调查管理" aid="surveylist">
-                                    <i class="fa fa-circle-o"></i> 调查管理
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../SkillTag/Index" atitle="技术点管理" aid="skilltaglist">
-                                    <i class="fa fa-circle-o"></i> 技术点管理
-                                </a>
-                            </li>
-                            @*<li id="admin-register">
-            <a href="#" class="menu" aurl="../Jobs/Index" atitle="公司管理" aid="jobslist">
-                <i class="fa fa-circle-o"></i> 公司管理
-            </a>
-        </li>*@
-                            <li id="admin-404">
-                                <a href="#" class="menu" aurl="../Position/Index" atitle="岗位管理" aid="positionlist">
-                                    <i class="fa fa-circle-o"></i> 岗位管理
-                                </a>
-                            </li>
-                            <li id="admin-404">
-                                <a href="#" class="menu" aurl="../SkillTag/SkillStatistic" atitle="方向技能标签统计" aid="skillStatistic">
-                                    <i class="fa fa-circle-o"></i> 方向技能标签统计
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-folder"></i> <span>学员体检</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="admin-login">
-                                <a href="#" class="menu" aurl="../Survey/Index" atitle="技术评估" aid="surveylist">
-                                    <i class="fa fa-circle-o"></i> 技术评估
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="岗位匹配查询" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 岗位匹配查询
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-folder"></i> <span>系统管理</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="admin-login">
-                                <a href="#" class="menu" aurl="../Survey/Index" atitle="角色管理" aid="surveylist">
-                                    <i class="fa fa-circle-o"></i> 角色管理
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="用户管理" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 用户管理
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="词典管理" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 词典管理
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-folder"></i> <span>数据分析</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="admin-login">
-                                <a href="#" class="menu" aurl="../Survey/Index" atitle="技术分析" aid="surveylist">
-                                    <i class="fa fa-circle-o"></i> 技术分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="CQC分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> CQC分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="性格分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 性格分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="职业能力分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 职业能力分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="薪资分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 薪资分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="城市分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 城市分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="项目分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 项目分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="行业分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 行业分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="岗位分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 岗位分析
-                                </a>
-                            </li>
-                            <li id="admin-register">
-                                <a href="#" class="menu" aurl="../Jobs/Index" atitle="招聘信息分析" aid="jobslist">
-                                    <i class="fa fa-circle-o"></i> 招聘信息分析
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="sidebar-menu" id="menuUl">
+                    @*<li class="header">菜单</li>
+                    <li id="admin-index"><a href="#"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>*@
+                     菜单 
                 </ul>
+                <script id="menuList" type="text/x-jquery-tmpl">
+                    {{each data}}
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>${MenuName}</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            {{each Children}}
+                            <li id="admin-login">
+                                <a href="#" class="menu" aurl="${MenuUrl}" atitle="${MenuName}" aid="${MenuCode}">
+                                    <i class="fa fa-circle-o"></i> ${MenuName}
+                                </a>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                    {{/each}}
+                </script>
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -384,6 +254,8 @@
 
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/jQueryUI/jquery-ui.min.js"></script>
+    <script src="~/js/tmpl/jquery.tmpl.js"></script>
+    <script src="~/js/tmpl/jquery.tmplPlus.js"></script>
     <script>
         $.widget.bridge('uibutton', $.ui.button);
     </script>
@@ -447,21 +319,68 @@
             $('.selectpicker').selectpicker('render');
         });
 
+        var _ = {
+            stuNo: "",
+            ScoreTotal: 0,
+            TagScoreList: [],
+            MasterData: {},
+            options: {
+                "url": "/Main/GetCurrentRoleMenus",
+                "data": {},
+                "type": "post",
+                "datatype": "json"
+            },
+            render: function (data) {
+                //$("#ListTb tr:gt(0)").remove();
+                $("#menuList").tmpl(data).appendTo('#menuUl');
+            },
+            getQueryString: function (name) {
+                var reg = new RegExp('(?:(?:&|\\?)' + name + '=([^&]*))|(?:/' + name + '/([^/]*))', 'i');
+                var r = window.location.href.match(reg);
+                if (r != null)
+                    return decodeURI(r[1] || r[2]);
+                return null;
+            },
+            ajaxData: function (options, callback) {
+                $.ajax({
+                    url: options.url,
+                    data: options.data,
+                    type: options.type,
+                    dataType: options.dataType,
+                    beforeSend: function () {
+                        $("#loading").show();
+                    },
+                    success: function (survey) {
+                        callback(survey);
+                    },
+                    complete: function () {
+                        $("#loading").hide();
+                        $('.datetime').datepicker({
+                            autoclose: true,
+                            format: 'yyyy-mm-dd'
+                        });
+                    }
+                })
+            }
+        };
 
         var nthTabs;
         $(document).ready(function () {
-            // 选择框
+            //渲染菜单
+            _.ajaxData(_.options, function (result) {
+                _.render(result);
+            })
             //基于bootstrap tab的自定义多标签的jquery实用插件，滚动条依赖jquery.scrollbar，图标依赖font-awesome
             nthTabs = $("#editor-tabs").nthTabs();
             nthTabs.addTab({
                 id: 'cnCharts',
-                title: '主页',
+                title: '调查问卷管理',
                 content: '<iframe src="../Survey/Index" id="content"  style="width:100%;height:630px;"></iframe>',
             }).setActTab("#cnCharts");
 
             $(".select2").select2();
 
-            $(".menu").click(function () {
+            $("#menuUl").on("click",".menu",function () {
                 var allTabs = nthTabs.getTabList();
                 var selectId = $(this).attr("aid");
                 var IsExist = false;

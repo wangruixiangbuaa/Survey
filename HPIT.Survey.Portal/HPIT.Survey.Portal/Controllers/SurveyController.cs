@@ -102,6 +102,19 @@ namespace HPIT.Survey.Portal.Controllers
         {
             SurveyDal dal = new SurveyDal();
             SurveyModel match = dal.QueryByID(model.SurveyID).Form;
+            match.CompanyNo = model.CompanyNo;
+            match.DepartName = model.DepartName;
+            match.Direction = model.Direction;
+            match.Phone = model.Phone;
+            match.PositionName = model.PositionName;
+            match.School = model.School;
+            match.StudentNo = model.StudentNo;
+            match.StuName = model.StuName;
+            match.Type = model.Type;
+            match.WagesOfFull = model.WagesOfFull;
+            match.WagesOfPeriod = model.WagesOfPeriod;
+            match.WagesOfReal = model.WagesOfReal;
+            match.Year = model.Year;
             List<Project> newProject = new List<Project>();
             foreach (var item in model.Project)
             {

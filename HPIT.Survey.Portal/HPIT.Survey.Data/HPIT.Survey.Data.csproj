@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapter\CommonDal.cs" />
+    <Compile Include="Adapter\DictionaryDal.cs" />
+    <Compile Include="Adapter\MenuDal.cs" />
     <Compile Include="Adapter\PositionDal.cs" />
     <Compile Include="Adapter\SkillTagDal.cs" />
     <Compile Include="Adapter\StudentDal.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Entitys\SkillTag.cs" />
     <Compile Include="Entitys\SkillTags.cs" />
     <Compile Include="Entitys\Student.cs" />
+    <Compile Include="Entitys\StudentEvaluate.cs" />
     <Compile Include="Entitys\StudentTags.cs" />
     <Compile Include="Entitys\SurveyContext.cs" />
     <Compile Include="Entitys\SurveyModel.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Entitys\Users.cs" />
     <Compile Include="Entitys\WorkFlow\Activity.cs" />
     <Compile Include="ExtEntitys\AbstractFormModel.cs" />
+    <Compile Include="ExtEntitys\MenuExt.cs" />
     <Compile Include="ExtEntitys\PositionExt.cs" />
     <Compile Include="ExtEntitys\SkillTagStatic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

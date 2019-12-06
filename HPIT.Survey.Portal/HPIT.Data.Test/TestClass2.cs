@@ -44,6 +44,14 @@ namespace HPIT.Data.Test
 
 
         [TestMethod]
+        public void TestMethodMenus()
+        {
+            var result = MenuDal.Instance.GetMenusByRoleName("学术主管");
+            string json = JsonConvert.SerializeObject(result);
+        }
+
+
+        [TestMethod]
         public void TestMethodPTags()
         {
             var result = PositionDal.Instance.GetTagsByPositionID("e8337a42-0d06-4fee-8332-ab227caee5fc");
@@ -76,7 +84,7 @@ namespace HPIT.Data.Test
         [TestMethod]
         public void TestMethod6()
         {
-            var json = SurveyDal.Instance.Delete(1058);
+            var json = SurveyDal.Instance.DeleteSurvery(1073);
         }
 
         [TestMethod]
@@ -123,6 +131,22 @@ namespace HPIT.Data.Test
             int reuslt = dal.UpdateTag(tag);
             var result = dal.context.SkillTag.ToList();
             string json = JsonConvert.SerializeObject(reuslt);
+        }
+
+        [TestMethod]
+        public void TestAddStudentEval()
+        {
+            StudentEval studentEval = new StudentEval();
+            studentEval.Direction = "NET";
+            studentEval.StudentName = "王瑞祥";
+            studentEval.StudentNo = "123456";
+            studentEval.TeacherPoint = 5;
+            studentEval.CreateTime = DateTime.Now;
+            studentEval.Score = 10;
+            SurveyContext context = new SurveyContext();
+            context.StudentEvaluate.Add(studentEval);
+            var result = context.SaveChanges();
+            string json = JsonConvert.SerializeObject(result);
         }
     }
 }

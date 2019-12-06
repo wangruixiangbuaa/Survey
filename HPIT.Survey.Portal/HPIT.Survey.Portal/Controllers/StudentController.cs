@@ -1,4 +1,5 @@
-﻿using HPIT.Evalute.Data;
+﻿using HPIT.Data.Core;
+using HPIT.Evalute.Data;
 using HPIT.Evalute.Data.Model;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
@@ -17,6 +18,14 @@ namespace HPIT.Survey.Portal.Controllers
     {
         // GET: Student
         public ActionResult Index()
+        {
+            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            ViewBag.StuName = currentUser.RealName;
+            return View();
+        }
+
+
+        public ActionResult ListIndex()
         {
             return View();
         }
@@ -51,8 +60,32 @@ namespace HPIT.Survey.Portal.Controllers
                 stag.StudentName = currentUser.RealName;
                 stag.StudentNo = stuNo;
             }
-            var result = StudentDal.Instance.AddStudentTags(stuNo,model.tags);
+            StudentEval studentEval = new StudentEval();
+            studentEval.StudentName = currentUser.RealName;
+            studentEval.StudentNo = stuNo;
+            studentEval.CreateTime = DateTime.Now;
+            studentEval.Score = model.tags.Sum(r=>r.SelfPoint);
+            var result = StudentDal.Instance.AddStudentTags(stuNo,model.tags,studentEval);
             return new DeluxeJsonResult(new { data = result, status = 200 }, "yyyy-MM-dd HH:mm");
+        }
+
+        [HttpPost]
+        public DeluxeJsonResult UpdateEvalPoint(StudentTagsModel model)
+        {
+           int result = StudentDal.Instance.UpdateStudentTags(model.stuNo,model.tags);
+           return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+        }
+
+
+        public DeluxeJsonResult QueryPageData(SearchModel<StudentEval> search)
+        {
+            int total = 0;
+            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            search.UserName = currentUser.RealName;
+            search.RoleName = currentUser.FullName;
+            var result = StudentDal.Instance.GetPageData(search, out total);
+            var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
+            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages }, "yyyy-MM-dd HH:mm");
         }
 
         [HttpPost]
