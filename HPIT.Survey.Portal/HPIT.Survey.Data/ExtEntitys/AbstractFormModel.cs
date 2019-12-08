@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPIT.Evalute.Data.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,8 @@ namespace HPIT.Survey.Data.ExtEntitys
         public T Form { get; set; }
 
         public Dictionary<string, object> ExtraDatas { get; set; } = new Dictionary<string, object>();
+
+
+        public HPITMemberInfo CurrentRole { get; set; } = new HPITMemberInfo();
     }
 }

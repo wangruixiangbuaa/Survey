@@ -67,8 +67,9 @@
                         <td>${Name}</td>
                         <td>${Value}</td>
                         <td>${Type}</td>
-                        <td><a href="#" class="dicEdit" tid="${ID}">编辑</a></td>
-                        <td><a href="#" class="divDelete" tid="${ID}">删除</a></td>
+                        <td><a href="#" class="dicEdit" tid="${ID}">编辑</a>
+                            <a href="#" class="divDelete" tid="${ID}">删除</a>
+                        </td>
                     </tr>
                     {{/each}}
                 </script>
@@ -84,7 +85,7 @@
             MasterData: {},
             options: {
                 "url": "/Dictionary/QueryPageData",
-                "data": { "PageIndex": 0,"PageSize":12 },
+                "data": { "PageIndex": 0,"PageSize":10 },
                 "type": "post",
                 "datatype": "json"
             },

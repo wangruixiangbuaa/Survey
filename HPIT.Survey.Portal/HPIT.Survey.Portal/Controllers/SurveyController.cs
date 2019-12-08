@@ -55,6 +55,7 @@ namespace HPIT.Survey.Portal.Controllers
         {
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
             result.Form.Type = (int)SurveyType.User;
+            result.CurrentRole = DeluxeUser.CurrentMember;
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
@@ -63,6 +64,7 @@ namespace HPIT.Survey.Portal.Controllers
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
             result.Form.Type = (int)SurveyType.Student;
             HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            result.CurrentRole = DeluxeUser.CurrentMember;
             //根据学生编号创建新的
             List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(currentUser.RealName,"");
             if (matchList.Count == 1)

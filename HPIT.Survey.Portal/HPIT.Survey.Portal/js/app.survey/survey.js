@@ -9,6 +9,41 @@ var _ = {
         "type": "get",
         "datatype": "json"
     },
+    checkZch15: function (num) {
+        if (num.length != 15) {
+            return "请输入15存数字";
+        }
+        var reg = /^[0-9]*$/;
+        if (!reg.test(num)) {
+            return "请输入纯数字";
+        }
+        var a = num.split("");
+        var p = [], s = [];
+        var temp = 0;
+        p[0] = 10;
+        s[0] = (p[0] % 11) * 1 + a[0] * 1;
+        for (var j = 1; j < a.length; j++) {
+            temp = s[j - 1] % 10;
+        }
+        if (temp == 0) {
+            temp = 10;
+        }
+        p[j] = temp * 2;
+        s[j] = (p[j] % 11) * 1 + a[j] * 1;
+        if (11 - p[14] >= 0) {
+            temp = 11 - p[14];
+        } else {
+            temp = 22 - p[14];
+        }
+
+        if (temp == 10) {
+            temp = 0;
+        }
+        if (temp == a[14]) {
+            return true;
+        }
+        return "校验失败";
+    },
     uuid: function() {
         var s = [];
         var hexDigits = "0123456789abcdef";
@@ -107,6 +142,15 @@ $(document).ready(function () {
     _.ajaxData(_.options, function (result) {
         _.MasterData = result;
         _.render(_.MasterData);
+        //判断是不是查看功能
+        if (result.CurrentRole != null) {
+            if (result.CurrentRole.FullName != "学生" && result.CurrentRole.FullName != '人事经理') {
+                $('#save').hide();
+                $('#addProject').hide();
+                $('#addPosition').hide();
+                $('#addjob').hide();
+            }
+        };
     })
 
     //检测界面上input标签的变化，如果有变化 则更改其中的值

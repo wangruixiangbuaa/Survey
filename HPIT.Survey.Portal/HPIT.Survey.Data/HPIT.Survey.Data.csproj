@@ -96,6 +96,10 @@
       <Project>{317ce2ff-4a10-43b8-bc0f-6861c20d6cfa}</Project>
       <Name>HPIT.Data.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HPIT.Evalute.Data\HPIT.Evalute.Data.csproj">
+      <Project>{cb3b9317-61d2-48d6-a338-eefa84b55bad}</Project>
+      <Name>HPIT.Evalute.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
