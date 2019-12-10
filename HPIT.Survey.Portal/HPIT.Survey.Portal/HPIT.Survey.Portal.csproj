@@ -153,6 +153,7 @@
     <Content Include="js\app.survey\survey.js" />
     <Content Include="js\aurora.js" />
     <Content Include="js\coalesce.js" />
+    <Content Include="js\common\common.js" />
     <Content Include="js\demo.js" />
     <Content Include="js\Echarts.js" />
     <Content Include="js\echarts\main.min.js" />

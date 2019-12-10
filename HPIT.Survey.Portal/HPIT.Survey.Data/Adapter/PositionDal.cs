@@ -25,8 +25,8 @@ namespace HPIT.Survey.Data.Adapter
             using (var context = new SurveyContext())
             {
                 string sql = string.Format(@"SELECT s.PositionID,t.*
-                                             FROM[SurveyDB].[dbo].[SkillTags] s 
-                                             left join[SurveyDB].[dbo].[SkillTag] t on s.TagID = t.TagID 
+                                             FROM [SurveyDB].[dbo].[SkillTags] s 
+                                             left join [SurveyDB].[dbo].[SkillTag] t on s.TagID = t.TagID 
                                              where PositionID = '{0}'", positionID);
                 tags = context.Database.SqlQuery<SkillTag>(sql).ToList();
             }

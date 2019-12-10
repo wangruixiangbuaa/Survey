@@ -19,6 +19,32 @@ namespace HPIT.Survey.Data.Adapter
             this.context = new SurveyContext();
         }
 
+        public int DeleteDic(int id)
+        {
+            int result = 0;
+            using (var db = new SurveyContext())
+            {
+                result = db.Database.ExecuteSqlCommand(
+                  string.Format("delete from dbo.Dictionary where ID={0}", id));
+            }
+            return result;
+        }
+
+        public int UpdateDic(Dictionary dictionary)
+        {
+            Dictionary match = this.context.Dictionary.FirstOrDefault(r=>r.ID==dictionary.ID);
+            int result = 0;
+            if (match != null)
+            {
+                this.context.Entry(match).State = System.Data.Entity.EntityState.Modified;
+                result = this.context.SaveChanges();
+            }else
+            {
+                this.context.Dictionary.Add(dictionary);
+            }
+            return result;
+        }
+
         /// <summary>
         /// 分页查询的方法
         /// </summary>

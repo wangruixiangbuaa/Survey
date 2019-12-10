@@ -29,11 +29,11 @@
     <div class="">
         <div class="box-body">
             <div class="pull-left">
-                @*<div class="form-group form-inline">
+                <div class="form-group form-inline">
                         <div class="btn-group">
-                            <a href="AddUser.aspx" class="btn btn-default" target="_self">添加用户</a><br />
+                            <a href="#" id="dicAdd" class="btn btn-default" target="_self">添加词典</a><br />
                         </div>
-                    </div>*@
+                    </div>
             </div>
             <div class="box-tools pull-right" style="margin-bottom: 17px;">
                 <div class="has-feedback">
@@ -67,8 +67,8 @@
                         <td>${Name}</td>
                         <td>${Value}</td>
                         <td>${Type}</td>
-                        <td><a href="#" class="dicEdit" tid="${ID}">编辑</a>
-                            <a href="#" class="divDelete" tid="${ID}">删除</a>
+                        <td><a href="#" type="dicEdit" tid="${ID}">编辑</a>
+                            <a href="#" type="dicDelete" tid="${ID}">删除</a>
                         </td>
                     </tr>
                     {{/each}}
@@ -77,71 +77,83 @@
         </div>
     </div>
 </section>
+<div class="modal fade" id="editModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">岗位标签编辑</h3>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="positionID" style="display:none;" />
+                <form id="dicform">
+                <table class="table table-bordered table-striped" style="width:570px">
+                    <tr>
+                        <td>词典名称<input class="form-control" name="ID" rows="10" id="dicid" style="display:none;" /></td>
+                        <td><input class="form-control" name="Name" rows="10" id="dicname" /></td>
+                    </tr>
+                    <tr>
+                        <td>词典值</td>
+                        <td><input type="text" class="form-control" name="Value" id="dicvalue"></td>
+                    </tr>
+                    <tr>
+                        <td>词典类型</td>
+                        <td><input type="text" class="form-control" name="Type" id="dicType"></td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" id="save" aria-hidden="true">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script src="~/js/page/paging.js"></script>
+    <script src="~/js/common/common.js"></script>
     <script type="text/javascript" charset="utf-8">
-        var _ = {
-            MasterData: {},
-            options: {
-                "url": "/Dictionary/QueryPageData",
-                "data": {
-                    "PageIndex": 0, "PageSize": 10, "Entity": { "Type": "方向" }},
-                "type": "post",
-                "datatype": "json"
-            },
-            render: function (data) {
-                $("#ListTb tr:gt(0)").remove();
-                $("#dataList").tmpl(data).appendTo('#ListTb');
-            },
-            getQueryString: function (name) {
-                var reg = new RegExp('(?:(?:&|\\?)' + name + '=([^&]*))|(?:/' + name + '/([^/]*))', 'i');
-                var r = window.location.href.match(reg);
-                if (r != null)
-                    return decodeURI(r[1] || r[2]);
-                return null;
-            },
-            ajaxData: function (options, callback) {
-                $.ajax({
-                    url: options.url,
-                    data: options.data,
-                    type: options.type,
-                    dataType: options.dataType,
-                    beforeSend: function () {
-                        $("#loading").show();
-                    },
-                    success: function (survey) {
-                        callback(survey);
-                    },
-                    complete: function () {
-                        $("#loading").hide();
-                        $('.datetime').datepicker({
-                            autoclose: true,
-                            format: 'yyyy-mm-dd'
-                        });
-                    }
-                })
+        var dic = {
+            queryList: function () {
+                _.queryList("/Dictionary/QueryPageData", { "PageIndex": 0, "PageSize": 12, "Entity": { "Type": "方向" } });
             }
-        };
+        }
         $(document).ready(function () {
-            _.ajaxData(_.options, function (result) {
-                _.render(result);
-                var setTotalCount = result.Total;
-                $('#box').paging({
-                    initPageNo: 1, // 初始页码
-                    totalPages: result.TotalPages, //总页数
-                    totalCount: '合计' + setTotalCount + '条数据', // 条目总数
-                    slideSpeed: 600, // 缓动速度。单位毫秒
-                    jump: true, //是否支持跳转
-                    callback: function (page) {
-                        //回调函数
-                        _.options.data.PageIndex = page;
-                        _.ajaxData(_.options, function (result) {
-                            _.render(result);
-                        });
+            $('#ListTb').on("click", "a", function () {
+                var type = $(this).attr("type");
+                var id = $(this).attr("tid");
+                if (type == "dicEdit") {
+                    $("#dicid").val(id);
+                    $('#editModal').modal('show');
+                }
+                if (type == 'dicDelete') {
+                    _.options.url = "/Dictionary/DeleteDic?id=" + id;
+                    _.ajaxData(_.options, function (result) {
+                        if (result.state > 0) {
+                            dic.queryList();
+                        } else {
+                            swal("", "删除失败", "info");
+                        }
+                    })
+                }
+            })
+            $("#dicAdd").click(function () {
+                $('#editModal').modal('show');
+            })
+            $('#save').click(function () {
+                _.options.url = "/Dictionary/UpdateDic";
+                _.options.data = $("#dicform").serialize();
+                _.ajaxData(_.options, function (result) {
+                    if (result.state > 0) {
+                        dic.queryList();
+                    } else {
+                        swal("", "更新失败", "info");
                     }
                 })
-            });
+            })
+            dic.queryList();
         })
     </script>
 }

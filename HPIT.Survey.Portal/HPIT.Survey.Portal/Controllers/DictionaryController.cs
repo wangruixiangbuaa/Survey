@@ -24,5 +24,19 @@ namespace HPIT.Survey.Portal.Controllers
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages }, "yyyy-MM-dd HH:mm");
         }
+
+
+        public DeluxeJsonResult DeleteDic(int id)
+        {
+            int result = DictionaryDal.Instance.DeleteDic(id);
+            return new DeluxeJsonResult(new { data = result,state= result}, "yyyy-MM-dd HH:mm");
+        }
+
+        [HttpPost]
+        public DeluxeJsonResult UpdateDic(HPIT.Survey.Data.Entitys.Dictionary dictionary)
+        {
+            int result = DictionaryDal.Instance.UpdateDic(dictionary);
+            return new DeluxeJsonResult(new { data = result,state = result}, "yyyy-MM-dd HH:mm");
+        }
     }
-}
+} 
