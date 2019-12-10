@@ -55,6 +55,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HPIT.Data.Core\HPIT.Data.Core.csproj">
+      <Project>{317ce2ff-4a10-43b8-bc0f-6861c20d6cfa}</Project>
+      <Name>HPIT.Data.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -35,12 +35,13 @@ namespace HPIT.Survey.Data.Entitys
             audit,
             [Display(Name = "通过")]
             pass,
+            [Display(Name = "完成")]
+            complete,
             [Display(Name = "未通过")]
-            fail,
+            reject,
             [Display(Name = "作废")]
             cancel,
-            [Display(Name = "完成")]
-            complete
+
         }
 
         public enum DataStatus

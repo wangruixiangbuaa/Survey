@@ -14,7 +14,11 @@ namespace HPIT.Survey.Data.Adapter
         public SurveyWorkFlow()
         {
             this.activities = new List<Activity>();
+            var pre = new Activity() { ActivityName = "学生", ActivitySort = 1, ActivityType = 1, RoleName = "学生" };
+            pre.ActivityUsers.Add(new Entitys.Users() { UserName = "学生" });
+            this.activities.Add(pre);
             var first = new Activity() { ActivityName = "人事经理审批", ActivitySort = 1, ActivityType = 1, RoleName = "人事经理" };
+            first.ActivityUsers.Add(new Entitys.Users() { UserName = "人事经理" });
             this.activities.Add(first);
             var second = new Activity() { ActivityName = "教质经理审批", ActivitySort = 2, ActivityType = 1, RoleName = "教质经理" };
             second.ActivityUsers.Add(new Entitys.Users() { UserName = "陈文玉" });
@@ -49,7 +53,7 @@ namespace HPIT.Survey.Data.Adapter
         {
             for (int i = 0; i < this.activities.Count; i++)
             {
-                if (this.activities[i].RoleName == roleName && this.activities[i].RoleName != "人事经理")
+                if (this.activities[i].RoleName == roleName)
                 {
                     return this.activities[i - 1].ActivityUsers[0].UserName;
                 }

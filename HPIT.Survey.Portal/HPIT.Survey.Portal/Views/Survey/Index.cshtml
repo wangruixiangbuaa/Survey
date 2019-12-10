@@ -90,14 +90,22 @@
                             {{if Type == 0}}
                             <td>已就业</td>
                             <td>
+                                {{if CurrentRoleName == '学生' && AuditStatus == 0 }}
                                 <a href="/Survey/UserIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">编辑</a>
                                 <a href="#" type="delete" pid="${SurveyID}">删除</a>
+                                {{else}}
+                                <a href="/Survey/UserIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">查看</a>
+                                {{/if}}
                             </td>
                             {{else}}
                             <td>未就业</td>
                             <td>
+                                {{if CurrentRoleName == '学生' && AuditStatus == 0}}
                                 <a href="/Survey/StudentIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">编辑</a>
                                 <a href="#" type="delete" pid="${SurveyID}">删除</a>
+                                {{else}}
+                                <a href="/Survey/StudentIndex?id=${SurveyID}" class="posiDelete" pname="${SurveyID}">查看</a>
+                                {{/if}}
                             </td>
                             {{/if}}
                             {{if AuditStatus != 3 && CurrentRoleName != '学生'}}

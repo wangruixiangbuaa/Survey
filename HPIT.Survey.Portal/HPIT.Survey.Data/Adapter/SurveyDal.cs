@@ -9,6 +9,7 @@ using System.Data.Entity;
 using HPIT.Data.Core;
 using System.Linq.Expressions;
 using HPIT.Survey.Data.Tool;
+using static HPIT.Survey.Data.Entitys.Enumerations;
 
 namespace HPIT.Survey.Data.Adapter
 {
@@ -31,6 +32,7 @@ namespace HPIT.Survey.Data.Adapter
         {
             SurveyContext context = new SurveyContext();
             survey.CreateTime = DateTime.Now;
+            survey.AuditStatus = (int)SurveyStatus.audit;
             context.SurveyModel.Add(survey);
             //遍历所有的职位，生成标签
             List<SkillTag> allTags = context.SkillTag.ToList();
@@ -76,6 +78,7 @@ namespace HPIT.Survey.Data.Adapter
         public int Update(SurveyModel survey)
         {
             survey.CreateTime = DateTime.Now;
+            survey.AuditStatus = (int)SurveyStatus.audit;
             context.Entry(survey).State = EntityState.Modified;
             return context.SaveChanges();
         }
@@ -110,18 +113,37 @@ namespace HPIT.Survey.Data.Adapter
             //通过工作流审批 获取到下一个审批人
             string nextAuditName = "";
             SurveyWorkFlow surveyWorkFlow = new SurveyWorkFlow();
+            //审批通过
             if (log.AuditState == 1)
             {
                 nextAuditName = surveyWorkFlow.Pass(log.AuditName, log.RoleName);
+                log.AuditState = (int)SurveyStatus.pass;
             }
+            //拒绝
             else
             {
                 nextAuditName = surveyWorkFlow.Reject(log.AuditName, log.RoleName);
+                log.AuditState = (int)SurveyStatus.reject;
             }
             if (nextAuditName == "已完成")
             {
-                log.AuditState = 3;
+                log.AuditState = (int)SurveyStatus.complete;
             }
+
+            if (nextAuditName == "人事经理")
+            {
+                log.AuditState = (int)SurveyStatus.audit;
+                SurveyModel current = this.QuerySingleByID(log.SurveyID).Form;
+                //如果没找到则为空，如果不为空，则设置成为当前单子的pem;
+                nextAuditName = current == null ? "" : current.PEM;
+            }
+
+            if (nextAuditName == "学生")
+            {
+                log.AuditState = (int)SurveyStatus.draft;
+                nextAuditName = "";
+            }
+
             context.Database.ExecuteSqlCommand(
                   string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}", nextAuditName, log.AuditState,log.SurveyID));
             return context.SaveChanges();
@@ -229,7 +251,7 @@ namespace HPIT.Survey.Data.Adapter
             else if (search.RoleName == "人事经理")
             {
                 Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;
-                Expression<Func<SurveyModel, bool>> lambda1 = item => (item.PEM == search.UserName && string.IsNullOrEmpty(item.AuditName)) || item.AuditStatus == 3;
+                Expression<Func<SurveyModel, bool>> lambda1 = item => item.PEM == search.UserName && (item.AuditName == item.PEM || string.IsNullOrEmpty(item.AuditName) || item.AuditStatus == 3);
                 //合并表达式
                 parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
             }

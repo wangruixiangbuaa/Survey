@@ -41,6 +41,7 @@ namespace HPIT.Survey.Portal.Controllers
         public DeluxeJsonResult GetSurveyByID(int id)
         {
             var result = SurveyDal.Instance.QuerySingleByID(id);
+            result.CurrentRole = DeluxeUser.CurrentMember;
             return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
         }
 
@@ -175,6 +176,7 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages}, "yyyy-MM-dd HH:mm");
         }
 
+        [AllowAnonymous]
         public DeluxeJsonResult QueryStudentInfo(string name,string className)
         {
             List<EvalStudent> result = EvaluteDal.Instance.GetMatchStudent(name,className);

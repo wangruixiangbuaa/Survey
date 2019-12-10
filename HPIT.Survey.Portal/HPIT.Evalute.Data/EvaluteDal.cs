@@ -57,6 +57,7 @@ namespace HPIT.Evalute.Data
             HPITMemberInfo stu = new HPITMemberInfo();
             stu.RealName = loginName;
             stu.Password =Md5Encrypt.Md5(passWord);
+            LogHelper.Default.WriteInfo(stu.RealName+"---"+stu.Password);
             List<HPITMemberInfo> result = DapperDBHelper.Instance.ExcuteQuery<HPITMemberInfo>(sql, stu).ToList();
             return result;
         }

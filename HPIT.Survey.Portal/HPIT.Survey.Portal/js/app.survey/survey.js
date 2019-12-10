@@ -64,7 +64,6 @@ var _ = {
         $("#projectC").tmpl(survey).appendTo('#div_project');
         $("#positionC").tmpl(survey).appendTo('#div_position');
         $("#jobC").tmpl(survey).appendTo('#div_job');
-
         $("#project").tmpl(_.MasterData).appendTo('#projectTb');
         $("#position").tmpl(_.MasterData).appendTo('#positionTb');
         $("#job").tmpl(_.MasterData).appendTo('#jobTb');
@@ -93,7 +92,7 @@ var _ = {
         } catch (e) {
             console.log("下拉框,初始化报错了。");
         }
-
+        //初始化分步的界面显示
         $("#wizard").bwizard().show();
     },
     getQueryString: function (name) {
@@ -117,6 +116,7 @@ var _ = {
             },
             complete: function () {
                 $("#loading").hide();
+                //初始化日期控件
                 $('.datetime').datepicker({
                     autoclose: true,
                     format: 'yyyy-mm-dd'
@@ -162,10 +162,9 @@ $(document).ready(function () {
         //学生姓名发生变化的时候
         if (name == "StuName") {
             var nvalue = $(this).val();
-            _.options.url = "/Survey/QueryStudentInfo?name=" + nvalue +"&className="+'';
+            _.options.url = "/Survey/QueryStudentInfo?name=" + encodeURI(nvalue) + "&className=" + encodeURI('');
             _.options.data = {};
             _.ajaxData(_.options, function (result) {
-                //console.log(result);
                 if (result.State == 'OK') {
                     _.MasterData.Form.ProjectName = result.Data.pName;
                     _.MasterData.Form.School = result.Data.GraduateSchool;
@@ -173,6 +172,7 @@ $(document).ready(function () {
                     _.MasterData.Form.Phone = result.Data.Mobile;
                     _.MasterData.Form.Year = result.Data.bYear;
                     _.MasterData.Form.Direction = result.Data.mName;
+                    //重新加载数据，渲染界面
                     $('#step1').html('');
                     $("#basic").tmpl(_.MasterData).appendTo('#step1');
                 };
@@ -245,8 +245,15 @@ $(document).ready(function () {
             swal("", "公司名不能为空！", "info");
             return;
         }
-        if (form.CompanyNo == '' || form.CompanyNo == null) {
+        if (form.CompanyNo == '' || form.CompanyNo == null)
+        {
             swal("", "公司工商号不能为空！", "info");
+            return;
+        }
+        var regExp = /^[0-9]*$/;
+        if (form.CompanyNo.length != 15 || !regExp.test(form.CompanyNo))
+        {
+            swal("", "公司工商号不符合要求(15位数字)", "info");
             return;
         }
         if (form.Position.length == 0) {
