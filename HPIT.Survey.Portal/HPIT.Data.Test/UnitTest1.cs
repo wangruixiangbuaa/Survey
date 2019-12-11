@@ -17,7 +17,7 @@ namespace HPIT.Data.Test
         public void TestMethod1()
         {
             SurveyModel survey = new SurveyModel();
-            survey.StuName = "调查学生3";
+            survey.StuName = "调查学生11-29";
             survey.WagesOfFull = 123;
             survey.WagesOfPeriod = 321;
             survey.WagesOfReal = 333;
@@ -34,8 +34,11 @@ namespace HPIT.Data.Test
             projects.Add(new Project() { BeginTime = DateTime.Now, EndTime = DateTime.Now, ProjectDesc ="第一个项目", ProjectName ="物流管理系统" , ProjectType ="物流", ProjectTypeID = 1 });
             projects.Add(new Project() { BeginTime = DateTime.Now, EndTime = DateTime.Now, ProjectDesc = "2第一个项目", ProjectName = "物流管理系统2", ProjectType = "物流2", ProjectTypeID = 1 });
             survey.Project = projects;
-            survey.StuNo = 1;
-            //survey.CompanyID = 1;
+            survey.CompanyNo = "114105022468253";
+            survey.Company.CompanyDesc = "这是公司描述";
+            survey.Company.CompanyType = "计算机互联网";
+            survey.Company.CompanyName = "腾讯";
+            survey.Company.City = "深圳";
             survey.Year = 2019;
             survey.CreateTime = DateTime.Now;
             survey.Direction = "Net";
@@ -44,7 +47,6 @@ namespace HPIT.Data.Test
             survey.Phone = "17700611332";
             survey.CorworkPhone = "18813048831";
             survey.Status = (int)SurveyStatus.draft;
-            survey.CompanyNo = "Neeee";
             //survey.Student = new Student() { Batch="NET190901", Address ="中兴", City="郑州", Phone = "17700611332", StuName = "王瑞祥"  , Year = 2019 }
             SurveyDal.Instance.Create(survey);
             AbstractFormModel<SurveyModel> model = new AbstractFormModel<SurveyModel>();

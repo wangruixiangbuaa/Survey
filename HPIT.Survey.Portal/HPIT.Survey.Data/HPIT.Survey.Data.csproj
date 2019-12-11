@@ -57,6 +57,7 @@
     <Compile Include="Adapter\DictionaryDal.cs" />
     <Compile Include="Adapter\MenuDal.cs" />
     <Compile Include="Adapter\PositionDal.cs" />
+    <Compile Include="Adapter\ProjectDal.cs" />
     <Compile Include="Adapter\SkillTagDal.cs" />
     <Compile Include="Adapter\StudentDal.cs" />
     <Compile Include="Adapter\SurveyDal.cs" />

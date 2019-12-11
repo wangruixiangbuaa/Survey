@@ -80,7 +80,7 @@ namespace HPIT.Survey.Data.Entitys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActiveJobs> ActiveJobs { get; set; }
 
-        public virtual Company Company { get; set; } 
+        public virtual Company Company { get; set; } = new Company();
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Position> Position { get; set; }
@@ -94,7 +94,7 @@ namespace HPIT.Survey.Data.Entitys
         [NotMapped]
         public Project CurrentProject { get; set; }
 
-        public virtual Student Student { get; set; } = new Student();
+        public virtual Student Student { get; set; } 
 
         [NotMapped]
         public string CurrentRoleName { get; set; }

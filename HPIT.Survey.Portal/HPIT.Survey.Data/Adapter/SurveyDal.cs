@@ -33,6 +33,20 @@ namespace HPIT.Survey.Data.Adapter
             SurveyContext context = new SurveyContext();
             survey.CreateTime = DateTime.Now;
             survey.AuditStatus = (int)SurveyStatus.audit;
+            //匹配公司信息
+            Company match = context.Company.FirstOrDefault(r => r.CompanyNo == survey.CompanyNo);
+            if (match != null)
+            {
+                survey.CompanyID = match.CompanyID;
+                match.City = survey.Company.City;
+                match.CompanyDesc = survey.Company.CompanyDesc;
+                match.CompanyType = survey.Company.CompanyType;
+                survey.Company = match;
+            }
+            else
+            {
+                survey.Company.CompanyNo = survey.CompanyNo;
+            }
             context.SurveyModel.Add(survey);
             //遍历所有的职位，生成标签
             List<SkillTag> allTags = context.SkillTag.ToList();
@@ -79,6 +93,20 @@ namespace HPIT.Survey.Data.Adapter
         {
             survey.CreateTime = DateTime.Now;
             survey.AuditStatus = (int)SurveyStatus.audit;
+            //匹配公司信息
+            Company match = context.Company.FirstOrDefault(r => r.CompanyNo == survey.CompanyNo);
+            if (match != null)
+            {
+                survey.CompanyID = match.CompanyID;
+                match.City = survey.Company.City;
+                match.CompanyDesc = survey.Company.CompanyDesc;
+                match.CompanyType = survey.Company.CompanyType;
+                survey.Company = match;
+            }
+            else
+            {
+                survey.Company.CompanyNo = survey.CompanyNo;
+            }
             context.Entry(survey).State = EntityState.Modified;
             return context.SaveChanges();
         }
@@ -179,7 +207,6 @@ namespace HPIT.Survey.Data.Adapter
             AbstractFormModel<SurveyModel> model = new AbstractFormModel<SurveyModel>();
             model.Form = new SurveyModel();
             model.Form.Company = new Company();
-            model.Form.Student = new Student();
             model.ExtraDatas = GetExtraDatas();
             return model;
         }
