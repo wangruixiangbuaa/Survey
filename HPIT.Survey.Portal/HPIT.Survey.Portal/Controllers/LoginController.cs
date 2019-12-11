@@ -28,7 +28,6 @@ namespace HPIT.Survey.Portal.Controllers
         // GET: Login
         public JsonResult LoginIn(string username, string password)
         {
-            //
             List<HPITMemberInfo> users = EvaluteDal.Instance.LoginMember(username,password);
             JsonResult jsonResult = new JsonResult();
             //如果找到的话，就添加到缓存当中，并且跳转到主页面

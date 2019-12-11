@@ -42,13 +42,13 @@ namespace HPIT.Survey.Portal.Controllers
         {
             var result = SurveyDal.Instance.QuerySingleByID(id);
             result.CurrentRole = DeluxeUser.CurrentMember;
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
         public DeluxeJsonResult DeleteSurveyByID(int id)
         {
             var result = SurveyDal.Instance.Delete(id);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
         [AllowAnonymous]
@@ -57,7 +57,7 @@ namespace HPIT.Survey.Portal.Controllers
             AbstractFormModel<SurveyModel> result = SurveyDal.Instance.StartNewSurvey();
             result.Form.Type = (int)SurveyType.User;
             result.CurrentRole = DeluxeUser.CurrentMember;
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
         public DeluxeJsonResult StartStudentNewSurvey(string stuNo)
@@ -82,7 +82,7 @@ namespace HPIT.Survey.Portal.Controllers
                 result.Form.PRM = match.PRM;
                 result.Form.PEM = match.PEM;
             }
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
         [AllowAnonymous]
@@ -97,7 +97,7 @@ namespace HPIT.Survey.Portal.Controllers
                 model.PEM = !string.IsNullOrEmpty(model.PEM) ? model.PEM : match.PEM;
             }
             var result = SurveyDal.Instance.Create(model);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
         [HttpPost]
@@ -145,7 +145,7 @@ namespace HPIT.Survey.Portal.Controllers
             match.ActiveJobs = newJobs;
             string json = JsonConvert.SerializeObject(match);
             int result = dal.Update(match);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
 
@@ -159,7 +159,7 @@ namespace HPIT.Survey.Portal.Controllers
             log.RoleName = currentUser.FullName;
             SurveyDal dal = new SurveyDal();
             var result = dal.Audit(log);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
         public DeluxeJsonResult QueryPageData(SearchModel<SurveyModel> search)
         {
@@ -173,7 +173,7 @@ namespace HPIT.Survey.Portal.Controllers
                 item.CurrentRoleName = currentUser.FullName;
             }
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
-            return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages}, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages});
         }
 
         [AllowAnonymous]
@@ -182,11 +182,11 @@ namespace HPIT.Survey.Portal.Controllers
             List<EvalStudent> result = EvaluteDal.Instance.GetMatchStudent(name,className);
             if (result.FirstOrDefault() == null)
             {
-                return new DeluxeJsonResult(new { Data = result, State = "Fail" }, "yyyy-MM-dd HH:mm");
+                return new DeluxeJsonResult(new { Data = result, State = "Fail" });
             }
             else
             {
-                return new DeluxeJsonResult(new { Data = result.FirstOrDefault(), State = "OK" }, "yyyy-MM-dd HH:mm");
+                return new DeluxeJsonResult(new { Data = result.FirstOrDefault(), State = "OK" });
             }
             
         }

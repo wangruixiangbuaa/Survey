@@ -15,7 +15,7 @@ namespace HPIT.Survey.Portal.Filters
             base.JsonRequestBehavior = behavior;
             this.DateTimeFormat = "yyyy-MM-dd hh:mm:ss";
         }
-        public DeluxeJsonResult(object data, String dateTimeFormat)
+        public DeluxeJsonResult(object data, String dateTimeFormat= "yyyy-MM-dd HH:mm")
         {
             base.Data = data;
             base.JsonRequestBehavior = JsonRequestBehavior.AllowGet;

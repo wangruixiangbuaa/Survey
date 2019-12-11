@@ -47,7 +47,7 @@ namespace HPIT.Survey.Portal.Controllers
             string stuNo = "";
             if (currentUser.FullName != "学生")
             {
-                return new DeluxeJsonResult(new { data="只能学生进行技术评估",status=403 }, "yyyy-MM-dd HH:mm");
+                return new DeluxeJsonResult(new { data="只能学生进行技术评估",status=403 });
             }
             List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(currentUser.RealName, "");
             if (matchList.Count == 1)
@@ -66,14 +66,14 @@ namespace HPIT.Survey.Portal.Controllers
             studentEval.CreateTime = DateTime.Now;
             studentEval.Score = model.tags.Sum(r=>r.SelfPoint);
             var result = StudentDal.Instance.AddStudentTags(stuNo,model.tags,studentEval);
-            return new DeluxeJsonResult(new { data = result, status = 200 }, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(new { data = result, status = 200 });
         }
 
         [HttpPost]
         public DeluxeJsonResult UpdateEvalPoint(StudentTagsModel model)
         {
            int result = StudentDal.Instance.UpdateStudentTags(model.stuNo,model.tags);
-           return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+           return new DeluxeJsonResult(result);
         }
 
 
@@ -85,14 +85,14 @@ namespace HPIT.Survey.Portal.Controllers
             search.RoleName = currentUser.FullName;
             var result = StudentDal.Instance.GetPageData(search, out total);
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
-            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages }, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages });
         }
 
         [HttpPost]
         public DeluxeJsonResult GetDirectionSkillTag(string direction)
         {
             var tags = SkillTagDal.Instance.DirectionTags(direction);
-            return new DeluxeJsonResult(new { data=tags , points = InitPoints() }, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(new { data=tags , points = InitPoints() });
         }
     }
 }

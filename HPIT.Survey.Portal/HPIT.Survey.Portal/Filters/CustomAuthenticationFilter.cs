@@ -6,6 +6,7 @@ using System.Web.Routing;
 using Newtonsoft.Json;
 using HPIT.Evalute.Data.Model;
 using System;
+using HPIT.Data.Core;
 
 namespace MVCLearn.Filters
 {
@@ -35,6 +36,9 @@ namespace MVCLearn.Filters
             else
             {
                 var value = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(cokie.Value));
+
+                LogHelper.Default.WriteInfo(value+"登录了系统"+filterContext.ActionDescriptor.ActionName +"--"+ filterContext.ActionDescriptor.ControllerDescriptor.ControllerName);
+
                 DeluxeUser.CurrentMember = JsonConvert.DeserializeObject<HPITMemberInfo>(value);
             }
         }

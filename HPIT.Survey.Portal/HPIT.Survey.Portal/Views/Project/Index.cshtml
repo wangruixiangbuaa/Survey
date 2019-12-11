@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "SkillStatistic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <style>
+        #loading {
+            display: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            background: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2000;
+        }
+    </style>
+}
+<div id="loading">
+    <img src="~/img/loadingimg/loading3.gif" style="margin-left: 40%; margin-top: 200px; width: 150px; height: 150px;" />
+</div>
+<h3>项目统计</h3>
+<div class="row">
+</div>
+<div id="main" style="width: 800px; height: 400px;margin-left: 20%;"></div>
+@section scripts{
+    <script src="~/js/tmpl/jquery.tmpl.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            var myChart;
+            var _ = {
+                draw: function (value) {
+                    $.ajax({
+                        url: "/Project/GetProjectStatics?direction=" + value,
+                        data: {},
+                        type: "get",
+                        dataType: "json",
+                        beforeSend: function () {
+                            $("#loading").show();
+                        },
+                        success: function (result) {
+                            data = result;
+                            if (myChart != null && myChart != "" && myChart != undefined) {
+                                myChart.dispose();
+                            }
+                            myChart = echarts.init(document.getElementById('main'));
+                            myChart.setOption({
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    type: 'scroll',
+                                    orient: 'vertical',
+                                    right: 10,
+                                    top: 20,
+                                    bottom: 20,
+                                    data: data.legendData,
+                                    selected: data.selected
+                                },
+                                series: [
+                                    {
+                                        name: '访问来源',
+                                        type: 'pie',
+                                        radius: '75%',
+                                        data: data,
+                                    }
+                                ]
+                            });
+                            //var tmpdata = { "data": result };
+                            //$("#urstatistic").tmpl(data).appendTo('#data');
+                        },
+                        complete: function () {
+                            $("#loading").hide();
+                        }
+                    })
+                }
+            }
+            _.draw("NET");
+            $("#dire").change(function () {
+                $("#main").empty();
+                var value = $(this).val();
+                _.draw(value);
+            });
+
+        })
+    </script>
+}
+

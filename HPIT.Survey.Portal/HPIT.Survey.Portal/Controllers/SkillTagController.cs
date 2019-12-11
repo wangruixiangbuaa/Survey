@@ -27,7 +27,7 @@ namespace HPIT.Survey.Portal.Controllers
             int total = 0;
             var result = SkillTagDal.Instance.GetPageData(search, out total);
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
-            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages }, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages });
         }
 
         [HttpPost]
@@ -35,14 +35,14 @@ namespace HPIT.Survey.Portal.Controllers
         {
             string json = JsonConvert.SerializeObject(model);
             var result = SkillTagDal.Instance.AddTags(model.tags);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
         [HttpPost]
         public DeluxeJsonResult UpdateTag(SkillTag tag)
         {
             var result = SkillTagDal.Instance.UpdateTag(tag);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
 
 
@@ -54,7 +54,7 @@ namespace HPIT.Survey.Portal.Controllers
         public DeluxeJsonResult GetDirectionSkillTagStatics(string direction)
         {
             var result = SkillTagDal.Instance.TagStatistic(direction);
-            return new DeluxeJsonResult(result, "yyyy-MM-dd HH:mm");
+            return new DeluxeJsonResult(result);
         }
     }
 }
