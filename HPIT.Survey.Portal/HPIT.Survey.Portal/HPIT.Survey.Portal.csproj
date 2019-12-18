@@ -160,6 +160,38 @@
     <Content Include="js\editselect\arrow-down.gif" />
     <Content Include="js\editselect\jquery.editable-select.css" />
     <Content Include="js\editselect\jquery.editable-select.js" />
+    <Content Include="js\fileinput\css\fileinput.css" />
+    <Content Include="js\fileinput\css\fileinput.min.css" />
+    <Content Include="js\fileinput\img\loading-sm.gif" />
+    <Content Include="js\fileinput\img\loading.gif" />
+    <Content Include="js\fileinput\js\fileinput.js" />
+    <Content Include="js\fileinput\js\fileinput.min.js" />
+    <Content Include="js\fileinput\js\locales\zh-TW.js" />
+    <Content Include="js\fileinput\js\locales\zh.js" />
+    <Content Include="js\fileinput\js\plugins\piexif.js" />
+    <Content Include="js\fileinput\js\plugins\piexif.min.js" />
+    <Content Include="js\fileinput\js\plugins\purify.js" />
+    <Content Include="js\fileinput\js\plugins\purify.min.js" />
+    <Content Include="js\fileinput\js\plugins\sortable.js" />
+    <Content Include="js\fileinput\js\plugins\sortable.min.js" />
+    <Content Include="js\fileinput\themes\explorer-fas\theme.css" />
+    <Content Include="js\fileinput\themes\explorer-fas\theme.js" />
+    <Content Include="js\fileinput\themes\explorer-fas\theme.min.css" />
+    <Content Include="js\fileinput\themes\explorer-fas\theme.min.js" />
+    <Content Include="js\fileinput\themes\explorer-fa\theme.css" />
+    <Content Include="js\fileinput\themes\explorer-fa\theme.js" />
+    <Content Include="js\fileinput\themes\explorer-fa\theme.min.css" />
+    <Content Include="js\fileinput\themes\explorer-fa\theme.min.js" />
+    <Content Include="js\fileinput\themes\explorer\theme.css" />
+    <Content Include="js\fileinput\themes\explorer\theme.js" />
+    <Content Include="js\fileinput\themes\explorer\theme.min.css" />
+    <Content Include="js\fileinput\themes\explorer\theme.min.js" />
+    <Content Include="js\fileinput\themes\fas\theme.js" />
+    <Content Include="js\fileinput\themes\fas\theme.min.js" />
+    <Content Include="js\fileinput\themes\fa\theme.js" />
+    <Content Include="js\fileinput\themes\fa\theme.min.js" />
+    <Content Include="js\fileinput\themes\gly\theme.js" />
+    <Content Include="js\fileinput\themes\gly\theme.min.js" />
     <Content Include="js\img\x.png" />
     <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\login\canva_moving_effect.js" />
@@ -1240,18 +1272,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\DeluxeUser.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SkillTagController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
     <Compile Include="Filters\CustomAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\StudentTagsModel.cs" />
     <Compile Include="Models\TagsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1366,6 +1401,12 @@
     <Content Include="Views\Student\ListIndex.cshtml" />
     <Content Include="Views\Dictionary\Index.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\Position\PositionStatisticIndex.cshtml" />
+    <Content Include="Views\Statistic\IndustryIndex.cshtml" />
+    <Content Include="Views\FileUpload\Index.cshtml" />
+    <Content Include="Views\FileUpload\FileInputIndex.cshtml" />
+    <Content Include="Views\FileUpload\FileListIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

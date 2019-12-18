@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using System.Web.Security;
+
 namespace HPIT.Survey.Portal.Controllers
 {
     public class LoginController : Controller
@@ -34,8 +36,29 @@ namespace HPIT.Survey.Portal.Controllers
             if (users != null && users.Count >=1)
             {
                 string json = JsonConvert.SerializeObject(users.FirstOrDefault());
-                HttpCookie cokie = new HttpCookie("login",Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(json)));
-                Response.Cookies.Add(cokie);
+                //
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(2, "loginUser", DateTime.Now, DateTime.Now.AddDays(1), false, json);
+                //加密
+                var ticketEncrypt = FormsAuthentication.Encrypt(ticket);
+                //添加到cookie
+                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName,ticketEncrypt);
+                //过期时间
+                cookie.Expires = DateTime.Now.Add(FormsAuthentication.Timeout);
+                //域
+                cookie.Domain = FormsAuthentication.CookieDomain;
+                //http协议
+                cookie.HttpOnly = true;
+                //ssl  安全套接字
+                cookie.Secure = FormsAuthentication.RequireSSL;
+                // / cookie浏览器的存储路径
+                cookie.Path = FormsAuthentication.FormsCookiePath;
+
+                //HttpCookie cokie = new HttpCookie("login",Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(json)));
+                //Response.Cookies.Add(cokie);
+                //先删除
+                Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
+                //添加
+                Response.Cookies.Add(cookie);
                 jsonResult.Data = new { data = json, state = "200" };
                 jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
                 return jsonResult;
@@ -49,8 +72,11 @@ namespace HPIT.Survey.Portal.Controllers
 
         public ActionResult LogOff()
         {
-            Request.Cookies.Clear();
-            Response.Cookies.Clear();
+            //Request.Cookies.Clear();
+            //Response.Cookies.Clear();
+            //Request.Cookies.Remove(FormsAuthentication.FormsCookieName);
+            //Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
+            FormsAuthentication.SignOut();
             return View("Index");
         }
     }

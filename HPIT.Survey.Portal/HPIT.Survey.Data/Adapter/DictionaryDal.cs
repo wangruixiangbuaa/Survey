@@ -36,6 +36,9 @@ namespace HPIT.Survey.Data.Adapter
             int result = 0;
             if (match != null)
             {
+                match.Name = dictionary.Name;
+                match.Value = dictionary.Value;
+                match.Type = dictionary.Type;
                 this.context.Entry(match).State = System.Data.Entity.EntityState.Modified;
                 result = this.context.SaveChanges();
             }else

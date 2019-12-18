@@ -369,8 +369,8 @@ $(document).ready(function () {
             }
         }
         _.MasterData.Form.ActiveJobs = newPro;
-        $("#projectTb tr:gt(0)").remove();
-        $("#project").tmpl(_.MasterData).appendTo('#projectTb');
+        $("#jobTb tr:gt(0)").remove();
+        $("#job").tmpl(_.MasterData).appendTo('#jobTb');
     })
 
 })

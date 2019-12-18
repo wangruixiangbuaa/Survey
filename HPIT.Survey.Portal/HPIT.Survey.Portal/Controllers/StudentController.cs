@@ -19,8 +19,8 @@ namespace HPIT.Survey.Portal.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
-            ViewBag.StuName = currentUser.RealName;
+            //HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            //ViewBag.StuName = currentUser.RealName;
             return View();
         }
 

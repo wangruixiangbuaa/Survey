@@ -1,4 +1,5 @@
 ﻿using HPIT.Survey.Data.Entitys;
+using HPIT.Survey.Data.ExtEntitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,18 @@ namespace HPIT.Survey.Data.Adapter
             return items;
         }
 
+
+        public List<CommonStatistic> IndustryStatistic()
+        {
+            List<CommonStatistic> Statistic = new List<CommonStatistic>();
+            string sql = @"select CompanyType name ,COUNT(CompanyType) value from [SurveyDB].[dbo].[Company] group by CompanyType";
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return Statistic;
+        }
+
         public List<GeneralSelectItem> GetCount()
         {
             List<GeneralSelectItem> items = new List<GeneralSelectItem>();
@@ -31,5 +44,8 @@ namespace HPIT.Survey.Data.Adapter
             }
             return items;
         }
+
+
+
     }
 }

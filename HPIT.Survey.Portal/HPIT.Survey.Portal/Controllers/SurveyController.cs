@@ -51,6 +51,12 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result);
         }
 
+        public DeluxeJsonResult ReplacePEMByID(int id,string pem)
+        {
+            var result = SurveyDal.Instance.ReplacePEM(id,pem);
+            return new DeluxeJsonResult(result);
+        }
+
         [AllowAnonymous]
         public DeluxeJsonResult StartUserNewSurvey()
         {

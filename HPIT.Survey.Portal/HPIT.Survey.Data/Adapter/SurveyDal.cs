@@ -41,11 +41,16 @@ namespace HPIT.Survey.Data.Adapter
                 match.City = survey.Company.City;
                 match.CompanyDesc = survey.Company.CompanyDesc;
                 match.CompanyType = survey.Company.CompanyType;
+                survey.City = match.City;
                 survey.Company = match;
             }
             else
             {
+                survey.City = survey.Company.City;
                 survey.Company.CompanyNo = survey.CompanyNo;
+                context.Company.Add(survey.Company);
+                context.SaveChanges();
+                survey.CompanyID = survey.Company.CompanyID;
             }
             context.SurveyModel.Add(survey);
             //遍历所有的职位，生成标签
@@ -101,10 +106,12 @@ namespace HPIT.Survey.Data.Adapter
                 match.City = survey.Company.City;
                 match.CompanyDesc = survey.Company.CompanyDesc;
                 match.CompanyType = survey.Company.CompanyType;
+                survey.City = match.City;
                 survey.Company = match;
             }
             else
             {
+                survey.City = survey.Company.City;
                 survey.Company.CompanyNo = survey.CompanyNo;
             }
             context.Entry(survey).State = EntityState.Modified;
@@ -176,6 +183,16 @@ namespace HPIT.Survey.Data.Adapter
                   string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}", nextAuditName, log.AuditState,log.SurveyID));
             return context.SaveChanges();
         }
+
+        public int ReplacePEM(int id, string pem)
+        {
+            SurveyContext context = new SurveyContext();
+            context.Database.ExecuteSqlCommand(
+                   string.Format(@"UPDATE dbo.SurveyModel SET PEM = '{0}' where SurveyID={1}", pem,id));
+            var result = context.SaveChanges();
+            return result;
+        }
+
 
         /// <summary>
         /// 根据id删除调查问卷 软删除
@@ -253,6 +270,18 @@ namespace HPIT.Survey.Data.Adapter
             model.Form = survey;
             model.ExtraDatas = GetExtraDatas();
             return model;
+        }
+
+
+        public List<CommonStatistic> CityStatistic()
+        {
+            List<CommonStatistic> Statistic = new List<CommonStatistic>();
+            string sql = @"select City name ,COUNT(City) value from [SurveyDB].[dbo].[SurveyModel] group by City";
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return Statistic;
         }
 
         /// <summary>

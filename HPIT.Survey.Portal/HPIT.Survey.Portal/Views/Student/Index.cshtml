@@ -20,7 +20,7 @@
     </style>
 }
     <div>
-        <h2 style="text-align:center;"><b>@ViewBag.StuName</b>学员技术评估</h2>
+        <h2 style="text-align:center;"><b id="stuName"></b>学员技术评估</h2>
         <div class="row" style="margin-left:0%;">
             <label class="col-md-1">软件工程师：</label>
             <select id="dire" class="input-sm col-md-1">
@@ -65,7 +65,8 @@
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script type="text/javascript" charset="utf-8">
         var _ = {
-            stuNo:"",
+            stuNo: "",
+            stuName:"",
             ScoreTotal: 0,
             TagScoreList:[],
             MasterData: {},
@@ -111,6 +112,8 @@
         };
         $(document).ready(function () {
             _.stuNo = _.getQueryString("stuNo");
+            _.stuName = _.getQueryString("stuName");
+            $("#stuName").html(_.stuName);
             _.ajaxData(_.options, function (result) {
                 _.render(result);
             });

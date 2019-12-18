@@ -26,5 +26,18 @@ namespace HPIT.Survey.Portal.Controllers
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages });
         }
+
+
+        public ActionResult PositionStatisticIndex()
+        {
+            return View();
+        }
+
+        public DeluxeJsonResult GetPositionStatics()
+        {
+            var result = PositionDal.Instance.PositionStatistic();
+            return new DeluxeJsonResult(result);
+        }
+
     }
 }

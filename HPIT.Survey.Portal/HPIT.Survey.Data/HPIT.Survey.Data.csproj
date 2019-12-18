@@ -85,6 +85,7 @@
     <Compile Include="Entitys\Users.cs" />
     <Compile Include="Entitys\WorkFlow\Activity.cs" />
     <Compile Include="ExtEntitys\AbstractFormModel.cs" />
+    <Compile Include="ExtEntitys\CommonStatistic.cs" />
     <Compile Include="ExtEntitys\MenuExt.cs" />
     <Compile Include="ExtEntitys\PositionExt.cs" />
     <Compile Include="ExtEntitys\SkillTagStatic.cs" />

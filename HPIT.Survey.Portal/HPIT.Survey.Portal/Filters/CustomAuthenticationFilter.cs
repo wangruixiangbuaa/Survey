@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using HPIT.Evalute.Data.Model;
 using System;
 using HPIT.Data.Core;
+using System.Web.Security;
 
 namespace MVCLearn.Filters
 {
@@ -20,11 +21,18 @@ namespace MVCLearn.Filters
             {
                 return;
             }
+            //获取请求上下问的context
             var Url = new UrlHelper(filterContext.RequestContext);
+            //获取登录的url
             var urlstr = Url.Action("Index", "Login");
             //filterContext.Result = new RedirectResult(urlstr); //指定返回重定向登录界面
-            HttpCookie cokie = filterContext.HttpContext.Request.Cookies.Get("Login");
-            if (cokie == null)
+            //HttpCookie cokie = filterContext.HttpContext.Request.Cookies.Get("Login");
+            //获取cookie 的名字
+            string cookieName = FormsAuthentication.FormsCookieName;
+            //当前context 里面取cookie
+            HttpCookie authCookie = filterContext.HttpContext.Request.Cookies[cookieName];
+            //cookie为空 返回登录页面
+            if (authCookie == null)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
                                        {
@@ -35,11 +43,24 @@ namespace MVCLearn.Filters
             }
             else
             {
-                var value = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(cokie.Value));
+                //定义票据
+                FormsAuthenticationTicket authTicket = null;
+                try
+                {
+                    //解密cookie的票据信息
+                    authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Default.WriteError(ex.Message);
+                }
 
-                LogHelper.Default.WriteInfo(value+"登录了系统"+filterContext.ActionDescriptor.ActionName +"--"+ filterContext.ActionDescriptor.ControllerDescriptor.ControllerName);
-
-                DeluxeUser.CurrentMember = JsonConvert.DeserializeObject<HPITMemberInfo>(value);
+                if (authTicket != null)
+                {
+                    //反序列化json 放到当前用户信息
+                    DeluxeUser.CurrentMember = JsonConvert.DeserializeObject<HPITMemberInfo>(authTicket.UserData);
+                    LogHelper.Default.WriteInfo(DeluxeUser.CurrentMember.RealName + "登录了系统" + filterContext.ActionDescriptor.ActionName + "--" + filterContext.ActionDescriptor.ControllerDescriptor.ControllerName);
+                }
             }
         }
 

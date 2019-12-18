@@ -19,6 +19,18 @@ namespace HPIT.Survey.Data.Adapter
             this.context = new SurveyContext();
         }
 
+
+        public List<CommonStatistic> PositionStatistic()
+        {
+            List<CommonStatistic> Statistic = new List<CommonStatistic>();
+            string sql = @"select PositionType name ,COUNT(PositionType) value from [SurveyDB].[dbo].[Position] group by PositionType";
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return Statistic;
+        }
+
         public List<SkillTag> GetTagsByPositionID(string positionID)
         {
             List<SkillTag> tags = new List<SkillTag>();
