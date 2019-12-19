@@ -393,7 +393,7 @@ $(document).ready(function () {
         var name = $(this).attr("pname");
         var newPro = [];
         for (var i = 0; i < _.MasterData.Form.ActiveJobs.length; i++) {
-            if (_.MasterData.Form.Position[i].JobName != name) {
+            if (_.MasterData.Form.ActiveJobs[i].JobName != name) {
                 newPro.push(_.MasterData.Form.ActiveJobs[i]);
             }
         }
