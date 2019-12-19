@@ -50,7 +50,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5 form-group">
-                    <label class="control-label col-md-3">年份</label><span class="col-md-8">
+                    <label class="control-label col-md-3">实训年份</label><span class="col-md-8">
                         <select name="Year" class="form-control input-md">
                             {{each ExtraDatas.Years}}
                             {{if Form.Year == Value}}
@@ -64,7 +64,7 @@
                     </span>
                 </div>
                 <div class="col-md-5 form-group">
-                    <label class="col-md-3 control-label">方向</label><span class="col-md-8">
+                    <label class="col-md-3 control-label">实训方向</label><span class="col-md-8">
                         <select name="Direction" class="form-control input-md">
                             {{each ExtraDatas.Directions}}
                             {{if Form.Direction == Value}}
@@ -80,7 +80,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5 form-group">
-                    <label class="control-label col-md-3">学校</label><span class="col-md-8"><input type="text" name="School" value="${Form.School}" class="form-control "></span>
+                    <label class="control-label col-md-3">大学</label><span class="col-md-8"><input type="text" name="School" value="${Form.School}" class="form-control "></span>
                 </div>
                 <div class="col-md-5 form-group">
                     <label class="control-label col-md-3">批次</label><span class="col-md-8"><input type="text" name="Batch" value="${Form.Batch}" class="form-control "></span>
@@ -94,62 +94,78 @@
             </div>
         </script>
         <div id="div_enterprise">
-            <script id="enterprise" type="text/x-jquery-tmpl">
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">城市</label><span class="col-md-8">
-                            <select name="Company.City" class="form-control input-md">
-                                {{each ExtraDatas.Citys}}
-                                {{if Form.Company.City == Value}}
-                                <option selected="selected" value="${Value}">${Text}</option>
-                                {{else}}
-                                <option value="${Value}">${Text}</option>
-                                {{/if}}
-                                {{/each}}
-                            </select>
-                            @*<input type="text" name="Company.City" value="${Form.Company.City}" class="form-control ">*@
-                        </span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">企业名</label><span class="col-md-8"><input type="text" name="Company.CompanyName" value="${Form.Company.CompanyName}" class="form-control "></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">企业编号</label><span class="col-md-8"><input type="text" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">所属行业</label>
-                        <span class="col-md-8">
-                            @*<input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control ">*@
-                            <select name="Company.CompanyType" id="editable-select"  class="form-control input-md">
-                                {{each ExtraDatas.Industrys}}
-                                {{if Form.Company.CompanyType == Value}}
-                                <option selected="selected" value="${Value}">${Text}</option>
-                                {{else}}
-                                <option value="${Value}">${Text}</option>
-                                {{/if}}
-                                {{/each}}
-                            </select>
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 form-group">
-                        <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
-                        <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 form-group">
-                        <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text" name="DepartName" value="${Form.DepartName}" class="form-control "></span>
-                    </div>
-                    <div class="col-md-5 form-group">
-                        <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="PositionName" value="${Form.PositionName}" class="form-control "></span>
-                    </div>
-                </div>
-            </script>
         </div>
+        <script id="enterprise" type="text/x-jquery-tmpl">
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">城市</label><span class="col-md-8">
+                        <select name="Company.City" class="form-control input-md">
+                            {{each ExtraDatas.Citys}}
+                            {{if Form.Company.City == Value}}
+                            <option selected="selected" value="${Value}">${Text}</option>
+                            {{else}}
+                            <option value="${Value}">${Text}</option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                        @*<input type="text" name="Company.City" value="${Form.Company.City}" class="form-control ">*@
+                    </span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">企业名</label><span class="col-md-8"><input type="text" name="Company.CompanyName" value="${Form.Company.CompanyName}" class="form-control "></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">企业工商号</label><span class="col-md-8"><input type="number" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">所属一级行业</label>
+                    <span class="col-md-8">
+                        @*<input type="text" name="Company.CompanyType" value="${Form.Company.CompanyType}" class="form-control ">*@
+                        <select name="Company.CompanyType" id="editable-select" class="form-control input-md">
+                            {{each ExtraDatas.Industrys}}
+                            {{if Form.Company.CompanyType == Value}}
+                            <option selected="selected" value="${Value}">${Text}</option>
+                            {{else}}
+                            <option value="${Value}">${Text}</option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                    </span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">所属二级行业</label>
+                    <span class="col-md-8">
+                        <select name="Company.CompanyDetailType" id="editable-select" class="form-control input-md">
+                            {{each ExtraDatas.SecondIndustrys}}
+                            {{if Form.Company.CompanyDetailType == Value}}
+                            <option selected="selected" value="${Value}">${Text}</option>
+                            {{else}}
+                            <option value="${Value}">${Text}</option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 form-group">
+                    <label class="control-label col-md-3" style=" width: 12%;">公司介绍</label>
+                    <span class="col-md-8 " style="width:83%;"><textarea class="form-control" name="Company.CompanyDesc" cols="250" rows="5">${Form.Company.CompanyDesc}</textarea></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 form-group">
+                    <label class="control-label col-md-3">部门</label><span class="col-md-8"><input type="text" name="DepartName" value="${Form.DepartName}" class="form-control "></span>
+                </div>
+                <div class="col-md-5 form-group">
+                    <label class="col-md-3 control-label">岗位</label><span class="col-md-8"><input type="text" name="PositionName" value="${Form.PositionName}" class="form-control "></span>
+                </div>
+            </div>
+        </script>
         <div id="div_salary">
             <script id="salary" type="text/x-jquery-tmpl">
                 <div class="row">

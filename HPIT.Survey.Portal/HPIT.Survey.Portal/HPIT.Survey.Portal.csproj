@@ -150,6 +150,7 @@
     <Content Include="img\user7-128x128.jpg" />
     <Content Include="img\user8-128x128.jpg" />
     <Content Include="img\visa.png" />
+    <Content Include="js\app.survey\studentsurvey.js" />
     <Content Include="js\app.survey\survey.js" />
     <Content Include="js\aurora.js" />
     <Content Include="js\coalesce.js" />
@@ -1407,6 +1408,8 @@
     <Content Include="Views\FileUpload\Index.cshtml" />
     <Content Include="Views\FileUpload\FileInputIndex.cshtml" />
     <Content Include="Views\FileUpload\FileListIndex.cshtml" />
+    <Content Include="Views\Statistic\SalaryIndex.cshtml" />
+    <Content Include="Views\Statistic\JobIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

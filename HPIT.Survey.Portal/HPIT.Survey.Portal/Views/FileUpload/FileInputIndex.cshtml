@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "FileInputIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/js/fileinput/css/fileinput.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <link href="~/js/fileinput/themes/explorer-fas/theme.css" rel="stylesheet" />
+}
+
+    <form action="/FileUpload/ProcessUploadFiles" method="post" enctype="multipart/form-data">
+        <input id="input-id" type="file" name="filenames" class="file" data-preview-file-type="text" />
+        <input type="submit" value="上传文件">
+    </form>
+@section scripts{
+    <script src="~/js/fileinput/js/fileinput.js"></script>
+    <script src="~/js/fileinput/js/plugins/sortable.js"></script>
+    <script src="~/js/fileinput/js/plugins/piexif.js"></script>
+    <script src="~/js/fileinput/js/locales/zh.js"></script>
+    <script src="~/js/fileinput/themes/fas/theme.js"></script>
+    <script src="~/js/fileinput/themes/explorer-fas/theme.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$("#input-id").fileinput();
+        })
+    </script>
+}

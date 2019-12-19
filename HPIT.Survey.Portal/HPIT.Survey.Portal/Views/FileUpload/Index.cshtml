@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="/FileUpload/ProcessUploadFiles" method="post" enctype="multipart/form-data">
+    <input type="file" name="filenames" id="file1" />
+    <input type="file" name="filenames" id="file2" />
+    <input type="submit" value="上传文件">
+</form>
+

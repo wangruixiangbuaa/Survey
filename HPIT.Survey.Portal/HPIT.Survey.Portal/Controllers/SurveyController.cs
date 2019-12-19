@@ -45,6 +45,33 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result);
         }
 
+
+        public DeluxeJsonResult GetAuditLogListByID(int surveyID)
+        {
+            var result = SurveyDal.Instance.AuditLogList(surveyID);
+            var data = from log in result
+                       select new
+                       {
+                           AuditTime = log.AuditTime,
+                           AuditName = log.AuditName,
+                           AuditState = AuditStateStr(log.AuditState)
+                       };
+            return new DeluxeJsonResult(new { Data = data });
+        }
+
+        public string AuditStateStr(int log)
+        {
+            if (log == 2)
+            {
+                return "通过";
+            }
+            if (log == 4)
+            {
+                return "拒绝";
+            }
+            return "";
+        }
+
         public DeluxeJsonResult DeleteSurveyByID(int id)
         {
             var result = SurveyDal.Instance.Delete(id);

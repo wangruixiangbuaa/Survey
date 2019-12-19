@@ -41,6 +41,7 @@ namespace HPIT.Survey.Data.Adapter
                 match.City = survey.Company.City;
                 match.CompanyDesc = survey.Company.CompanyDesc;
                 match.CompanyType = survey.Company.CompanyType;
+                match.CompanyDetailType = survey.Company.CompanyDetailType;
                 survey.City = match.City;
                 survey.Company = match;
             }
@@ -106,6 +107,7 @@ namespace HPIT.Survey.Data.Adapter
                 match.City = survey.Company.City;
                 match.CompanyDesc = survey.Company.CompanyDesc;
                 match.CompanyType = survey.Company.CompanyType;
+                match.CompanyDetailType = survey.Company.CompanyDetailType;
                 survey.City = match.City;
                 survey.Company = match;
             }
@@ -144,43 +146,44 @@ namespace HPIT.Survey.Data.Adapter
         {
             log.AuditTime = DateTime.Now;
             SurveyContext context = new SurveyContext();
-            context.AuditLog.Add(log);
             //通过工作流审批 获取到下一个审批人
             string nextAuditName = "";
             SurveyWorkFlow surveyWorkFlow = new SurveyWorkFlow();
+            int finalLogStatus = 0;
             //审批通过
             if (log.AuditState == 1)
             {
                 nextAuditName = surveyWorkFlow.Pass(log.AuditName, log.RoleName);
                 log.AuditState = (int)SurveyStatus.pass;
+                finalLogStatus = log.AuditState;
             }
             //拒绝
             else
             {
                 nextAuditName = surveyWorkFlow.Reject(log.AuditName, log.RoleName);
                 log.AuditState = (int)SurveyStatus.reject;
+                finalLogStatus = log.AuditState;
+                if (nextAuditName == "人事经理")
+                {
+                    SurveyModel current = this.QuerySingleByID(log.SurveyID).Form;
+                    //如果没找到则为空，如果不为空，则设置成为当前单子的pem;
+                    nextAuditName = current == null ? "" : current.PEM;
+                }
+
+                if (nextAuditName == "学生")
+                {
+                    finalLogStatus = (int)SurveyStatus.draft;
+                    nextAuditName = "";
+                }
             }
             if (nextAuditName == "已完成")
             {
                 log.AuditState = (int)SurveyStatus.complete;
             }
-
-            if (nextAuditName == "人事经理")
-            {
-                log.AuditState = (int)SurveyStatus.audit;
-                SurveyModel current = this.QuerySingleByID(log.SurveyID).Form;
-                //如果没找到则为空，如果不为空，则设置成为当前单子的pem;
-                nextAuditName = current == null ? "" : current.PEM;
-            }
-
-            if (nextAuditName == "学生")
-            {
-                log.AuditState = (int)SurveyStatus.draft;
-                nextAuditName = "";
-            }
-
+            //添加一条log
+            context.AuditLog.Add(log);
             context.Database.ExecuteSqlCommand(
-                  string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}", nextAuditName, log.AuditState,log.SurveyID));
+                  string.Format(@"UPDATE dbo.SurveyModel SET AuditName = '{0}', AuditStatus={1} where SurveyID={2}", nextAuditName, finalLogStatus ,log.SurveyID));
             return context.SaveChanges();
         }
 
@@ -191,6 +194,13 @@ namespace HPIT.Survey.Data.Adapter
                    string.Format(@"UPDATE dbo.SurveyModel SET PEM = '{0}' where SurveyID={1}", pem,id));
             var result = context.SaveChanges();
             return result;
+        }
+
+
+        public List<AuditLog> AuditLogList(int surveyID)
+        {
+            var logs = context.AuditLog.Where(r => r.SurveyID == surveyID && (r.AuditState == 2 || r.AuditState == 4)).OrderByDescending(r=>r.AuditTime).ToList();
+            return logs;
         }
 
 
@@ -244,9 +254,15 @@ namespace HPIT.Survey.Data.Adapter
             List<GeneralSelectItem> sources = context.Dictionary.Where(r => r.Type == "来源").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
             sources.Insert(0,new GeneralSelectItem() { Text = "请选择" , Value=""});
             ExtraDatas["Source"] = sources;
-            List<GeneralSelectItem> industrys = context.Dictionary.Where(r => r.Type == "行业").Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+            List<GeneralSelectItem> industrys = context.Dictionary.Where(r => r.Type == "行业" && r.ParentID == null).Select(r => new GeneralSelectItem { ID=r.ID, Text = r.Name, Value = r.Value }).ToList();
             industrys.Insert(0,new GeneralSelectItem() { Text="请选择",Value=""});
             ExtraDatas["Industrys"] = industrys;
+            List<GeneralSelectItem> detailindustrys = context.Dictionary.Where(r => r.Type == "行业" && r.ParentID >0).Select(r => new GeneralSelectItem {ID = r.ID, Text = r.Name, Value = r.Value, parentID = (int)r.ParentID }).ToList();
+            detailindustrys.Insert(0, new GeneralSelectItem() { Text = "请选择", Value = "" });
+            ExtraDatas["DetailIndustrys"] = detailindustrys;
+            List<GeneralSelectItem> secondindustrys = new List<GeneralSelectItem>();
+            detailindustrys.Insert(0, new GeneralSelectItem() { Text = "请选择", Value = "" });
+            ExtraDatas["SecondIndustrys"] = secondindustrys;
             ExtraDatas["Count"] = CommonDal.Instance.GetCount();
             ExtraDatas["Years"] = CommonDal.Instance.GetYears();
             return ExtraDatas;

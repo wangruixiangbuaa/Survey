@@ -70,13 +70,13 @@ var _ = {
         //绘制各个步骤
         //处理可以输入的下拉框的控件 处理
         try {
-            $("#companyType").editableSelect({
-                bg_iframe: true,
-                case_sensitive: false,
-                items_then_scroll: 10,
-                isFilter: false
-            });
-            $("#companyType_sele").val(_.MasterData.Form.Company.CompanyType);
+            //$("#companyType").editableSelect({
+            //    bg_iframe: true,
+            //    case_sensitive: false,
+            //    items_then_scroll: 10,
+            //    isFilter: false
+            //});
+            //$("#companyType_sele").val(_.MasterData.Form.Company.CompanyType);
             $("#positionSource").editableSelect({
                 bg_iframe: true,
                 case_sensitive: false,
@@ -209,8 +209,33 @@ $(document).ready(function () {
         }
         if (name.split('.').length == 1) {
             _.MasterData.Form[name] = $(this).val();
-        } else {
+        } else
+        {
             var ss = name.split('.');
+            if (name == "Company.CompanyType") {
+                var value = $(this).val();
+                var parentid = 0;
+                for (var i = 0; i < _.MasterData.ExtraDatas.Industrys.length; i++) {
+                    if (_.MasterData.ExtraDatas.Industrys[i].Value == value) {
+                        parentid = _.MasterData.ExtraDatas.Industrys[i].ID;
+                    }
+                }
+                _.MasterData.ExtraDatas.SecondIndustrys = [];
+                for (var i = 0; i < _.MasterData.ExtraDatas.DetailIndustrys.length; i++) {
+                    if (_.MasterData.ExtraDatas.DetailIndustrys[i].parentID == parentid) {
+                        var text = _.MasterData.ExtraDatas.DetailIndustrys[i].Text;
+                        var value = _.MasterData.ExtraDatas.DetailIndustrys[i].Value;
+                        _.MasterData.ExtraDatas.SecondIndustrys.push({ "Text": text, "Value": value });
+                    }
+                }
+                if (_.MasterData.ExtraDatas.SecondIndustrys.length > 0)
+                {
+                    _.MasterData.Form['Company']['CompanyDetailType'] = _.MasterData.ExtraDatas.SecondIndustrys[0].Value;
+                }
+                _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
+                $('#step2').html('');
+                $("#enterprise").tmpl(_.MasterData).appendTo('#step2');
+            }
             //var nameval = $("input[name=" + name + "']").val();
             _.MasterData.Form[ss[0]][ss[1]] = $(this).val();
         }
@@ -219,7 +244,7 @@ $(document).ready(function () {
 
     $("#div_job").on("click", "#save", function () {
         //获取下拉框选择的公司类型的值。
-        _.MasterData.Form.Company.CompanyType = $("input[name='Company.CompanyType_sele']").val();
+        //_.MasterData.Form.Company.CompanyType = $("input[name='Company.CompanyType_sele']").val();
         if (_.MasterData.Form.SurveyID == 0) {
             _.options.url = "/Survey/Save";
         } else {
@@ -243,6 +268,10 @@ $(document).ready(function () {
         //未就业学生都需要校验
         if (form.Company.CompanyName == '' || form.Company.CompanyName == null) {
             swal("", "公司名不能为空！", "info");
+            return;
+        }
+        if (form.Company.CompanyDetailType == '' || form.Company.CompanyDetailType == null) {
+            swal("", "公司行业不能为空！", "info");
             return;
         }
         if (form.CompanyNo == '' || form.CompanyNo == null)
