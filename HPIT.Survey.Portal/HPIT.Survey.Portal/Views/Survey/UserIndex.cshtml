@@ -98,7 +98,7 @@
         <script id="enterprise" type="text/x-jquery-tmpl">
             <div class="row">
                 <div class="col-md-5 form-group">
-                    <label class="control-label col-md-3">城市</label><span class="col-md-8">
+                    <label class="control-label col-md-3">公司所在城市</label><span class="col-md-8">
                         <select name="Company.City" class="form-control input-md">
                             {{each ExtraDatas.Citys}}
                             {{if Form.Company.City == Value}}
@@ -117,8 +117,10 @@
             </div>
             <div class="row">
                 <div class="col-md-5 form-group">
-                    <label class="control-label col-md-3">企业工商号</label><span class="col-md-8"><input type="number" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
+                    <label class="control-label col-md-3">企业工商号</label>
+                    <span class="col-md-8"><input type="number" name="CompanyNo" value="${Form.CompanyNo}" class="form-control "></span>
                 </div>
+                <b style="color:red;margin-left: -53px;vertical-align: -7px;">通过“企查查”或“天眼”，在“工商信息”可以查到。</b>
             </div>
             <div class="row">
                 <div class="col-md-5 form-group">
@@ -205,13 +207,14 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="col-md-3 control-label">项目类型</label><span class="col-md-8">
-                            @*<input type="text" class="form-control">*@
-                            <select id="projectType" name="projectType" class="form-control input-md">
-                                {{each ExtraDatas.ProjectTypes}}
-                                <option value="${Value}">${Text}</option>
-                                {{/each}}
-                            </select>
-                        </span>
+    @*<input type="text" class="form-control">*@
+    <select id="projectType" name="projectType" class="form-control input-md">
+        {{each ExtraDatas.ProjectTypes}}
+        <option value="${Value}">${Text}</option>
+        {{/each}}
+    </select>
+    <b style="color:red;">下拉列表没有，则手动输入。</b>
+</span>
                     </div>
                 </div>
                 <div class="row">
@@ -268,13 +271,14 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <label class="control-label col-md-3">来源</label><span class="col-md-8">
-                            @*<input type="text" class="form-control ">*@
-                            <select id="positionSource" name="positionSource" class="form-control input-md">
-                                {{each ExtraDatas.Source}}
-                                <option value="${Value}">${Text}</option>
-                                {{/each}}
-                            </select>
-                        </span>
+    @*<input type="text" class="form-control ">*@
+    <select id="positionSource" name="positionSource" class="form-control input-md">
+        {{each ExtraDatas.Source}}
+        <option value="${Value}">${Text}</option>
+        {{/each}}
+    </select>
+    <b style="color:red;">下拉列表没有，则手动输入。</b>
+</span>
                     </div>
                 </div>
                 <div class="row">

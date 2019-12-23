@@ -20,13 +20,29 @@ namespace HPIT.Survey.Data.Adapter
         }
 
 
-        public List<CommonStatistic> PositionStatistic()
+        public List<CommonStatistic> PositionStatistic(string direction)
         {
             List<CommonStatistic> Statistic = new List<CommonStatistic>();
-            string sql = @"select PositionType name ,COUNT(PositionType) value from [SurveyDB].[dbo].[Position] group by PositionType";
+            string sql = string.Format(@"select PositionName name ,COUNT(PositionName) value FROM[SurveyDB].[dbo].[SurveyModel] where Direction = '{0}' group by PositionName", direction);
+
+            //string sql = string.Format(@"select PositionType name ,COUNT(PositionType) value from [SurveyDB].[dbo].[Position] p 
+            //                             left join [SurveyDB].[dbo].SurveyModel s on p.SurveyID=s.SurveyID where Direction ='{0}' group by PositionType",direction);
             using (var context = new SurveyContext())
             {
                 Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return Statistic;
+        }
+
+        public List<Company> GetPositionRelateCompany(string position,string direction)
+        {
+            List<Company> Statistic = new List<Company>();
+            string sql = string.Format(@"select s.StuName,s.Direction,s.Phone ,s.PositionName, c.* FROM [SurveyDB].[dbo].[SurveyModel] s left join [SurveyDB].[dbo].Company c
+                                         on s.CompanyID = c.CompanyID
+                                         where PositionName='{0}' and Direction='{1}'", position,direction);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<Company>(sql).ToList();
             }
             return Statistic;
         }

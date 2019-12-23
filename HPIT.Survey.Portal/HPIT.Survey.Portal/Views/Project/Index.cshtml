@@ -17,24 +17,68 @@
             left: 0;
             z-index: 2000;
         }
+        .hang {
+            margin-left: 20px !important;
+            margin-right: 20px !important;
+        }
     </style>
 }
 <div id="loading">
     <img src="~/img/loadingimg/loading3.gif" style="margin-left: 40%; margin-top: 200px; width: 150px; height: 150px;" />
 </div>
 <h3>项目统计</h3>
-<div class="row">
+<div class="row hang">
+    <label class="col-md-1">岗位：</label>
+    <select id="dire" class="input-sm col-md-1"></select>
+    <script id="selectList" type="text/x-jquery-tmpl">
+        {{each Data}}
+        <option value="${Value}">${Text}</option>
+        {{/each}}
+    </script>
 </div>
 <div id="main" style="width: 800px; height: 400px;margin-left: 20%;"></div>
+<div class="row hang">
+    <table id="ListTb" class="table table-bordered">
+        <tr>
+            @*<th>标签编号</th>*@
+            <th>项目名称</th>
+            <th>项目类型</th>
+            <th>项目描述</th>
+            <th>企业名称</th>
+            <th>企业类型</th>
+        </tr>
+    </table>
+    <div class="pagebox" style="height:30px;" id="box"></div>
+    <script id="dataList" type="text/x-jquery-tmpl">
+        {{each  Data}}
+        <tr>
+            <td>${ProjectName}</td>
+            <td>${ProjectType}</td>
+            <td>${ProjectDesc}</td>
+            <td>${CompanyName}</td>
+            <td>${CompanyType}</td>
+        </tr>
+        {{/each}}
+    </script>
+</div>
 @section scripts{
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
+    <script src="~/js/common/common.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             var myChart;
-            var _ = {
+            var ps = {
+                position_select: function () {
+                    _.options.url = "/Project/GetAllPositionName";
+                    _.ajaxData(_.options, function (result) {
+                        //$("#ListTb tr:gt(0)").remove();
+                        $("#selectList").tmpl(result).appendTo('#dire');
+                    })
+                },
+                position:"前端工程师",
                 draw: function (value) {
                     $.ajax({
-                        url: "/Project/GetProjectStatics?direction=" + value,
+                        url: "/Project/GetProjectStatics?position=" + value,
                         data: {},
                         type: "get",
                         dataType: "json",
@@ -70,8 +114,12 @@
                                     }
                                 ]
                             });
-                            //var tmpdata = { "data": result };
-                            //$("#urstatistic").tmpl(data).appendTo('#data');
+                            myChart.on('click', function (params) {
+                                _.options.url = "/Project/GetProjectStaticsDetail?type=" + params.name + '&position=' + ps.position;
+                                _.ajaxData(_.options, function (result) {
+                                    _.render(result);
+                                })
+                            });
                         },
                         complete: function () {
                             $("#loading").hide();
@@ -79,11 +127,13 @@
                     })
                 }
             }
-            _.draw("NET");
+            ps.position_select();
+            ps.draw("前端工程师");
             $("#dire").change(function () {
                 $("#main").empty();
                 var value = $(this).val();
-                _.draw(value);
+                ps.position = value;
+                ps.draw(value);
             });
 
         })

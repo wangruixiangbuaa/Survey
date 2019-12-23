@@ -33,10 +33,16 @@ namespace HPIT.Survey.Portal.Controllers
             return View();
         }
 
-        public DeluxeJsonResult GetPositionStatics()
+        public DeluxeJsonResult GetPositionStatics(string direction)
         {
-            var result = PositionDal.Instance.PositionStatistic();
+            var result = PositionDal.Instance.PositionStatistic(direction);
             return new DeluxeJsonResult(result);
+        }
+
+        public DeluxeJsonResult GetPositionRelateCompany(string position,string direction)
+        {
+            var result = PositionDal.Instance.GetPositionRelateCompany(position,direction);
+            return new DeluxeJsonResult(new { Data = result });
         }
 
     }

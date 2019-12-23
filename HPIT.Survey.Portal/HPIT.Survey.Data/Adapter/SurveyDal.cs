@@ -289,16 +289,15 @@ namespace HPIT.Survey.Data.Adapter
         }
 
 
-        public List<CommonStatistic> CityStatistic()
+
+        public Company GetMatchCompany(string No)
         {
-            List<CommonStatistic> Statistic = new List<CommonStatistic>();
-            string sql = @"select City name ,COUNT(City) value from [SurveyDB].[dbo].[SurveyModel] group by City";
-            using (var context = new SurveyContext())
-            {
-                Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
-            }
-            return Statistic;
+            var match = context.Company.Where(r => r.CompanyNo == No).FirstOrDefault();
+            return match;
         }
+
+
+
 
         /// <summary>
         /// 分页查询，代码

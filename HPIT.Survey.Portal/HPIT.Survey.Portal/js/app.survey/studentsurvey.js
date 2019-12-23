@@ -285,9 +285,37 @@ $(document).ready(function () {
             swal("", "至少填写一个岗位招聘信息！", "info");
             return;
         }
+        for (var i = 0; i < form.Position.length; i++) {
+            if (form.Position[i].PositionName == '' || form.Position[i].PositionName == undefined) {
+                swal("", "岗位信息中岗位名不能为空！", "info");
+                return;
+            }
+            if (form.Position[i].PositionType == '' || form.Position[i].PositionType == undefined) {
+                swal("", "岗位信息中岗位类别不能为空！", "info");
+                return;
+            }
+            if (form.Position[i].PositionDesc == '' || form.Position[i].PositionDesc == undefined) {
+                swal("", "岗位信息中岗位描述描述不能为空！", "info");
+                return;
+            }
+        }
         if (form.ActiveJobs.length == 0) {
             swal("", "至少填写一个公司正在招聘的职位！", "info");
             return;
+        }
+        for (var i = 0; i < form.ActiveJobs.length; i++) {
+            if (form.ActiveJobs[i].JobName == '' || form.ActiveJobs[i].JobName == undefined) {
+                swal("", "招聘职位信息中职位名不能为空！", "info");
+                return;
+            }
+            if (form.ActiveJobs[i].JobType == '' || form.ActiveJobs[i].JobType == undefined) {
+                swal("", "招聘职位信息中招聘职位不能为空！", "info");
+                return;
+            }
+            if (form.ActiveJobs[i].AvageMoney == '' || form.ActiveJobs[i].AvageMoney <= 0) {
+                swal("", "招聘职位信息中薪资不能为空！", "info");
+                return;
+            }
         }
         _.ajaxData(_.options, function (result) {
             //alert("反馈成功!");

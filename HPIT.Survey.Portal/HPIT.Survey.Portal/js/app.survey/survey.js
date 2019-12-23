@@ -176,7 +176,39 @@ $(document).ready(function () {
                     $('#step1').html('');
                     $("#basic").tmpl(_.MasterData).appendTo('#step1');
                 };
-                
+            })
+        }
+        if (name == 'CompanyNo') {
+            var nvalue = $(this).val();
+            _.options.url = "/Survey/QueryCompanyByNo?companyNO=" + encodeURI(nvalue);
+            _.options.data = {};
+            _.ajaxData(_.options, function (result) {
+                if (result.State == 'OK') {
+                    if (result.Data != null && result.Data != undefined) {
+                        _.MasterData.Form.Company.CompanyName = result.Data.CompanyName;
+                        _.MasterData.Form.Company.City = result.Data.City;
+                        _.MasterData.Form.Company.CompanyType = result.Data.CompanyType;
+                        _.MasterData.Form.Company.CompanyDetailType = result.Data.CompanyDetailType;
+                        _.MasterData.Form.Company.CompanyDesc = result.Data.CompanyDesc;
+                        //重新加载数据，渲染界面
+                        var parentid = 0;
+                        for (var i = 0; i < _.MasterData.ExtraDatas.Industrys.length; i++) {
+                            if (_.MasterData.ExtraDatas.Industrys[i].Value == result.Data.CompanyType) {
+                                parentid = _.MasterData.ExtraDatas.Industrys[i].ID;
+                            }
+                        }
+                        _.MasterData.ExtraDatas.SecondIndustrys = [];
+                        for (var i = 0; i < _.MasterData.ExtraDatas.DetailIndustrys.length; i++) {
+                            if (_.MasterData.ExtraDatas.DetailIndustrys[i].parentID == parentid) {
+                                var text = _.MasterData.ExtraDatas.DetailIndustrys[i].Text;
+                                var value = _.MasterData.ExtraDatas.DetailIndustrys[i].Value;
+                                _.MasterData.ExtraDatas.SecondIndustrys.push({ "Text": text, "Value": value });
+                            }
+                        }
+                        $('#step2').html('');
+                        $("#enterprise").tmpl(_.MasterData).appendTo('#step2');
+                    }
+                };
             })
         }
         if (name.split('.').length == 1) {
@@ -285,13 +317,55 @@ $(document).ready(function () {
             swal("", "公司工商号不符合要求(15位数字)", "info");
             return;
         }
+        if (form.Project.length == 0) {
+            swal("", "至少填写一个项目信息！", "info");
+            return;
+        }
+        for (var i = 0; i < form.Project.length; i++) {
+            if (form.Project[i].ProjectName == '' || form.Project[i].ProjectName == undefined) {
+                swal("", "项目信息中项目名不能为空！", "info");
+                return;
+            }
+            if (form.Project[i].ProjectType == '' || form.Project[i].ProjectType == undefined) {
+                swal("", "项目信息中项目类别不能为空！", "info");
+                return;
+            }
+            if (form.Project[i].ProjectDesc == '' || form.Project[i].ProjectDesc == undefined) {
+                swal("", "项目信息中项目描述不能为空！", "info");
+                return;
+            }
+        }
         if (form.Position.length == 0) {
             swal("", "至少填写一个岗位招聘信息！", "info");
             return;
         }
+        for (var i = 0; i < form.Position.length; i++) {
+            if (form.Position[i].PositionName == '' || form.Position[i].PositionName == undefined) {
+                swal("", "岗位信息中岗位名不能为空！", "info");
+                return;
+            }
+            if (form.Position[i].PositionType == '' || form.Position[i].PositionType == undefined) {
+                swal("", "岗位信息中岗位类别不能为空！", "info");
+                return;
+            }
+            if (form.Position[i].PositionDesc == '' || form.Position[i].PositionDesc == undefined) {
+                swal("", "岗位信息中岗位描述描述不能为空！", "info");
+                return;
+            }
+        }
         if (form.ActiveJobs.length == 0) {
             swal("", "至少填写一个公司正在招聘的职位！", "info");
             return;
+        }
+        for (var i = 0; i < form.ActiveJobs.length; i++) {
+            if (form.ActiveJobs[i].JobName == '' || form.ActiveJobs[i].JobName == undefined) {
+                swal("", "招聘职位信息中职位名不能为空！", "info");
+                return;
+            }
+            if (form.ActiveJobs[i].AvageMoney=='' || form.ActiveJobs[i].AvageMoney <= 0) {
+                swal("", "招聘职位信息中薪资不能为空！", "info");
+                return;
+            }
         }
         _.ajaxData(_.options, function (result) {
             //alert("反馈成功!");
@@ -365,7 +439,7 @@ $(document).ready(function () {
         }
         _.MasterData.Form.Position = newPro;
         $("#positionTb tr:gt(0)").remove();
-        $("#position").tmpl(_.MasterData).appendTo('#projectTb');
+        $("#position").tmpl(_.MasterData).appendTo('#positionTb');
     })
 
     $("#wizard").on("click", "#addjob", function () {

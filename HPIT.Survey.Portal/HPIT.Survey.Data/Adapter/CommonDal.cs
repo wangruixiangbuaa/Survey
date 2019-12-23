@@ -22,17 +22,78 @@ namespace HPIT.Survey.Data.Adapter
             return items;
         }
 
-
-        public List<CommonStatistic> IndustryStatistic()
+        /// <summary>
+        /// 行业分析
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public List<CommonStatistic> IndustryStatistic(string position)
         {
             List<CommonStatistic> Statistic = new List<CommonStatistic>();
-            string sql = @"select CompanyType name ,COUNT(CompanyType) value from [SurveyDB].[dbo].[Company] group by CompanyType";
+            string sql = string.Format(@"select  c.CompanyType name,count(c.CompanyType) value FROM [SurveyDB].[dbo].[SurveyModel] s 
+                           left join [SurveyDB].[dbo].Company c on s.CompanyID = c.CompanyID where s.PositionName = '{0}' group by c.CompanyType",position);
+            //string sql = @"select CompanyType name ,COUNT(CompanyType) value from [SurveyDB].[dbo].[Company] group by CompanyType";
             using (var context = new SurveyContext())
             {
                 Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
             }
             return Statistic;
         }
+
+        public List<Company> IndustryStatisticDetail(string position, string type)
+        {
+            List<Company> Statistic = new List<Company>();
+            string sql = string.Format(@"select s.StuName,s.Direction,s.Phone ,s.PositionName, c.* FROM [SurveyDB].[dbo].[SurveyModel] s left join [SurveyDB].[dbo].Company c
+                                         on s.CompanyID = c.CompanyID
+                                         where PositionName ='{0}' and c.CompanyType ='{1}'", position, type);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<Company>(sql).ToList();
+            }
+            return Statistic;
+        }
+
+        public List<GeneralSelectItem> GetAllPositionNames()
+        {
+            List<GeneralSelectItem> Statistic = new List<GeneralSelectItem>();
+            string sql = string.Format(@" select distinct(s.PositionName) Text, s.PositionName Value FROM 
+                           [SurveyDB].[dbo].[SurveyModel] s ");
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<GeneralSelectItem>(sql).ToList();
+            }
+            return Statistic;
+        }
+
+
+
+        public List<CommonStatistic> CityStatistic(string position)
+        {
+            List<CommonStatistic> Statistic = new List<CommonStatistic>();
+            string sql = string.Format(@"select  c.City name,count(c.City) value FROM [SurveyDB].[dbo].[SurveyModel] s 
+                                         left join [SurveyDB].[dbo].Company c  on s.CompanyID = c.CompanyID 
+                                         where s.PositionName = '{0}' group by c.City",position);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return Statistic;
+        }
+
+
+        public List<Company> CityStatisticDetail(string position, string city)
+        {
+            List<Company> Statistic = new List<Company>();
+            string sql = string.Format(@"select s.StuName,s.Direction,s.Phone ,s.PositionName, c.* FROM [SurveyDB].[dbo].[SurveyModel] s left join [SurveyDB].[dbo].Company c
+                                         on s.CompanyID = c.CompanyID
+                                         where PositionName ='{0}' and c.City ='{1}'", position, city);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<Company>(sql).ToList();
+            }
+            return Statistic;
+        }
+
 
         public List<CommonStatistic> SalaryStatistic()
         {

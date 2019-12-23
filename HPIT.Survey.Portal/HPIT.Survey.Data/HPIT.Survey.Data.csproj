@@ -88,6 +88,7 @@
     <Compile Include="ExtEntitys\CommonStatistic.cs" />
     <Compile Include="ExtEntitys\MenuExt.cs" />
     <Compile Include="ExtEntitys\PositionExt.cs" />
+    <Compile Include="ExtEntitys\ProjectExt.cs" />
     <Compile Include="ExtEntitys\SkillTagStatic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool\ExpressionExt.cs" />

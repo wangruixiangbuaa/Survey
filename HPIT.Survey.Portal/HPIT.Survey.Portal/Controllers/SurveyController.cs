@@ -221,7 +221,13 @@ namespace HPIT.Survey.Portal.Controllers
             {
                 return new DeluxeJsonResult(new { Data = result.FirstOrDefault(), State = "OK" });
             }
-            
+        }
+
+        [AllowAnonymous]
+        public DeluxeJsonResult QueryCompanyByNo(string companyNO)
+        {
+            var match = SurveyDal.Instance.GetMatchCompany(companyNO);
+            return new DeluxeJsonResult(new { Data = match, State = "OK" });
         }
 
     }
