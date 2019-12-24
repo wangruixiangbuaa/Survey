@@ -1402,7 +1402,7 @@
     <Content Include="Views\Student\ListIndex.cshtml" />
     <Content Include="Views\Dictionary\Index.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\Statistic\CityIndex.cshtml" />
     <Content Include="Views\Position\PositionStatisticIndex.cshtml" />
     <Content Include="Views\Statistic\IndustryIndex.cshtml" />
     <Content Include="Views\FileUpload\Index.cshtml" />
@@ -1410,6 +1410,7 @@
     <Content Include="Views\FileUpload\FileListIndex.cshtml" />
     <Content Include="Views\Statistic\SalaryIndex.cshtml" />
     <Content Include="Views\Statistic\JobIndex.cshtml" />
+    <Content Include="Views\Statistic\SkillStatisticIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

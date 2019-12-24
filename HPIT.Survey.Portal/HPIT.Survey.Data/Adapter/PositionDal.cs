@@ -86,5 +86,21 @@ namespace HPIT.Survey.Data.Adapter
             }
             return list;
         }
+
+
+        public int UpdatePosition(Position position)
+        {
+            int result = -1;
+            var match = context.Position.FirstOrDefault(r=>r.PositionID == position.PositionID);
+            if (match != null)
+            {
+                match.PositionName = position.PositionName;
+                match.PositionType = position.PositionType;
+                match.PositionDesc = position.PositionDesc;
+                context.Entry(match).State = System.Data.Entity.EntityState.Modified;
+                result = context.SaveChanges();
+            }
+            return result;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace HPIT.Survey.Portal.Controllers
     public class StatisticController : Controller
     {
         // GET: Statistic
-        public ActionResult Index()
+        public ActionResult CityIndex()
         {
             return View();
         }
@@ -56,10 +56,16 @@ namespace HPIT.Survey.Portal.Controllers
             return View();
         }
 
-        public DeluxeJsonResult GetSalaryStatistic()
+        public DeluxeJsonResult GetSalaryStatistic(string position)
         {
-            var result = CommonDal.Instance.SalaryStatistic();
+            var result = CommonDal.Instance.SalaryStatistic(position);
             return new DeluxeJsonResult(result);
+        }
+
+        public DeluxeJsonResult GetSalaryStatisticDetail(string position,string range)
+        {
+            var result = CommonDal.Instance.SalaryStatisticDetail(position,range);
+            return new DeluxeJsonResult(new { Data = result });
         }
 
 
@@ -72,6 +78,30 @@ namespace HPIT.Survey.Portal.Controllers
         {
             var result = CommonDal.Instance.JobStatistic();
             return new DeluxeJsonResult(result);
+        }
+
+        public DeluxeJsonResult GetAllPositionTbName()
+        {
+            var result = CommonDal.Instance.GetAllPositionTbNames();
+            return new DeluxeJsonResult(new { Data = result });
+        }
+
+
+        public ActionResult SkillStatisticIndex()
+        {
+            return View();
+        }
+
+        public DeluxeJsonResult GetSkillStatistic(string position)
+        {
+            var result = CommonDal.Instance.SkillStatistic(position);
+            return new DeluxeJsonResult(result);
+        }
+
+        public DeluxeJsonResult GetSkillStatisticDetail(string position, string tagName)
+        {
+            var result = CommonDal.Instance.SkillStatisticDetail(position, tagName);
+            return new DeluxeJsonResult(new { Data = result });
         }
 
     }

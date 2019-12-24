@@ -45,5 +45,12 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(new { Data = result });
         }
 
+
+        public DeluxeJsonResult UpdatePosition(Position position)
+        {
+            var result = PositionDal.Instance.UpdatePosition(position);
+            return new DeluxeJsonResult(result);
+        }
+
     }
 }

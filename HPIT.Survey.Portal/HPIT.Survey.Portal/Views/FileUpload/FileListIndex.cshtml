@@ -36,12 +36,13 @@
                 <div class="has-feedback">
                     <ul>
                         @*<li><label>标签类型：</label><input type="text" id="TextBox_Account" class="form-control input-sm searchInput" /></li>
-                            <li>
-                                <label>方向：</label> <select id="DropDownList_Roles" class="form-control input-sm searchInput">
-                                    <option value="-1">请选择</option>
-                                </select>
-                            </li>*@
+        <li>
+            <label>方向：</label> <select id="DropDownList_Roles" class="form-control input-sm searchInput">
+                <option value="-1">请选择</option>
+            </select>
+        </li>*@
                         <li><input type="button" value="查询" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                        <li><input type="button" value="api查询" id="apibtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
                     </ul>
                 </div>
             </div>
@@ -86,6 +87,13 @@
         }
         $(document).ready(function () {
             dic.queryList();
+            $("#apibtn").click(function () {
+                _.options.url = "http://localhost:50756/api/Survey/Get?id=1100";
+                _.options.type = "get";
+                _.ajaxData(_.options, function (result) {
+                    console.log(result);
+                })
+            })
         })
     </script>
 }

@@ -79,7 +79,8 @@
                         <td>${PositionType}</td>
                         <td>${Source}</td>
                         <th>${Years}年</th>
-                        <td><a href="#" type="posiEdit" tags="${TagsJsonStr}"  pdesc="${PositionDesc}" pid="${PositionID}">编辑</a></td>
+                        @*<td><a href="#" type="posiUpdate" tags="${TagsJsonStr}" pdesc="${PositionDesc}" pid="${PositionID}">更新</a></td>*@
+                        <td><a href="#" type="posiEdit"  pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">标签编辑</a></td>
                     </tr>
                     {{/each}}
                 </script>
@@ -87,6 +88,37 @@
         </div>
     </div>
 </section>
+@*<div class="modal fade" id="updateModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">岗位编辑</h3>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="positionID" style="display:none;" />
+                <table class="table table-bordered table-striped" style="width:570px">
+                    <tr>
+                        <td>岗位名称</td>
+                        <td><input class="form-control" rows="10" name="name"  id="pname"/></td>
+                    </tr>
+                    <tr>
+                        <td>岗位描述</td>
+                        <td><textarea class="form-control" rows="10" name="desc" id="desc"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>岗位类型</td>
+                        <td><input type="text" class="form-control" id="ptype" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" id="updatesave" aria-hidden="true">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>*@
 <div class="modal fade" id="editModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -182,7 +214,12 @@
                 _.options.data = { "tags": tagObjs };
                 _.options.url = "/SkillTag/AddTags";
                 _.ajaxData(_.options, function (result) {
-                    alert(result);
+                    if (result > 0) {
+                        alert("编辑成功");
+                    } else {
+                        alert("编辑失败");
+                    }
+                    
                 })
 
             })
