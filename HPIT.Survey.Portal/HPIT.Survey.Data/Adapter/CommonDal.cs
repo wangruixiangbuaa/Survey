@@ -163,10 +163,15 @@ namespace HPIT.Survey.Data.Adapter
             return items;
         }
 
-        public List<CommonStatistic> JobStatistic()
+        public List<CommonStatistic> JobStatistic(string direction)
         {
             List<CommonStatistic> Statistic = new List<CommonStatistic>();
-            string sql = @"select JobType name ,COUNT(JobType) value from [SurveyDB].[dbo].[ActiveJobs] group by JobType";
+            //string sql = @"select JobType name ,COUNT(JobType) value from [SurveyDB].[dbo].[ActiveJobs] group by JobType";
+            string sql = string.Format(@"select p.PositionName name,Count(p.PositionName) value  from dbo.ActiveJobs a 
+                         left join dbo.Position p on a.PositionID = p.PositionID
+                         left join dbo.SurveyModel s on p.SurveyID = s.SurveyID
+                         left join dbo.Company c on s.CompanyID = c.CompanyID
+                          where Direction = '{0}' group by p.PositionName",direction);
             using (var context = new SurveyContext())
             {
                 Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
@@ -174,7 +179,21 @@ namespace HPIT.Survey.Data.Adapter
             return Statistic;
         }
 
-
+        public List<Company> JobStatisticDetail(string direction,string position)
+        {
+            List<Company> Statistic = new List<Company>();
+            //string sql = @"select JobType name ,COUNT(JobType) value from [SurveyDB].[dbo].[ActiveJobs] group by JobType";
+            string sql = string.Format(@"select p.PositionName,p.PositionType,c.*  from dbo.ActiveJobs a 
+                                         left join dbo.Position p on a.PositionID = p.PositionID
+                                         left join dbo.SurveyModel s on p.SurveyID = s.SurveyID
+                                         left join dbo.Company c on s.CompanyID = c.CompanyID
+                                          where Direction = '{0}' and p.PositionName='{1}' ", direction,position);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<Company>(sql).ToList();
+            }
+            return Statistic;
+        }
 
         //技术点分析
         public List<CommonStatistic>  SkillStatistic(string position)

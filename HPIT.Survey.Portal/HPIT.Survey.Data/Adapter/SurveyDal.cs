@@ -333,6 +333,21 @@ namespace HPIT.Survey.Data.Adapter
                 //合并表达式
                 parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
             }
+            if (!string.IsNullOrEmpty(search.Entity.Batch))
+            {
+                Expression<Func<SurveyModel, bool>> batchWhere = item => item.Batch == search.Entity.Batch;
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(parameter.whereLambda, batchWhere);
+            }
+            if (!string.IsNullOrEmpty(search.Entity.ProjectName))
+            {
+                Expression<Func<SurveyModel, bool>> projectNameWhere = item => item.ProjectName == search.Entity.ProjectName;
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(parameter.whereLambda, projectNameWhere);
+            }
+            if (!string.IsNullOrEmpty(search.Entity.Direction))
+            {
+                Expression<Func<SurveyModel, bool>> directionWhere = item => item.Direction == search.Entity.Direction;
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(parameter.whereLambda, directionWhere);
+            }
             //查询数据
             DBBaseService baseService = new DBBaseService(SurveyContext.Instance);
             List<SurveyModel> list = baseService.GetSimplePagedData<SurveyModel, int>(parameter, out count);

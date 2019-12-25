@@ -1273,12 +1273,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\DeluxeUser.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
+    <Compile Include="Controllers\FileManageController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\RazorController.cs" />
     <Compile Include="Controllers\SkillTagController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -1411,6 +1413,8 @@
     <Content Include="Views\Statistic\SalaryIndex.cshtml" />
     <Content Include="Views\Statistic\JobIndex.cshtml" />
     <Content Include="Views\Statistic\SkillStatisticIndex.cshtml" />
+    <Content Include="Views\Razor\Index.cshtml" />
+    <Content Include="Views\FileManage\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

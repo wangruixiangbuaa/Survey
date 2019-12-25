@@ -48,17 +48,22 @@
                             <li><label>项目部：</label><input type="text" id="TextBox_ProjectPart" class="form-control input-sm searchInput" />  <asp:TextBox ID="TextBox_CreateTime" CssClass="form-control input-sm searchInput" runat="server"></asp:TextBox></li>
                             <li>
                                 <label>方向：</label> <select id="DropDownList_Direction" class="form-control input-sm searchInput">
-                                    <option value="-1">请选择</option>
-                                </select>
+    <option value="">请选择</option>
+    <option value="NET">NET</option>
+    <option value="Java">JAVA</option>
+    <option value="企信">企信</option>
+    <option value="网销">网销</option>
+    <option value="前端">Web前端</option>
+</select>
                             </li>
-                            <li><input type="button" value="查询" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                            <li><input type="button" value="查询" id="searchBtn" data-toggle="modal"  class="btn btn-default" /></li>
                         </ul>
                     </div>
                 </div>
                 <div class="row">
                     <table id="ListTb" class="table table-bordered">
                         <tr>
-                            <th>编号</th>
+                            @*<th>编号</th>*@
                             <th>年级</th>
                             <th>批次</th>
                             <th>方向</th>
@@ -78,7 +83,7 @@
                     <script id="dataList" type="text/x-jquery-tmpl">
                         {{each  Data}}
                         <tr>
-                            <td>${SurveyID}</td>
+                            @*<td>${SurveyID}</td>*@
                             <td>${Year}</td>
                             <td>${Batch}</td>
                             <td>${Direction}</td>
@@ -187,11 +192,19 @@
     <script type="text/javascript" charset="utf-8">
         var survey = {
             queryList: function () {
-                _.queryList("/Survey/QueryPageData", { "PageIndex": 0, "PageSize": 12, "Entity": {} });
+                var batch = $("#TextBox_Batch").val();
+                var projectName = $("#TextBox_ProjectPart").val();
+                var direction = $("#DropDownList_Direction").val();
+                var data = { "PageIndex": _.currentPageIndex-1, "PageSize": 15, "Entity": { "Batch": batch, "ProjectName": projectName, "Direction": direction } };
+                _.queryList("/Survey/QueryPageData",data );
             }
         }
         $(document).ready(function () {
             //替换审批人
+            $("#searchBtn").click(function () {
+                _.currentPageIndex = 1;
+                survey.queryList();
+            })
             $("#replaceSave").click(function () {
                 _.options.url = "/Survey/ReplacePEMByID?id=" + $("#surveyID").val() + "&pem=" + $("#pem").val();
                 _.ajaxData(_.options, function (result) {

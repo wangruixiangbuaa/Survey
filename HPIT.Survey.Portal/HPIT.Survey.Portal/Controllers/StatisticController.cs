@@ -74,10 +74,17 @@ namespace HPIT.Survey.Portal.Controllers
             return View();
         }
 
-        public DeluxeJsonResult GetJobStatistic()
+        public DeluxeJsonResult GetJobStatistic(string direction)
         {
-            var result = CommonDal.Instance.JobStatistic();
+            var result = CommonDal.Instance.JobStatistic(direction);
             return new DeluxeJsonResult(result);
+        }
+
+
+        public DeluxeJsonResult GetJobStatisticDetail(string direction,string position)
+        {
+            var result = CommonDal.Instance.JobStatisticDetail(direction,position);
+            return new DeluxeJsonResult(new { Data = result });
         }
 
         public DeluxeJsonResult GetAllPositionTbName()

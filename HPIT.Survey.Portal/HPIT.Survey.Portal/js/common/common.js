@@ -1,4 +1,5 @@
 ﻿var _ = {
+    currentPageIndex:0,
     MasterData: {},
     options: {
         "url": "/Dictionary/QueryPageData",
@@ -24,13 +25,14 @@
             _.render(result);
             var setTotalCount = result.Total;
             $('#box').paging({
-                initPageNo: 1, // 初始页码
+                initPageNo: _.currentPageIndex, // 初始页码
                 totalPages: result.TotalPages, //总页数
                 totalCount: '合计' + setTotalCount + '条数据', // 条目总数
                 slideSpeed: 600, // 缓动速度。单位毫秒
                 jump: true, //是否支持跳转
                 callback: function (page) {
                     //回调函数
+                    _.currentPageIndex = page;
                     _.options.data.PageIndex = page;
                     _.ajaxData(_.options, function (result) {
                         _.render(result);

@@ -23,18 +23,56 @@
     <img src="~/img/loadingimg/loading3.gif" style="margin-left: 40%; margin-top: 200px; width: 150px; height: 150px;" />
 </div>
 <h3>正在招聘职位统计</h3>
-<div class="row">
+<div class="row hang">
+    <label class="col-md-1">专业方向：</label>
+    <select id="dire" class="input-sm col-md-1">
+        <option value="NET">NET</option>
+        <option value="Java">JAVA</option>
+        <option value="企信">企信</option>
+        <option value="大数据">大数据</option>
+        <option value="Web前端">Web前端</option>
+        <option value="网销">网销</option>
+    </select>
 </div>
-<div id="main" style="width: 800px; height: 400px;margin-left: 20%;"></div>
+<div id="main" style="width: 800px; height: 350px;margin-left: 20%;"></div>
+<div class="row hang">
+    <table id="ListTb" class="table table-bordered">
+        <tr>
+            @*<th>标签编号</th>*@
+            <th>公司编号</th>
+            <th>公司名称</th>
+            <th>公司所在城市</th>
+            <th>公司一级行业</th>
+            <th>公司二级行业</th>
+            @*<th>招聘职位</th>*@
+        </tr>
+    </table>
+    <div class="pagebox" style="height:30px;" id="box"></div>
+    <script id="dataList" type="text/x-jquery-tmpl">
+        {{each  Data}}
+        <tr>
+            <td>${CompanyNo}</td>
+            <td>${CompanyName}</td>
+            <td>${City}</td>
+            <td>${CompanyType}</td>
+            <td>${CompanyDetailType}</td>
+            @*<th>${PositionName}</th>
+            <th>${PositionType}</th>*@
+        </tr>
+        {{/each}}
+    </script>
+</div>
 @section scripts{
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
+    <script src="~/js/common/common.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             var myChart;
-            var _ = {
+            var ps = {
+                direction: "",
                 draw: function (value) {
                     $.ajax({
-                        url: "/Statistic/GetJobStatistic",
+                        url: "/Statistic/GetJobStatistic?direction=" + value,
                         data: {},
                         type: "get",
                         dataType: "json",
@@ -70,8 +108,12 @@
                                     }
                                 ]
                             });
-                            //var tmpdata = { "data": result };
-                            //$("#urstatistic").tmpl(data).appendTo('#data');
+                            myChart.on('click', function (params) {
+                                _.options.url = "/Statistic/GetJobStatisticDetail?position=" + params.name + '&direction=' + ps.direction;
+                                _.ajaxData(_.options, function (result) {
+                                    _.render(result);
+                                })
+                            });
                         },
                         complete: function () {
                             $("#loading").hide();
@@ -79,7 +121,14 @@
                     })
                 }
             }
-            _.draw("NET");
+            ps.draw("NET");
+            ps.direction = "NET";
+            $("#dire").change(function () {
+                $("#main").empty();
+                var value = $(this).val();
+                ps.direction = value;
+                ps.draw(value);
+            });
         })
     </script>
 }

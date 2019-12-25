@@ -43,6 +43,8 @@
         </li>*@
                         <li><input type="button" value="查询" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
                         <li><input type="button" value="api查询" id="apibtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                        <li><input type="button" value="apiDelete" id="apiDeletebtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                        <li><input type="button" value="apiPut" id="apiPutbtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
                     </ul>
                 </div>
             </div>
@@ -90,6 +92,24 @@
             $("#apibtn").click(function () {
                 _.options.url = "http://localhost:50756/api/Survey/Get?id=1100";
                 _.options.type = "get";
+                _.ajaxData(_.options, function (result) {
+                    console.log(result);
+                })
+            })
+
+            $("#apiDeletebtn").click(function () {
+                _.options.url = "http://localhost:50756/api/Survey/Delete?id=1100";
+                _.options.type = "delete";
+                _.ajaxData(_.options, function (result) {
+                    console.log(result);
+                })
+            })
+
+
+            $("#apiPutbtn").click(function () {
+                _.options.url = "http://localhost:50756/api/Survey/Update";
+                _.options.type = "put";
+                _.options.data = { "CompanyName": "a12", "CompanyNo": "123","CompanyDesc":"desc" }
                 _.ajaxData(_.options, function (result) {
                     console.log(result);
                 })
