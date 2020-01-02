@@ -111,5 +111,21 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(new { Data = result });
         }
 
+        public ActionResult CQCStatisticIndex()
+        {
+            return View();
+        }
+
+        public DeluxeJsonResult GetCQCStatistic(string position)
+        {
+            var result = CommonDal.Instance.CQCStatistic(position);
+            return new DeluxeJsonResult(result);
+        }
+
+        public DeluxeJsonResult GetCQCStatisticDetail(string position, string tagName)
+        {
+            var result = CommonDal.Instance.CQCStatisticDetail(position, tagName);
+            return new DeluxeJsonResult(new { Data = result });
+        }
     }
 }

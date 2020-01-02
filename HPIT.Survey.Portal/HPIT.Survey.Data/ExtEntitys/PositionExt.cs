@@ -27,6 +27,11 @@ namespace HPIT.Survey.Data.ExtEntitys
         public string Source { get; set; }
 
         public string Years { get; set; }
+
+
+        public decimal AvageMoney { get; set; }
+
+        public string Skills { get; set; }
         public string CompanyName { get; set; }
 
         public string CompanyType { get; set; }

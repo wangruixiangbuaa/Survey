@@ -19,6 +19,7 @@ namespace HPIT.Survey.Portal.Controllers
         // GET: SkillTag
         public ActionResult Index()
         {
+            ViewData["Directions"] = CommonDal.Instance.GetDictionary("方向");
             return View();
         }
 

@@ -312,7 +312,7 @@ namespace HPIT.Survey.Data.Adapter
             parameter.orderByLambda = t => t.SurveyID;
             parameter.pageIndex = search.PageIndex;
             parameter.pageSize = search.PageSize;
-            if (search.RoleName == "学生")
+            if (search.RoleName == "学生" || search.RoleName == "项目组组长" || search.RoleName == "技术主管" || search.RoleName == "项目主管" || search.RoleName == "人事主管")
             {
                 Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;
                 Expression<Func<SurveyModel, bool>> lambda1 = item => item.StuName == search.UserName;

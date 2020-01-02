@@ -31,6 +31,20 @@ namespace HPIT.Survey.Data.Adapter
             return skillStatistic;
         }
 
+        public List<CommonStatistic> ProjectCityStatistic(string city)
+        {
+            List<CommonStatistic> skillStatistic = new List<CommonStatistic>();
+            string sql = string.Format(@"select p.ProjectType name ,COUNT(*) value  FROM [SurveyDB].[dbo].Project p 
+                                         left join [SurveyDB].[dbo].[SurveyModel] s  on s.SurveyID = p.SurveyID  
+                                         left join [SurveyDB].[dbo].[Company] c on s.CompanyID = c.CompanyID where c.City = '{0}'
+                                         group by p.ProjectType", city);
+            using (var context = new SurveyContext())
+            {
+                skillStatistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return skillStatistic;
+        }
+
 
         public List<ProjectExt> GetProjectListByType(string position, string type)
         {

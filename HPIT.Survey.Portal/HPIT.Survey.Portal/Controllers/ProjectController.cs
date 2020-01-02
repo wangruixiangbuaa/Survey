@@ -22,6 +22,13 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(result);
         }
 
+
+        public DeluxeJsonResult GetProjectCityStatics(string city)
+        {
+            var result = ProjectDal.Instance.ProjectCityStatistic(city);
+            return new DeluxeJsonResult(result);
+        }
+
         public DeluxeJsonResult GetProjectStaticsDetail(string position, string type)
         {
             var result = ProjectDal.Instance.GetProjectListByType(position,type);

@@ -203,7 +203,14 @@ namespace HPIT.Survey.Portal.Controllers
             var result = SurveyDal.Instance.GetPageData(search,out total);
             foreach (var item in result)
             {
-                item.CurrentRoleName = currentUser.FullName;
+                if (currentUser.FullName != "项目组组长" && currentUser.FullName != "技术主管" && currentUser.FullName != "项目主管" && currentUser.FullName != "人事主管")
+                {
+                    item.CurrentRoleName = "学生";
+                }
+                else
+                {
+                    item.CurrentRoleName = currentUser.FullName;
+                }
             }
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total ,TotalPages = totalPages});

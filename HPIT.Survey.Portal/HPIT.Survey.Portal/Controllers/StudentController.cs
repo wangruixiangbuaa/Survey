@@ -45,7 +45,7 @@ namespace HPIT.Survey.Portal.Controllers
         {
             HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
             string stuNo = "";
-            if (currentUser.FullName != "学生")
+            if (currentUser.FullName != "项目组组长" && currentUser.FullName != "技术主管" && currentUser.FullName != "项目主管" && currentUser.FullName != "人事主管")
             {
                 return new DeluxeJsonResult(new { data="只能学生进行技术评估",status=403 });
             }
@@ -89,9 +89,9 @@ namespace HPIT.Survey.Portal.Controllers
         }
 
         [HttpPost]
-        public DeluxeJsonResult GetDirectionSkillTag(string direction)
+        public DeluxeJsonResult GetDirectionSkillTag(string direction,string stuName,string stuNo)
         {
-            var tags = SkillTagDal.Instance.DirectionTags(direction);
+            var tags = SkillTagDal.Instance.DirectionTags(direction,stuName,stuNo);
             return new DeluxeJsonResult(new { data=tags , points = InitPoints() });
         }
     }

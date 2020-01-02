@@ -5,7 +5,8 @@
         "url": "/Dictionary/QueryPageData",
         "data": { "PageIndex": 0, "PageSize": 12, "Entity": { "Type": "方向" } },
         "type": "post",
-        "datatype": "json"
+        "datatype": "json",
+        "jsonp":"jsonpCallback"
     },
     render: function (data) {
         $("#ListTb tr:gt(0)").remove();

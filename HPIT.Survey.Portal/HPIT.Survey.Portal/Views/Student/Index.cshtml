@@ -38,17 +38,13 @@
             {{each data}}
             <div class="col-md-3" style="margin-top:10px;">
                 <select class="input-sm" stype="${TagName}" sid="${TagID}">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+                    {{each Points}}
+                    {{if SelfPoint == Value}}
+                    <option value="${Value}" selected="selected">${Text}</option>
+                    {{else}}
+                    <option value="${Value}">${Text}</option>
+                    {{/if}}
+                    {{/each}}
                 </select>
                 <label>${TagName}</label>
             </div>
@@ -72,7 +68,7 @@
             MasterData: {},
             options: {
                 "url": "/Student/GetDirectionSkillTag",
-                "data": {"direction":"NET"},
+                "data": { "direction": "NET" },
                 "type": "post",
                 "datatype": "json"
             },
@@ -114,6 +110,8 @@
             _.stuNo = _.getQueryString("stuNo");
             _.stuName = _.getQueryString("stuName");
             $("#stuName").html(_.stuName);
+            _.options.data.stuName = _.stuName;
+            _.options.data.stuNo = _.stuNo;
             _.ajaxData(_.options, function (result) {
                 _.render(result);
             });
@@ -145,7 +143,11 @@
                 }
                 _.options.data = { "tags": _.TagScoreList, "stuNo": _.stuNo };
                 _.ajaxData(_.options, function (result) {
-                    swal('', "提交成功", "success");
+                    if (result.status == '200') {
+                        swal('', "提交成功", "success");
+                    } else {
+                        swal('', "" + result.data, "success");
+                    }
                 })
             })
             $("#dire").change(function () {

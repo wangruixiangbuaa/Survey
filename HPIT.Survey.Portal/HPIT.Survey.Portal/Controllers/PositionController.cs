@@ -2,6 +2,8 @@
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
+using HPIT.Survey.Data.QueryModel;
+using HPIT.Survey.Portal.Common;
 using HPIT.Survey.Portal.Filters;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,21 @@ namespace HPIT.Survey.Portal.Controllers
         public ActionResult PositionStatisticIndex()
         {
             return View();
+        }
+
+        public ActionResult PositionMatchIndex()
+        {
+            return View();
+        }
+
+
+        public DeluxeJsonResult PositionMatchSearch(SearchModel<PositionMatchModel> search)
+        {
+            search.UserName = DeluxeUser.CurrentMember.RealName;
+            int total = 0;
+            var result = PositionDal.Instance.GetMatchPageData(search, out total);
+            var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
+            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages });
         }
 
         public DeluxeJsonResult GetPositionStatics(string direction)

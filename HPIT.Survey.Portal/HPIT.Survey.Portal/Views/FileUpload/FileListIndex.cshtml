@@ -45,6 +45,7 @@
                         <li><input type="button" value="api查询" id="apibtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
                         <li><input type="button" value="apiDelete" id="apiDeletebtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
                         <li><input type="button" value="apiPut" id="apiPutbtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                        <li><input type="button" value="api天气" id="apiWeatherPutbtn" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
                     </ul>
                 </div>
             </div>
@@ -110,6 +111,16 @@
                 _.options.url = "http://localhost:50756/api/Survey/Update";
                 _.options.type = "put";
                 _.options.data = { "CompanyName": "a12", "CompanyNo": "123","CompanyDesc":"desc" }
+                _.ajaxData(_.options, function (result) {
+                    console.log(result);
+                })
+            })
+
+            $("#apiWeatherPutbtn").click(function () {
+                _.options.url = "http://t.weather.sojson.com/api/weather/city/101220101";
+                _.options.type = "get";
+                _.options.datatype = 'jsonp';
+                _.options.data = { }
                 _.ajaxData(_.options, function (result) {
                     console.log(result);
                 })

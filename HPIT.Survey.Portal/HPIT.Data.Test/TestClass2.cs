@@ -1,4 +1,5 @@
-﻿using HPIT.Evalute.Data;
+﻿using HPIT.Data.Core;
+using HPIT.Evalute.Data;
 using HPIT.StudentEvaluate.Core;
 using HPIT.Survey.Data.Adapter;
 using HPIT.Survey.Data.Entitys;
@@ -55,6 +56,34 @@ namespace HPIT.Data.Test
         public void TestMethodPTags()
         {
             var result = PositionDal.Instance.GetTagsByPositionID("e8337a42-0d06-4fee-8332-ab227caee5fc");
+            string json = JsonConvert.SerializeObject(result);
+        }
+
+        [TestMethod]
+        public void TestHTTPServiceGET()
+        {
+            var result = HTTPService.Get("http://t.weather.sojson.com/api/weather/city/101220101") ;
+            string json = JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// application/json 地址一定要对，要添加http:协议头，端口号正确
+        /// </summary>
+        [TestMethod]
+        public void TestHTTPServicePOST()
+        {
+            string jsonData = "{ 'CompanyName':'第一家公司','CompanyType':'sss'}";
+            var result = HTTPService.Post("http://localhost:50756/api/Survey/Add", null,"application/json", jsonData,5000);
+            string json = JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// get 请求地址 添加http 协议头 端口号 jsonp 跨域
+        /// </summary>
+        [TestMethod]
+        public void TestHTTPServiceGetAPI()
+        {
+            var result = HTTPService.Get("http://localhost:50756/api/Survey/Get?id=1100");
             string json = JsonConvert.SerializeObject(result);
         }
 

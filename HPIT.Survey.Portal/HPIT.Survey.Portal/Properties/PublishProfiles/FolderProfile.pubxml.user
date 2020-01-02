@@ -19,37 +19,37 @@
       <publishTime>09/11/2013 09:10:04</publishTime>
     </File>
     <File Include="bin/HPIT.Data.Core.dll">
-      <publishTime>12/19/2019 21:06:06</publishTime>
+      <publishTime>12/27/2019 10:46:12</publishTime>
     </File>
     <File Include="bin/HPIT.Data.Core.pdb">
-      <publishTime>12/19/2019 21:06:06</publishTime>
+      <publishTime>12/27/2019 10:46:12</publishTime>
     </File>
     <File Include="bin/HPIT.Evalute.Data.dll">
-      <publishTime>12/19/2019 21:06:13</publishTime>
+      <publishTime>12/27/2019 10:46:12</publishTime>
     </File>
     <File Include="bin/HPIT.Evalute.Data.pdb">
-      <publishTime>12/19/2019 21:06:13</publishTime>
+      <publishTime>12/27/2019 10:46:12</publishTime>
     </File>
     <File Include="bin/HPIT.Survey.Data.dll">
-      <publishTime>12/19/2019 21:06:14</publishTime>
+      <publishTime>12/27/2019 10:46:13</publishTime>
     </File>
     <File Include="bin/HPIT.Survey.Data.dll.config">
       <publishTime>11/14/2019 19:37:38</publishTime>
     </File>
     <File Include="bin/HPIT.Survey.Data.pdb">
-      <publishTime>12/19/2019 21:06:14</publishTime>
+      <publishTime>12/27/2019 10:46:13</publishTime>
     </File>
     <File Include="bin/HPIT.Survey.Portal.dll">
-      <publishTime>12/20/2019 09:10:23</publishTime>
+      <publishTime>12/27/2019 10:46:15</publishTime>
     </File>
     <File Include="bin/HPIT.Survey.Portal.pdb">
-      <publishTime>12/20/2019 09:10:23</publishTime>
+      <publishTime>12/27/2019 10:46:15</publishTime>
     </File>
     <File Include="bin/HPIT.Web.Core.dll">
-      <publishTime>12/19/2019 21:06:06</publishTime>
+      <publishTime>12/27/2019 10:46:12</publishTime>
     </File>
     <File Include="bin/HPIT.Web.Core.pdb">
-      <publishTime>12/19/2019 21:06:06</publishTime>
+      <publishTime>12/27/2019 10:46:12</publishTime>
     </File>
     <File Include="bin/log4net.dll">
       <publishTime>03/08/2017 19:26:22</publishTime>
@@ -397,10 +397,10 @@
       <publishTime>11/13/2019 09:56:51</publishTime>
     </File>
     <File Include="js/app.survey/studentsurvey.js">
-      <publishTime>12/19/2019 20:44:53</publishTime>
+      <publishTime>12/20/2019 15:36:34</publishTime>
     </File>
     <File Include="js/app.survey/survey.js">
-      <publishTime>12/19/2019 20:45:45</publishTime>
+      <publishTime>12/20/2019 16:36:26</publishTime>
     </File>
     <File Include="js/aurora.js">
       <publishTime>11/13/2019 10:24:03</publishTime>
@@ -409,7 +409,7 @@
       <publishTime>11/13/2019 10:24:03</publishTime>
     </File>
     <File Include="js/common/common.js">
-      <publishTime>12/10/2019 20:55:44</publishTime>
+      <publishTime>12/25/2019 11:30:33</publishTime>
     </File>
     <File Include="js/demo.js">
       <publishTime>11/13/2019 10:24:03</publishTime>
@@ -4008,11 +4008,14 @@
     <File Include="Views/Dictionary/Index.cshtml">
       <publishTime>12/10/2019 21:10:32</publishTime>
     </File>
+    <File Include="Views/FileManage/Index.cshtml">
+      <publishTime>12/24/2019 21:05:33</publishTime>
+    </File>
     <File Include="Views/FileUpload/FileInputIndex.cshtml">
       <publishTime>12/16/2019 09:20:52</publishTime>
     </File>
     <File Include="Views/FileUpload/FileListIndex.cshtml">
-      <publishTime>12/16/2019 11:26:52</publishTime>
+      <publishTime>12/25/2019 10:10:17</publishTime>
     </File>
     <File Include="Views/FileUpload/Index.cshtml">
       <publishTime>12/16/2019 10:19:16</publishTime>
@@ -4021,19 +4024,22 @@
       <publishTime>11/13/2019 11:05:47</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
-      <publishTime>12/10/2019 16:18:00</publishTime>
+      <publishTime>12/24/2019 11:42:47</publishTime>
     </File>
     <File Include="Views/Main/Index.cshtml">
       <publishTime>12/06/2019 15:40:35</publishTime>
     </File>
     <File Include="Views/Position/Index.cshtml">
-      <publishTime>11/27/2019 20:40:30</publishTime>
+      <publishTime>12/24/2019 10:01:01</publishTime>
     </File>
     <File Include="Views/Position/PositionStatisticIndex.cshtml">
-      <publishTime>12/11/2019 18:24:15</publishTime>
+      <publishTime>12/23/2019 19:11:24</publishTime>
     </File>
     <File Include="Views/Project/Index.cshtml">
-      <publishTime>12/11/2019 10:34:46</publishTime>
+      <publishTime>12/24/2019 09:04:37</publishTime>
+    </File>
+    <File Include="Views/Razor/Index.cshtml">
+      <publishTime>12/24/2019 20:16:41</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>12/15/2019 20:20:06</publishTime>
@@ -4044,17 +4050,26 @@
     <File Include="Views/SkillTag/SkillStatistic.cshtml">
       <publishTime>12/11/2019 10:31:06</publishTime>
     </File>
+    <File Include="Views/Statistic/CityIndex.cshtml">
+      <publishTime>12/24/2019 09:04:50</publishTime>
+    </File>
+    <File Include="Views/Statistic/CQCStatisticIndex.cshtml">
+      <publishTime>12/26/2019 10:24:23</publishTime>
+    </File>
     <File Include="Views/Statistic/Index.cshtml">
       <publishTime>12/11/2019 18:17:27</publishTime>
     </File>
     <File Include="Views/Statistic/IndustryIndex.cshtml">
-      <publishTime>12/18/2019 16:15:43</publishTime>
+      <publishTime>12/24/2019 09:04:59</publishTime>
     </File>
     <File Include="Views/Statistic/JobIndex.cshtml">
-      <publishTime>12/18/2019 16:50:33</publishTime>
+      <publishTime>12/25/2019 17:15:14</publishTime>
     </File>
     <File Include="Views/Statistic/SalaryIndex.cshtml">
-      <publishTime>12/18/2019 16:43:10</publishTime>
+      <publishTime>12/24/2019 17:38:39</publishTime>
+    </File>
+    <File Include="Views/Statistic/SkillStatisticIndex.cshtml">
+      <publishTime>12/24/2019 10:28:24</publishTime>
     </File>
     <File Include="Views/Student/Index.cshtml">
       <publishTime>12/16/2019 17:18:11</publishTime>
@@ -4063,13 +4078,13 @@
       <publishTime>12/16/2019 17:15:43</publishTime>
     </File>
     <File Include="Views/Survey/Index.cshtml">
-      <publishTime>12/19/2019 20:53:39</publishTime>
+      <publishTime>12/25/2019 11:32:27</publishTime>
     </File>
     <File Include="Views/Survey/StudentIndex.cshtml">
-      <publishTime>12/20/2019 09:03:02</publishTime>
+      <publishTime>12/20/2019 15:27:24</publishTime>
     </File>
     <File Include="Views/Survey/UserIndex.cshtml">
-      <publishTime>12/20/2019 09:03:15</publishTime>
+      <publishTime>12/20/2019 15:27:14</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>11/13/2019 09:39:50</publishTime>

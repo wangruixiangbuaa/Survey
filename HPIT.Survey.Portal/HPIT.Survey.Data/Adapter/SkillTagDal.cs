@@ -1,10 +1,12 @@
 ﻿using HPIT.Data.Core;
 using HPIT.Survey.Data.Entitys;
 using HPIT.Survey.Data.ExtEntitys;
+using HPIT.Survey.Data.Tool;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +30,16 @@ namespace HPIT.Survey.Data.Adapter
             parameter.pageIndex = search.PageIndex;
             parameter.pageSize = search.PageSize;
             parameter.whereLambda = t => t.TagID != "";
+            if (!string.IsNullOrEmpty(search.Entity.Direction))
+            {
+                Expression<Func<SkillTag, bool>> Where = item => item.Direction == search.Entity.Direction;
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SkillTag>(parameter.whereLambda, Where);
+            }
+            if (!string.IsNullOrEmpty(search.Entity.TagType))
+            {
+                Expression<Func<SkillTag, bool>> Where = item => item.TagType == search.Entity.TagType;
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SkillTag>(parameter.whereLambda, Where);
+            }
             DBBaseService baseService = new DBBaseService(SurveyContext.Instance);
             List<SkillTag> list = baseService.GetSimplePagedData<SkillTag, string>(parameter, out count);
             return list;
@@ -41,9 +53,34 @@ namespace HPIT.Survey.Data.Adapter
             return context.SaveChanges();
         }
 
-        public List<SkillTag> DirectionTags(string direction)
+        public List<GeneralSelectItem> InitPoints()
         {
-            return context.SkillTag.Where(r => r.Direction == direction).ToList();
+            List<GeneralSelectItem> points = new List<GeneralSelectItem>();
+            for (int i = 0; i <= 10; i++)
+            {
+                points.Add(new GeneralSelectItem() { Text = i.ToString(), Value = i.ToString() });
+            }
+            return points;
+        }
+
+        public List<SkillTagExt> DirectionTags(string direction,string stuName,string stuNo)
+        {
+            List<SkillTagExt> stuSkills = new List<SkillTagExt>();
+            string sql = string.Format("select * from [dbo].SkillTag where Direction = '{0}'",direction);
+            if (!string.IsNullOrEmpty(stuName) || !string.IsNullOrEmpty(stuNo))
+            {
+                sql = string.Format(@"SELECT s.SelfPoint,s.StudentName,s.StudentNo,s.TeacherPoint,t.TagName,t.TagID,t.TagType,t.Direction,t.DirectionID
+                                         FROM [dbo].[StudentTags] s left join [dbo].SkillTag t on s.TagID = t.TagID where s.StudentName='{0}' and s.StudentNo='{1}' ", stuName, stuNo);
+            }
+            using (var context = new SurveyContext())
+            {
+                stuSkills = context.Database.SqlQuery<SkillTagExt>(sql).ToList();
+            }
+            foreach (var item in stuSkills)
+            {
+                item.Points = InitPoints();
+            }
+            return stuSkills;
         }
 
         public List<SkillTagStatic> TagStatistic(string direction)

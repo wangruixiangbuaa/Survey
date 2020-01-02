@@ -1415,6 +1415,8 @@
     <Content Include="Views\Statistic\SkillStatisticIndex.cshtml" />
     <Content Include="Views\Razor\Index.cshtml" />
     <Content Include="Views\FileManage\Index.cshtml" />
+    <Content Include="Views\Statistic\CQCStatisticIndex.cshtml" />
+    <Content Include="Views\Position\PositionMatchIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

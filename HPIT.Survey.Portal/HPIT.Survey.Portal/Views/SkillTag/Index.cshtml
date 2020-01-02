@@ -1,4 +1,5 @@
-﻿@{
+﻿@using HPIT.Survey.Data.Entitys
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -44,13 +45,20 @@
             <div class="box-tools pull-right" style="margin-bottom: 17px;">
                 <div class="has-feedback">
                     <ul>
-                        <li><label>标签类型：</label><input type="text" id="TextBox_Account" class="form-control input-sm searchInput" /></li>
+                        <li><label>标签类型：</label><input type="text" id="TextBox_TagType" class="form-control input-sm searchInput" /></li>
                         <li>
-                            <label>方向：</label> <select id="DropDownList_Roles" class="form-control input-sm searchInput">
-                                <option value="-1">请选择</option>
+                            <label>方向：</label>
+                            <select id="DropDownList_Direction" class="form-control input-sm searchInput">
+                                <option value="">请选择</option>
+                                @{ 
+                                    foreach (GeneralSelectItem item in (ViewData["Directions"] as List<GeneralSelectItem>))
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
                             </select>
                         </li>
-                        <li><input type="button" value="查询" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                        <li><input type="button" value="查询" id="searchBtn" class="btn btn-default" /></li>
                     </ul>
                 </div>
             </div>
@@ -106,16 +114,21 @@
                         <td>课程名称</td>
                         <td>
                             <input class="form-control" name="CourseName" id="CourseName">
-                            @*<select class="form-control selectpicker">
-                        <option>NET</option>
-                        <option>JAVA</option>
-                        <option>HTML</option>
-                    </select>*@
                         </td>
                     </tr>
                     <tr>
                         <td>方向</td>
-                        <td><input class="form-control" name="direction" id="direction"></td>
+                        <td>@*<input class="form-control" name="direction" id="direction">*@
+                            <select id="DropDownList_Direction" class="form-control input-sm searchInput">
+                                <option value="">请选择</option>
+                                @{
+                                    foreach (GeneralSelectItem item in (ViewData["Directions"] as List<GeneralSelectItem>))
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -129,51 +142,16 @@
 @section scripts{
     <script src="~/js/tmpl/jquery.tmpl.js"></script>
     <script src="~/js/page/paging.js"></script>
+    <script src="~/js/common/common.js"></script>
     <script type="text/javascript" charset="utf-8">
-        window.onload = function () {
-            //alert("页面加载中。。。");
-        };
-        var _ = {
-            MasterData: {},
-            options: {
-                "url": "/SkillTag/QueryPageData",
-                "data": { "PageIndex": 0,"PageSize":12 },
-                "type": "post",
-                "datatype": "json"
-            },
-            render: function (data) {
-                $("#ListTb tr:gt(0)").remove();
-                $("#dataList").tmpl(data).appendTo('#ListTb');
-            },
-            getQueryString: function (name) {
-                var reg = new RegExp('(?:(?:&|\\?)' + name + '=([^&]*))|(?:/' + name + '/([^/]*))', 'i');
-                var r = window.location.href.match(reg);
-                if (r != null)
-                    return decodeURI(r[1] || r[2]);
-                return null;
-            },
-            ajaxData: function (options, callback) {
-                $.ajax({
-                    url: options.url,
-                    data: options.data,
-                    type: options.type,
-                    dataType: options.dataType,
-                    beforeSend: function () {
-                        $("#loading").show();
-                    },
-                    success: function (survey) {
-                        callback(survey);
-                    },
-                    complete: function () {
-                        $("#loading").hide();
-                        $('.datetime').datepicker({
-                            autoclose: true,
-                            format: 'yyyy-mm-dd'
-                        });
-                    }
-                })
+        var survey = {
+            queryList: function () {
+                var type = $("#TextBox_TagType").val();
+                var direction = $("#DropDownList_Direction").val();
+                var data = { "PageIndex": _.currentPageIndex - 1, "PageSize": 15, "Entity": { "TagType": type, "Direction": direction } };
+                _.queryList("/SkillTag/QueryPageData", data);
             }
-        };
+        }
         $(document).ready(function () {
             $("#ListTb").on("click", "a", function () {
                 var tid = $(this).attr("tid");
@@ -190,6 +168,11 @@
                 $("#editModal").modal("show");
             })
 
+            $("#searchBtn").click(function () {
+                _.currentPageIndex = 1;
+                survey.queryList();
+            })
+
             $("#save").click(function () {
                 var tagObj = {
                     "TagID": $("#tagid").val(),
@@ -201,28 +184,10 @@
                 _.options.data = tagObj;
                 _.options.url = "/SkillTag/UpdateTag";
                 _.ajaxData(_.options, function (result) {
-                    window.location.reload();
+                    survey.queryList();
                 })
             })
-            _.ajaxData(_.options, function (result) {
-                _.render(result);
-                var setTotalCount = result.Total;
-                $('#box').paging({
-                    initPageNo: 1, // 初始页码
-                    totalPages: result.TotalPages, //总页数
-                    totalCount: '合计' + setTotalCount + '条数据', // 条目总数
-                    slideSpeed: 600, // 缓动速度。单位毫秒
-                    jump: true, //是否支持跳转
-                    callback: function (page) {
-                        //回调函数
-                        //alert(page);
-                        _.options.data.PageIndex = page;
-                        _.ajaxData(_.options, function (result) {
-                            _.render(result);
-                        });
-                    }
-                })
-            });
+            survey.queryList();
         })
     </script>
 }

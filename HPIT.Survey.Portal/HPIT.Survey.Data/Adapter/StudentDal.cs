@@ -31,6 +31,14 @@ namespace HPIT.Survey.Data.Adapter
             {
                 context.StudentEvaluate.Add(eval);
             }
+            else
+            {
+                using (var db = new SurveyContext())
+                {
+                    db.Database.ExecuteSqlCommand(
+                       string.Format("update dbo.StudentEvaluate set Score={0} where StudentNo='{1}'", eval.Score, stuNo));
+                }
+            }
             using (var db = new SurveyContext())
             {
                  db.Database.ExecuteSqlCommand(
@@ -56,7 +64,7 @@ namespace HPIT.Survey.Data.Adapter
                 foreach (var item in tags)
                 {
                     result= db.Database.ExecuteSqlCommand(
-                    string.Format("update dbo.StudentTags set TeacherPoint = {0} where StudentNo='{1}'", item.TeacherPoint ,stuNo));
+                    string.Format("update dbo.StudentTags set TeacherPoint = {0} where TagID='{1}' and StudentNo ='{2}'", item.TeacherPoint ,item.TagID,stuNo));
                 }
                 int sum = (int)tags.Sum(r => r.TeacherPoint);
                 result = db.Database.ExecuteSqlCommand(

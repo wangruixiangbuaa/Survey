@@ -86,5 +86,21 @@ namespace HPIT.Data.Core
             return list.Skip((parameter.pageIndex - 1) * parameter.pageSize).Take(parameter.pageSize).ToList();
         }
 
+
+        public List<T> GetSqlPagedData<T,TEntity,Tkey>(string sql, GetPageListParameter<TEntity, Tkey> parameter, out int count) where T : class
+        {
+            count = db.Database.SqlQuery<T>(sql).Count();
+            DbRawSqlQuery<T> list = db.Database.SqlQuery<T>(sql);
+
+            if (parameter.pageIndex <= 0)
+            {
+                parameter.pageIndex = 1;
+            }
+            if (parameter.pageIndex >= count)
+            {
+                parameter.pageIndex = count;
+            }
+            return list.Skip((parameter.pageIndex - 1) * parameter.pageSize).Take(parameter.pageSize).ToList();
+        }
     }
 }

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBBaseService.cs" />
+    <Compile Include="HTTPService.cs" />
     <Compile Include="LogHelper.cs" />
     <Compile Include="PageIndexModel.cs" />
     <Compile Include="PageModel.cs" />

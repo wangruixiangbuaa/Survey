@@ -22,6 +22,11 @@ namespace HPIT.Survey.Data.Adapter
             return items;
         }
 
+        public List<GeneralSelectItem> GetDictionary(string type)
+        {
+            SurveyContext context = new SurveyContext();
+            return context.Dictionary.Where(r => r.Type == type).Select(r => new GeneralSelectItem { Text = r.Name, Value = r.Value }).ToList();
+        }
         /// <summary>
         /// 行业分析
         /// </summary>
@@ -221,6 +226,45 @@ namespace HPIT.Survey.Data.Adapter
                                          left join dbo.SurveyModel s on s.SurveyID = p.SurveyID
                                          left join dbo.Company c on s.CompanyID = c.CompanyID
                                          where p.PositionName = '{0}'  and t.TagName = '{1}'", position, tagName);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<Company>(sql).ToList();
+            }
+            return Statistic;
+        }
+
+
+        //CQC分析
+        public List<CommonStatistic> CQCStatistic(string position)
+        {
+            List<CommonStatistic> Statistic = new List<CommonStatistic>();
+            string sql = string.Format(@"select t.TagName name ,count(t.TagName) value from  dbo.SkillTags ks 
+                                         left join dbo.Position p on ks.PositionID = p.PositionID
+                                         left join dbo.SkillTag t on ks.TagID = t.TagID  
+                                         where p.PositionName = '{0}' and t.CourseName='CQC' group by t.TagName ", position);
+            using (var context = new SurveyContext())
+            {
+                Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
+            }
+            return Statistic;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
+        public List<Company> CQCStatisticDetail(string position, string tagName)
+        {
+            List<Company> Statistic = new List<Company>();
+            string sql = string.Format(@"select distinct(c.CompanyName),c.CompanyType,c.CompanyDetailType,
+                                         c.City,c.CompanyID,c.CompanyNo,c.CompanyDesc,c.Status,c.DepartName from  dbo.SkillTags ks 
+                                         left join dbo.Position p on ks.PositionID = p.PositionID
+                                         left join dbo.SkillTag t on ks.TagID = t.TagID
+                                         left join dbo.SurveyModel s on s.SurveyID = p.SurveyID
+                                         left join dbo.Company c on s.CompanyID = c.CompanyID
+                                         where p.PositionName = '{0}'  and t.TagName = '{1}' and t.CourseName='CQC'", position, tagName);
             using (var context = new SurveyContext())
             {
                 Statistic = context.Database.SqlQuery<Company>(sql).ToList();

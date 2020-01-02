@@ -23,7 +23,15 @@ namespace HPIT.Survey.Portal.Controllers
         public DeluxeJsonResult GetCurrentRoleMenus()
         {
             HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
-            List<MenuExt> menuList = MenuDal.Instance.GetMenusByRoleName(currentUser.FullName);
+            List<MenuExt> menuList = new List<MenuExt>();
+            if (currentUser.FullName == "项目组组长" || currentUser.FullName == "技术主管" || currentUser.FullName == "项目主管" || currentUser.FullName == "人事主管")
+            {
+                menuList = MenuDal.Instance.GetMenusByRoleName("学生");
+            }
+            else
+            {
+                menuList = MenuDal.Instance.GetMenusByRoleName(currentUser.FullName);
+            }
             return new DeluxeJsonResult(new { data = menuList, code = 200 }, "yyyy-MM-dd HH:mm");
         }
     }
