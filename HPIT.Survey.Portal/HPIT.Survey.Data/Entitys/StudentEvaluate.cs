@@ -26,6 +26,10 @@ namespace HPIT.Survey.Data.Entitys
 
         public int? TeacherPoint { get; set; }
 
+        public string PEM { get; set; }
+
+        public string PRM { get; set; }
+
         public DateTime CreateTime { get; set; }
     }
 }

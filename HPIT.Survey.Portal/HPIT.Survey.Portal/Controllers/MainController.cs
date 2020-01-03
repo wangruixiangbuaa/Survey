@@ -28,6 +28,10 @@ namespace HPIT.Survey.Portal.Controllers
             {
                 menuList = MenuDal.Instance.GetMenusByRoleName("学生");
             }
+            else if (currentUser.FullName == "人事经理" || currentUser.FullName == "项目经理")
+            {
+                menuList = MenuDal.Instance.GetMenusByRoleName("人事经理");
+            }
             else
             {
                 menuList = MenuDal.Instance.GetMenusByRoleName(currentUser.FullName);

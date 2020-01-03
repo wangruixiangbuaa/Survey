@@ -11,5 +11,7 @@ namespace HPIT.Survey.Portal.Models
         public List<StudentTags> tags { get; set; }
 
         public string stuNo { get; set; }
+
+        public string positionName { get; set; }
     }
 }

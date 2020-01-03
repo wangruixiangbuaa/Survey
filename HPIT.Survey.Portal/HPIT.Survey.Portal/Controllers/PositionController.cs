@@ -18,6 +18,7 @@ namespace HPIT.Survey.Portal.Controllers
         // GET: Position
         public ActionResult Index()
         {
+            ViewData["Source"] = CommonDal.Instance.GetDictionary("来源");
             return View();
         }
 

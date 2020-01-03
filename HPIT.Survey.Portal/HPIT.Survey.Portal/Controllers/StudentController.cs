@@ -45,24 +45,27 @@ namespace HPIT.Survey.Portal.Controllers
         {
             HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
             string stuNo = "";
-            if (currentUser.FullName != "项目组组长" && currentUser.FullName != "技术主管" && currentUser.FullName != "项目主管" && currentUser.FullName != "人事主管")
+            if (currentUser.FullName!="学生" && currentUser.FullName != "项目组组长" && currentUser.FullName != "技术主管" && currentUser.FullName != "项目主管" && currentUser.FullName != "人事主管")
             {
                 return new DeluxeJsonResult(new { data="只能学生进行技术评估",status=403 });
             }
             List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(currentUser.RealName, "");
+            StudentEval studentEval = new StudentEval();
             if (matchList.Count == 1)
             {
                 EvalStudent match = matchList.FirstOrDefault();
                 stuNo = match.StudentNo;
+                studentEval.PEM = match.PEM;
+                studentEval.PRM = match.PRM;
             }
             foreach (var stag in model.tags)
             {
                 stag.StudentName = currentUser.RealName;
                 stag.StudentNo = stuNo;
             }
-            StudentEval studentEval = new StudentEval();
             studentEval.StudentName = currentUser.RealName;
             studentEval.StudentNo = stuNo;
+            studentEval.Direction = model.positionName;
             studentEval.CreateTime = DateTime.Now;
             studentEval.Score = model.tags.Sum(r=>r.SelfPoint);
             var result = StudentDal.Instance.AddStudentTags(stuNo,model.tags,studentEval);
@@ -73,7 +76,7 @@ namespace HPIT.Survey.Portal.Controllers
         public DeluxeJsonResult UpdateEvalPoint(StudentTagsModel model)
         {
            int result = StudentDal.Instance.UpdateStudentTags(model.stuNo,model.tags);
-           return new DeluxeJsonResult(result);
+           return new DeluxeJsonResult(new { data = result, status = 200 });
         }
 
 
@@ -83,6 +86,15 @@ namespace HPIT.Survey.Portal.Controllers
             HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
             search.UserName = currentUser.RealName;
             search.RoleName = currentUser.FullName;
+            search.Entity = new StudentEval();
+            if (currentUser.FullName == "项目经理")
+            {
+                search.Entity.PRM = currentUser.RealName;
+            }
+            if (currentUser.FullName == "人事经理")
+            {
+                search.Entity.PEM = currentUser.RealName;
+            }
             var result = StudentDal.Instance.GetPageData(search, out total);
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
             return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages });

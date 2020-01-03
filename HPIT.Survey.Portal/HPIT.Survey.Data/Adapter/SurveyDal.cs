@@ -288,16 +288,11 @@ namespace HPIT.Survey.Data.Adapter
             return model;
         }
 
-
-
         public Company GetMatchCompany(string No)
         {
             var match = context.Company.Where(r => r.CompanyNo == No).FirstOrDefault();
             return match;
         }
-
-
-
 
         /// <summary>
         /// 分页查询，代码

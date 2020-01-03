@@ -193,6 +193,7 @@
     <Content Include="js\fileinput\themes\fa\theme.min.js" />
     <Content Include="js\fileinput\themes\gly\theme.js" />
     <Content Include="js\fileinput\themes\gly\theme.min.js" />
+    <Content Include="js\highlight\highlight.js" />
     <Content Include="js\img\x.png" />
     <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\login\canva_moving_effect.js" />

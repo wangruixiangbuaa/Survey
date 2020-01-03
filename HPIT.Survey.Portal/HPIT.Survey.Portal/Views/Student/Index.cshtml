@@ -28,7 +28,7 @@
                 <option value="JAVA">JAVA工程师</option>
                 <option value="企信">企信信息化工程师</option>
                 <option value="大数据">大数据工程师</option>
-                <option value="Web前端">Web前端工程师</option>
+                <option value="前端">Web前端工程师</option>
                 <option value="网销">网络营销工程师</option>
             </select>
         </div>
@@ -141,7 +141,8 @@
                 } else {
                     _.options.url = "/Student/UpdateEvalPoint";
                 }
-                _.options.data = { "tags": _.TagScoreList, "stuNo": _.stuNo };
+                var positionName = $("#dire").val();
+                _.options.data = { "tags": _.TagScoreList, "stuNo": _.stuNo, "positionName": positionName };
                 _.ajaxData(_.options, function (result) {
                     if (result.status == '200') {
                         swal('', "提交成功", "success");

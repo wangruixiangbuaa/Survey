@@ -26,7 +26,6 @@ namespace HPIT.Survey.Data.Adapter
         {
             List<CommonStatistic> Statistic = new List<CommonStatistic>();
             string sql = string.Format(@"select PositionName name ,COUNT(PositionName) value FROM[SurveyDB].[dbo].[SurveyModel] where Direction = '{0}' group by PositionName", direction);
-
             //string sql = string.Format(@"select PositionType name ,COUNT(PositionType) value from [SurveyDB].[dbo].[Position] p 
             //                             left join [SurveyDB].[dbo].SurveyModel s on p.SurveyID=s.SurveyID where Direction ='{0}' group by PositionType",direction);
             using (var context = new SurveyContext())
@@ -72,10 +71,20 @@ namespace HPIT.Survey.Data.Adapter
             parameter.pageSize = search.PageSize;
             //parameter.whereLambda = t => t.PositionID > 0;
             DBBaseService baseService = new DBBaseService(SurveyContext.Instance);
+            string sqlwhere = " where 1=1 ";
             string sql = @"SELECT p.*,c.CompanyName ,c.CompanyType 
                          FROM dbo.[Position] p 
                          left join dbo.[SurveyModel] s on p.SurveyID = s.SurveyID 
                          left join dbo.[Company] c on c.CompanyID = s.CompanyID";
+            if (!string.IsNullOrEmpty(search.Entity.PositionType))
+            {
+                sqlwhere += string.Format(" and PositionType='{0}'",search.Entity.PositionType);
+            }
+            if (!string.IsNullOrEmpty(search.Entity.Source))
+            {
+                sqlwhere += string.Format(" and Source ='{0}'",search.Entity.Source);
+            }
+            sql = string.Format("{0}{1}",sql,sqlwhere);
             List<PositionExt> list = baseService.GetSqlPagedData<PositionExt, int>(sql,parameter, out count);
             foreach (PositionExt position in list)
             {

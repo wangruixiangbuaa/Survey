@@ -1,4 +1,5 @@
-﻿@{
+﻿@using HPIT.Survey.Data.Entitys
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -45,13 +46,19 @@
             <div class="box-tools pull-right" style="margin-bottom: 17px;">
                 <div class="has-feedback">
                     <ul>
-                        <li><label>岗位类型：</label><input type="text" id="TextBox_Account" class="form-control input-sm searchInput" /></li>
+                        <li><label>岗位类型：</label><input type="text" id="TextBox_PositionType" class="form-control input-sm searchInput" /></li>
                         <li>
-                            <label>来源：</label> <select id="DropDownList_Roles" class="form-control input-sm searchInput">
-                                <option value="-1">请选择</option>
+                            <label>来源：</label> <select id="DropDownList_Source" class="form-control input-sm searchInput">
+                                <option value="">请选择</option>
+                                @{
+                                    foreach (GeneralSelectItem item in (ViewData["Source"] as List<GeneralSelectItem>))
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
                             </select>
                         </li>
-                        <li><input type="button" value="查询" data-toggle="modal" data-target="#editModal" class="btn btn-default" /></li>
+                        <li><input type="button" value="查询" id="searchBtn" class="btn btn-default" /></li>
                     </ul>
                 </div>
             </div>
@@ -80,7 +87,8 @@
                         <td>${Source}</td>
                         <th>${Years}年</th>
                         @*<td><a href="#" type="posiUpdate" tags="${TagsJsonStr}" pdesc="${PositionDesc}" pid="${PositionID}">更新</a></td>*@
-                        <td><a href="#" type="posiEdit"  pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">标签编辑</a></td>
+                        <td><a href="#" type="posiEdit" pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">标签编辑</a></td>
+                        <td><a href="#" type="posiEdit" pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">标签编辑</a></td>
                     </tr>
                     {{/each}}
                 </script>
@@ -89,36 +97,36 @@
     </div>
 </section>
 @*<div class="modal fade" id="updateModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">岗位编辑</h3>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="positionID" style="display:none;" />
-                <table class="table table-bordered table-striped" style="width:570px">
-                    <tr>
-                        <td>岗位名称</td>
-                        <td><input class="form-control" rows="10" name="name"  id="pname"/></td>
-                    </tr>
-                    <tr>
-                        <td>岗位描述</td>
-                        <td><textarea class="form-control" rows="10" name="desc" id="desc"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>岗位类型</td>
-                        <td><input type="text" class="form-control" id="ptype" /></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" id="updatesave" aria-hidden="true">保存</button>
-                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">岗位编辑</h3>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="positionID" style="display:none;" />
+                    <table class="table table-bordered table-striped" style="width:570px">
+                        <tr>
+                            <td>岗位名称</td>
+                            <td><input class="form-control" rows="10" name="name"  id="pname"/></td>
+                        </tr>
+                        <tr>
+                            <td>岗位描述</td>
+                            <td><textarea class="form-control" rows="10" name="desc" id="desc"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>岗位类型</td>
+                            <td><input type="text" class="form-control" id="ptype" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-dismiss="modal" id="updatesave" aria-hidden="true">保存</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 <div class="modal fade" id="editModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -127,12 +135,16 @@
                 <h3 id="myModalLabel">岗位标签编辑</h3>
             </div>
             <div class="modal-body">
-                <input type="text" id="positionID" style="display:none;"/>
+                <input type="text" id="positionID" style="display:none;" />
                 <table class="table table-bordered table-striped" style="width:570px">
                     <tr>
                         <td>岗位描述</td>
-                        <td><textarea class="form-control" rows="10" id="desc"></textarea></td>
+                        <td><p id="testHtml" style="width:420px;"></p></td>
                     </tr>
+                    @*<tr>
+                        <td>岗位描述</td>
+                        <td><textarea class="form-control" rows="10" id="desc"></textarea></td>
+                    </tr>*@
                     <tr>
                         <td>已存在的标签</td>
                         <td><input type="text" id="existtagValue"></td>
@@ -156,17 +168,13 @@
     <script src="~/js/page/paging.js"></script>
     <script src="~/js/common/common.js"></script>
     <script src="~/js/tags/tag.js"></script>
+    <script src="~/js/highlight/highlight.js"></script>
     <script type="text/javascript" charset="utf-8">
-        window.onload = function () {
-            //alert("页面加载中。。。");
-        };
         var survey = {
             queryList: function () {
-                var percent = $("#DropDownList_skill").val();
-                var point = $("#DropDownList_ability").val();
-                var salary = $("#TextBox_salary").val();
-                var city = $("#DropDownList_City").val();
-                var data = { "PageIndex": _.currentPageIndex - 1, "PageSize": 15, "Entity": { "Percent": percent, "Point": point, "Salary": salary, "City": city } };
+                var positionType = $("#TextBox_PositionType").val();
+                var source = $("#DropDownList_Source").val();
+                var data = { "PageIndex": _.currentPageIndex - 1, "PageSize": 15, "Entity": { "PositionType": positionType, "Source": source } };
                 _.queryList("/Position/QueryPageData", data);
             }
         }
@@ -174,7 +182,7 @@
         var tag2 = new Tag("existtagValue");
         $(document).ready(function () {
             $("#save").click(function () {
-                var tags =  $(".tagItem span");
+                var tags = $(".tagItem span");
                 var tagObjs = [];
                 var pid = $("#positionID").val();
                 for (var i = 0; i < tags.length; i++) {
@@ -190,11 +198,16 @@
                     } else {
                         alert("编辑失败");
                     }
-                    
+
                 })
 
             })
-            
+
+            $("#searchBtn").click(function () {
+                _.currentPageIndex = 1;
+                survey.queryList();
+            })
+
             $("#ListTb").on("click", "a", function () {
                 var type = $(this).attr("type");
                 var desc = $(this).attr("pdesc");
@@ -211,8 +224,18 @@
                 var id = $(this).attr("pid");
                 $("#positionID").val(id);
                 if (type == "posiEdit") {
-                    $("#desc").val(desc);
                     //tag.tagValue = "浙江,绍兴,上海,山东,北京,四川";
+                    $("#testHtml").html(desc);
+                    var oldStr = $("#testHtml").html();
+                    /* 测试按钮点击 */
+                    var val = existObj.join('|');
+                    /* 类级别插件调用，返回 添加高亮效果 的字符串 */
+                    var newStr = $.highlight(oldStr, {
+                        color: '#FF0000',// 高度颜色，默认:#f00
+                        weight: true,    // 是否加粗，默认:不加粗
+                        keys: val        //需要高亮的值，必须的
+                    });
+                    $("#testHtml").html(newStr);
                     $("#editModal").modal("show");
                 }
             })
