@@ -321,6 +321,13 @@ namespace HPIT.Survey.Data.Adapter
                 //合并表达式
                 parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
             }
+            else if (search.RoleName == "项目经理")
+            {
+                Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;
+                Expression<Func<SurveyModel, bool>> lambda1 = item => item.PRM == search.UserName;
+                //合并表达式
+                parameter.whereLambda = ExpressionExt.ReBuildExpression<SurveyModel>(lambda0, lambda1);
+            }
             else
             {
                 Expression<Func<SurveyModel, bool>> lambda0 = item => item.Status != 1;

@@ -88,7 +88,7 @@
                         <th>${Years}年</th>
                         @*<td><a href="#" type="posiUpdate" tags="${TagsJsonStr}" pdesc="${PositionDesc}" pid="${PositionID}">更新</a></td>*@
                         <td><a href="#" type="posiEdit" pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">标签编辑</a></td>
-                        <td><a href="#" type="posiEdit" pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">标签编辑</a></td>
+                        <td><a href="#" type="posiClear" pdesc="${PositionDesc}" pid="${PositionID}" tags="${TagsJsonStr}">清除标签</a></td>
                     </tr>
                     {{/each}}
                 </script>
@@ -96,37 +96,6 @@
         </div>
     </div>
 </section>
-@*<div class="modal fade" id="updateModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">岗位编辑</h3>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="positionID" style="display:none;" />
-                    <table class="table table-bordered table-striped" style="width:570px">
-                        <tr>
-                            <td>岗位名称</td>
-                            <td><input class="form-control" rows="10" name="name"  id="pname"/></td>
-                        </tr>
-                        <tr>
-                            <td>岗位描述</td>
-                            <td><textarea class="form-control" rows="10" name="desc" id="desc"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td>岗位类型</td>
-                            <td><input type="text" class="form-control" id="ptype" /></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success" data-dismiss="modal" id="updatesave" aria-hidden="true">保存</button>
-                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
 <div class="modal fade" id="editModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -227,7 +196,6 @@
                     //tag.tagValue = "浙江,绍兴,上海,山东,北京,四川";
                     $("#testHtml").html(desc);
                     var oldStr = $("#testHtml").html();
-                    /* 测试按钮点击 */
                     var val = existObj.join('|');
                     /* 类级别插件调用，返回 添加高亮效果 的字符串 */
                     var newStr = $.highlight(oldStr, {
@@ -237,6 +205,12 @@
                     });
                     $("#testHtml").html(newStr);
                     $("#editModal").modal("show");
+                }
+                if (type == "posiClear") {
+                    _.options.url = "/Position/ClearPositionTags?positionID=" + id;
+                    _.ajaxData(_.options, function (result) {
+                        survey.queryList();
+                    })
                 }
             })
             survey.queryList();

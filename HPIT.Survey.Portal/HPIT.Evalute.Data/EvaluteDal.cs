@@ -19,7 +19,7 @@ namespace HPIT.Evalute.Data
                            p.Classroom,b.Name as bName from Student s 
                            left join ProjectDepartment p on s.ProjectDepartmentId = p.Id 
                            left join Batch b on p.BatchId = b.Id
-                           left join Major m on s.MajorId = m.Id 
+                           left join Major m on p.MajorId = m.Id 
                            ) t where Name=@Name or pName=@ClassName";
             EvalStudent stu = new EvalStudent();
             stu.Name = name;
@@ -38,7 +38,7 @@ namespace HPIT.Evalute.Data
                           p.Classroom,b.Name as bName from Student s 
                           left join ProjectDepartment p on s.ProjectDepartmentId = p.Id 
                           left join Batch b on p.BatchId = b.Id
-                          left join Major m on s.MajorId = m.Id ) t where StudentNo=@StudentNo";
+                          left join Major m on p.MajorId = m.Id ) t where StudentNo=@StudentNo";
             EvalStudent stu = new EvalStudent();
             stu.StudentNo = StudentNo;
             List<EvalStudent> result = DapperDBHelper.Instance.ExcuteQuery<EvalStudent>(sql, stu).ToList();

@@ -21,7 +21,6 @@ namespace HPIT.Survey.Data.Adapter
             this.context = new SurveyContext();
         }
 
-
         public List<CommonStatistic> PositionStatistic(string direction)
         {
             List<CommonStatistic> Statistic = new List<CommonStatistic>();
@@ -33,6 +32,18 @@ namespace HPIT.Survey.Data.Adapter
                 Statistic = context.Database.SqlQuery<CommonStatistic>(sql).ToList();
             }
             return Statistic;
+        }
+
+
+        public int ClearPositionTags(string positionID)
+        {
+            int result = 0;
+            using (var context = new SurveyContext())
+            {
+                result = context.Database.ExecuteSqlCommand(
+                   "Delete from dbo.SkillTags  where PositionID=" + positionID);
+            }
+            return result;
         }
 
         public List<Company> GetPositionRelateCompany(string position,string direction)
@@ -115,10 +126,7 @@ namespace HPIT.Survey.Data.Adapter
                          st.PositionID,Skills = (
                                  stuff(
                                      (select ',' + TagName from SkillTags tst left join SkillTag t on tst.TagID=t.TagID  where  PositionID = st.PositionID  order by t.TagName for xml path('')),
-                                     1,
-                                     1,
-                                     ''
-                                 )
+                                     1,1,'')
                              )
                          from SkillTags as st group by  st.PositionID) tt on tt.PositionID = p.PositionID
                          left join dbo.[SurveyModel] s on p.SurveyID = s.SurveyID 
@@ -136,8 +144,13 @@ namespace HPIT.Survey.Data.Adapter
             }
             int totalSkillNeed = 0;
             float realSkillNeed = 0;
-            if (search.Entity.Percent>0 && skillcount >0)
+            if (search.Entity.Percent>=0 && skillcount >0)
             {
+                //默认70
+                if (search.Entity.Percent == 0)
+                {
+                    search.Entity.Percent = 70;
+                }
                 totalSkillNeed = skillcount * 100 / search.Entity.Percent;
                 realSkillNeed = skillcount * (((float)search.Entity.Percent) / 100);
                 sqlWhere += " and skillCount <=" + totalSkillNeed;
@@ -150,15 +163,17 @@ namespace HPIT.Survey.Data.Adapter
             {
                 sqlWhere += " and t.AvageMoney <=" + search.Entity.Salary;
             }
+            List<PositionExt> list = new List<PositionExt>();
+            count = 0;
             if (!string.IsNullOrEmpty(studentTagStr))
             {
                 List<string> realNeedTags = tags.Take((int)realSkillNeed).ToList();
                 string realNeedSkillStr = string.Join(",",realNeedTags);
-                sqlWhere += string.Format(" and t.Skills like '%{0}%' or t.Skills like '%{1}%'",studentTagStr,realNeedSkillStr);
+                sqlWhere += string.Format(" and t.Skills like '%{0}%'",realNeedSkillStr);
+                sql = string.Format("{0}{1}", sql, sqlWhere);
+                list = baseService.GetSqlPagedData<PositionExt, PositionMatchModel, int>(sql, parameter, out count);
             }
             //标签的匹配度 精确匹配度,判断匹配的数量
-            sql = string.Format("{0}{1}",sql,sqlWhere);
-            List<PositionExt> list = baseService.GetSqlPagedData<PositionExt, PositionMatchModel, int>(sql, parameter, out count);
             //foreach (PositionExt position in list)
             //{
             //    //查询对应职位的标签。

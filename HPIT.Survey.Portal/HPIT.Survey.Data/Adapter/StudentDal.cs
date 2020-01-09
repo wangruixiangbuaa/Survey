@@ -20,6 +20,12 @@ namespace HPIT.Survey.Data.Adapter
             this.context = new SurveyContext();
         }
 
+        public StudentEval GetMatchEval(string stuName)
+        {
+            var match = context.StudentEvaluate.FirstOrDefault(r=>r.StudentName == stuName);
+            return match;
+        }
+
         /// <summary>
         /// 添加学生标签
         /// </summary>

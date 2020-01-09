@@ -42,6 +42,11 @@ namespace HPIT.Survey.Portal.Controllers
         {
             var result = SurveyDal.Instance.QuerySingleByID(id);
             result.CurrentRole = DeluxeUser.CurrentMember;
+            HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
+            if (currentUser.FullName == "项目组组长" || currentUser.FullName == "技术主管" || currentUser.FullName == "项目主管" || currentUser.FullName == "人事主管")
+            {
+                result.CurrentRole.FullName = "学生";
+            }
             return new DeluxeJsonResult(result);
         }
 
@@ -99,6 +104,10 @@ namespace HPIT.Survey.Portal.Controllers
             result.Form.Type = (int)SurveyType.Student;
             HPITMemberInfo currentUser = DeluxeUser.CurrentMember;
             result.CurrentRole = DeluxeUser.CurrentMember;
+            if (currentUser.FullName == "项目组组长" || currentUser.FullName == "技术主管" || currentUser.FullName == "项目主管" || currentUser.FullName == "人事主管")
+            {
+                result.CurrentRole.FullName = "学生";
+            }
             //根据学生编号创建新的
             List<EvalStudent> matchList = EvaluteDal.Instance.GetMatchStudent(currentUser.RealName,"");
             if (matchList.Count == 1)
@@ -169,9 +178,9 @@ namespace HPIT.Survey.Portal.Controllers
                 item.SurveyID = model.SurveyID;
                 newJobs.Add(item);
             }
+            dal.context.ActiveJobs.RemoveRange(match.ActiveJobs);
             dal.context.Position.RemoveRange(match.Position);
             dal.context.Project.RemoveRange(match.Project);
-            dal.context.ActiveJobs.RemoveRange(match.ActiveJobs);
             dal.context.SaveChanges();
             match.Project = newProject;
             match.Position = newPositions;
@@ -203,7 +212,7 @@ namespace HPIT.Survey.Portal.Controllers
             var result = SurveyDal.Instance.GetPageData(search,out total);
             foreach (var item in result)
             {
-                if (currentUser.FullName != "项目组组长" && currentUser.FullName != "技术主管" && currentUser.FullName != "项目主管" && currentUser.FullName != "人事主管")
+                if (currentUser.FullName == "项目组组长" || currentUser.FullName == "技术主管" || currentUser.FullName == "项目主管" || currentUser.FullName == "人事主管")
                 {
                     item.CurrentRoleName = "学生";
                 }

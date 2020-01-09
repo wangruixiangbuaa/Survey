@@ -119,7 +119,7 @@
                     <tr>
                         <td>方向</td>
                         <td>@*<input class="form-control" name="direction" id="direction">*@
-                            <select id="DropDownList_Direction" class="form-control input-sm searchInput">
+                            <select id="Direction" class="form-control input-sm searchInput">
                                 <option value="">请选择</option>
                                 @{
                                     foreach (GeneralSelectItem item in (ViewData["Directions"] as List<GeneralSelectItem>))
@@ -179,7 +179,7 @@
                     "TagName": $("#tagName").val(),
                     "TagType": $("#tagType").val(),
                     "CourseName": $("#CourseName").val(),
-                    "Direction": $("#direction").val()
+                    "Direction": $("#Direction").val()
                 };
                 _.options.data = tagObj;
                 _.options.url = "/SkillTag/UpdateTag";

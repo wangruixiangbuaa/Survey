@@ -48,8 +48,16 @@ namespace HPIT.Survey.Data.Adapter
 
         public int UpdateTag(SkillTag tag)
         {
-            tag.Creatime = DateTime.Now;
-            context.Entry(tag).State = EntityState.Modified;
+            SkillTag match = context.SkillTag.Where(r => r.TagID == tag.TagID).FirstOrDefault();
+            if (match != null)
+            {
+                match.TagName = tag.TagName;
+                match.TagType = tag.TagType;
+                match.Direction = tag.Direction;
+                match.CourseName = tag.CourseName;
+                match.Creatime = DateTime.Now;
+            }
+            context.Entry(match).State = EntityState.Modified;
             return context.SaveChanges();
         }
 
@@ -69,8 +77,15 @@ namespace HPIT.Survey.Data.Adapter
             string sql = string.Format("select * from [dbo].SkillTag where Direction = '{0}'",direction);
             if (!string.IsNullOrEmpty(stuName) || !string.IsNullOrEmpty(stuNo))
             {
-                sql = string.Format(@"SELECT s.SelfPoint,s.StudentName,s.StudentNo,s.TeacherPoint,t.TagName,t.TagID,t.TagType,t.Direction,t.DirectionID
+                var match = context.StudentEvaluate.FirstOrDefault(r => r.StudentNo == stuNo);
+                if (match != null)
+                {
+                    if (match.Direction == direction)
+                    {
+                        sql = string.Format(@"SELECT s.SelfPoint,s.StudentName,s.StudentNo,s.TeacherPoint,t.TagName,t.TagID,t.TagType,t.Direction,t.DirectionID
                                          FROM [dbo].[StudentTags] s left join [dbo].SkillTag t on s.TagID = t.TagID where s.StudentName='{0}' and s.StudentNo='{1}' ", stuName, stuNo);
+                    }
+                }
             }
             using (var context = new SurveyContext())
             {

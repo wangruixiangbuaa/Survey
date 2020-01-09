@@ -46,9 +46,14 @@ namespace HPIT.Survey.Portal.Controllers
         {
             search.UserName = DeluxeUser.CurrentMember.RealName;
             int total = 0;
+            var eval_match = StudentDal.Instance.GetMatchEval(search.UserName);
+            if (eval_match == null)
+            {
+                return new DeluxeJsonResult(new { Data = "", Total = 0, TotalPages = 0, State = 300, Msg = "请先进行评估才可以进行职位匹配！！！" });
+            }
             var result = PositionDal.Instance.GetMatchPageData(search, out total);
             var totalPages = total % search.PageSize == 0 ? total / search.PageSize : total / search.PageSize + 1;
-            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages });
+            return new DeluxeJsonResult(new { Data = result, Total = total, TotalPages = totalPages, State = 200 });
         }
 
         public DeluxeJsonResult GetPositionStatics(string direction)
@@ -63,6 +68,11 @@ namespace HPIT.Survey.Portal.Controllers
             return new DeluxeJsonResult(new { Data = result });
         }
 
+        public DeluxeJsonResult ClearPositionTags(string positionID)
+        {
+            var result = PositionDal.Instance.ClearPositionTags(positionID);
+            return new DeluxeJsonResult(result);
+        }
 
         public DeluxeJsonResult UpdatePosition(Position position)
         {

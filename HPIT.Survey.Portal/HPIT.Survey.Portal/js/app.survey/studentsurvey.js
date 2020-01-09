@@ -179,6 +179,39 @@ $(document).ready(function () {
 
             })
         }
+        if (name == 'CompanyNo') {
+            var nvalue = $(this).val();
+            _.options.url = "/Survey/QueryCompanyByNo?companyNO=" + encodeURI(nvalue);
+            _.options.data = {};
+            _.ajaxData(_.options, function (result) {
+                if (result.State == 'OK') {
+                    if (result.Data != null && result.Data != undefined) {
+                        _.MasterData.Form.Company.CompanyName = result.Data.CompanyName;
+                        _.MasterData.Form.Company.City = result.Data.City;
+                        _.MasterData.Form.Company.CompanyType = result.Data.CompanyType;
+                        _.MasterData.Form.Company.CompanyDetailType = result.Data.CompanyDetailType;
+                        _.MasterData.Form.Company.CompanyDesc = result.Data.CompanyDesc;
+                        //重新加载数据，渲染界面
+                        var parentid = 0;
+                        for (var i = 0; i < _.MasterData.ExtraDatas.Industrys.length; i++) {
+                            if (_.MasterData.ExtraDatas.Industrys[i].Value == result.Data.CompanyType) {
+                                parentid = _.MasterData.ExtraDatas.Industrys[i].ID;
+                            }
+                        }
+                        _.MasterData.ExtraDatas.SecondIndustrys = [];
+                        for (var i = 0; i < _.MasterData.ExtraDatas.DetailIndustrys.length; i++) {
+                            if (_.MasterData.ExtraDatas.DetailIndustrys[i].parentID == parentid) {
+                                var text = _.MasterData.ExtraDatas.DetailIndustrys[i].Text;
+                                var value = _.MasterData.ExtraDatas.DetailIndustrys[i].Value;
+                                _.MasterData.ExtraDatas.SecondIndustrys.push({ "Text": text, "Value": value });
+                            }
+                        }
+                        $('#step1').html('');
+                        $("#enterprise").tmpl(_.MasterData).appendTo('#step1');
+                    }
+                };
+            })
+        }
         if (name.split('.').length == 1) {
             _.MasterData.Form[name] = $(this).val();
         }
@@ -308,10 +341,10 @@ $(document).ready(function () {
                 swal("", "招聘职位信息中职位名不能为空！", "info");
                 return;
             }
-            if (form.ActiveJobs[i].JobType == '' || form.ActiveJobs[i].JobType == undefined) {
-                swal("", "招聘职位信息中招聘职位不能为空！", "info");
-                return;
-            }
+            //if (form.ActiveJobs[i].JobType == '' || form.ActiveJobs[i].JobType == undefined) {
+            //    swal("", "招聘职位信息中招聘职位不能为空！", "info");
+            //    return;
+            //}
             if (form.ActiveJobs[i].AvageMoney == '' || form.ActiveJobs[i].AvageMoney <= 0) {
                 swal("", "招聘职位信息中薪资不能为空！", "info");
                 return;
@@ -328,7 +361,7 @@ $(document).ready(function () {
                 timer: 2000
             })
             setTimeout(function () {
-                window.close();
+                window.location.href="/Survey/Index";
                 //5秒后实现的方法写在这个方法里面
             }, 2 * 1000)
         });
